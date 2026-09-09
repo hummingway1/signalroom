@@ -408,3 +408,4 @@ positive 가능 — 사람 재검토 필요), 라우팅이 의도한 체계 범�
 
 전체 변경 이력은 `CHANGELOG.md`(1~11차 반영)를 참고.
 "# signalroom" 
+ 
