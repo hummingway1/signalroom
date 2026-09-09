@@ -4,12 +4,78 @@
 // oauth-providers/{kakao,naver,google}.mjs 안에만 있다 — 이 파일은 provider 이름과 무관하게
 // 동일한 파이프라인(§F 설계)을 수행한다: authorize URL 생성 → code 교환 → 프로필 조회 →
 // 로그인/가입 → (신규 가입이면) 익명 데이터 승계 → 세션 생성.
-import { findOrCreateUserByAuthAccount, createSession } from '../repositories/auth-repository.mjs';
+import { findOrCreateUserByAuthAccount, createSession, createEmailAccount, findEmailAuthAccount } from '../repositories/auth-repository.mjs';
 import { listChildProfilesForUser, updateChildProfile } from '../repositories/child-profile-repository.mjs';
 import { listPurchasedAnalysesForUser, reassignOwnerForAccountLinking } from '../repositories/purchased-analysis-repository.mjs';
 import { kakaoProvider } from './oauth-providers/kakao.mjs';
 import { naverProvider } from './oauth-providers/naver.mjs';
 import { googleProvider } from './oauth-providers/google.mjs';
+import bcrypt from 'bcryptjs';
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const BCRYPT_ROUNDS = 10;
+
+export class AuthValidationError extends Error {
+  constructor(code, message) {
+    super(message);
+    this.code = code;
+  }
+}
+
+/** §이메일 회원가입 — 인증 정보(이메일/비밀번호)만 다룬다. 이름/성별/생년월일/출생시간 같은
+ * 서비스 프로필 정보는 여기서 저장하지 않는다 — 기존 POST /api/charts(§3 역할 분리 원칙)로
+ * 별도 처리한다. 익명 상태에서 만든 데이터를 이 신규 계정에 연결하는 것도 기존 OAuth 가입과
+ * 완전히 동일한 절차(reassignOwnerForAccountLinking)를 그대로 재사용한다. */
+export async function signupWithEmail({ email, password, nickname, anonymousUserId = null }) {
+  if (typeof email !== 'string' || !EMAIL_REGEX.test(email)) {
+    throw new AuthValidationError('INVALID_EMAIL', '올바른 이메일 형식이 아닙니다.');
+  }
+  if (typeof password !== 'string' || password.length < 8) {
+    throw new AuthValidationError('INVALID_PASSWORD', '비밀번호는 8자 이상이어야 합니다.');
+  }
+  if (typeof nickname !== 'string' || nickname.trim().length < 2 || nickname.trim().length > 20) {
+    throw new AuthValidationError('INVALID_NICKNAME', '닉네임은 2~20자여야 합니다.');
+  }
+
+  const passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS);
+  const result = await createEmailAccount({ email: email.toLowerCase().trim(), nickname: nickname.trim(), passwordHash });
+  if (result.error === 'EMAIL_ALREADY_EXISTS') {
+    throw new AuthValidationError('EMAIL_ALREADY_EXISTS', '이미 가입된 이메일입니다.');
+  }
+
+  // §기존 OAuth 가입과 완전히 동일한 절차 재사용 — 익명 상태에서 만든 자녀 프로필/구매
+  // 이력을 신규 계정에 연결(실패 시 자동 롤백 포함, linkAnonymousData가 이미 처리).
+  if (anonymousUserId) {
+    try {
+      await linkAnonymousData(anonymousUserId, result.user.id);
+    } catch (err) {
+      console.error('[이메일 가입 - 익명 데이터 연결 실패]', err.message);
+    }
+  }
+
+  const session = await createSession(result.user.id);
+  return { session, user: result.user, isNewUser: true };
+}
+
+/** §이메일 로그인 — 계정이 없는 경우와 비밀번호가 틀린 경우 모두 동일한 에러(INVALID_CREDENTIALS)
+ * 를 반환한다(§보안 원칙 — 계정 존재 여부를 노출하지 않음). */
+export async function loginWithEmail({ email, password }) {
+  if (typeof email !== 'string' || typeof password !== 'string') {
+    throw new AuthValidationError('INVALID_CREDENTIALS', '이메일 또는 비밀번호가 올바르지 않습니다.');
+  }
+  const account = await findEmailAuthAccount(email.toLowerCase().trim());
+  if (!account || !account.password_hash) {
+    // §타이밍 공격 방지 — 계정이 없어도 해싱 비교와 비슷한 시간이 걸리도록 더미 해시와 비교한다.
+    await bcrypt.compare(password, '$2a$10$abcdefghijklmnopqrstuuOeWs3W0v3d1t5w1p1a2s3s4w5o6r7d8');
+    throw new AuthValidationError('INVALID_CREDENTIALS', '이메일 또는 비밀번호가 올바르지 않습니다.');
+  }
+  const valid = await bcrypt.compare(password, account.password_hash);
+  if (!valid) {
+    throw new AuthValidationError('INVALID_CREDENTIALS', '이메일 또는 비밀번호가 올바르지 않습니다.');
+  }
+  const session = await createSession(account.user_id);
+  return { session, user: { id: account.user_id, email: account.email, nickname: account.nickname } };
+}
 
 export const OAUTH_PROVIDERS = {
   kakao: kakaoProvider,

@@ -232,6 +232,16 @@ export default function App() {
     }
   }
 
+  async function handleEmailAuthSuccess(user, isNewUser) {
+    localStorage.removeItem('saju_anon_user_id');
+    localStorage.setItem(USER_ID_STORAGE_KEY, user.id);
+    localStorage.setItem(NICKNAME_STORAGE_KEY, user.nickname);
+    setUserId(user.id);
+    setNickname(user.nickname);
+    setScreen(pendingAfterSignup ?? 'home');
+    setPendingAfterSignup(null);
+  }
+
   async function handleLogout() {
     try {
       await api.logout();
@@ -352,7 +362,7 @@ export default function App() {
           </div>
         )}
         {screen === 'home' && <HomeScreen onSelect={(key) => handleHomeSelect(key, 'home')} onLogin={() => { setPendingAfterSignup('home'); setScreen('signup'); }} onOpenMyPage={() => setScreen('mypage')} nickname={nickname} />}
-        {screen === 'mypage' && <MyPage nickname={nickname} onBack={() => setScreen(homeOrigin)} onHome={() => setScreen(homeOrigin)} onOpenProducts={() => setScreen('products')} onLogout={handleLogout} onOpenLegal={(docType) => { setLegalDocType(docType); setScreen('legal'); }} />}
+        {screen === 'mypage' && <MyPage nickname={nickname} onBack={() => setScreen(homeOrigin)} onHome={() => setScreen(homeOrigin)} onOpenProducts={() => setScreen('products')} onLogout={handleLogout} onOpenLegal={(docType) => { setLegalDocType(docType); setScreen('legal'); }} onLogin={() => { setPendingAfterSignup(homeOrigin); setScreen('signup'); }} />}
         {screen === 'legal' && <LegalScreen docType={legalDocType} onBack={() => setScreen('mypage')} onHome={() => setScreen(homeOrigin)} />}
         {screen === 'products' && <ProductsScreen onBack={() => setScreen('mypage')} onHome={() => setScreen(homeOrigin)} />}
         {screen === 'intro' && <ServiceIntroScreen serviceKey={pendingService} onNext={handleIntroNext} onBack={() => setScreen(homeOrigin)} />}
@@ -380,7 +390,7 @@ export default function App() {
             onHome={() => setScreen(homeOrigin)}
           />
         )}
-        {screen === 'signup' && <NicknameSignup onSubmit={handleNicknameSubmit} isSubmitting={isSigningUp} error={nicknameError} onBack={() => setScreen('home')} />}
+        {screen === 'signup' && <NicknameSignup onSubmit={handleNicknameSubmit} isSubmitting={isSigningUp} error={nicknameError} onBack={() => setScreen('home')} onEmailAuthSuccess={handleEmailAuthSuccess} />}
         {screen === 'fun' && <FunContentScreen onBack={() => setScreen('chat')} onHome={() => setScreen('home')} />}
         {screen === 'battle' && <SajuBattleScreen myChartId={chartId} onBack={() => setScreen(pendingService === 'battle' ? homeOrigin : 'chat')} onHome={() => setScreen(homeOrigin)} />}
         {screen === 'ranking' && <LeaderboardScreen chartId={chartId} userId={userId} onBack={() => setScreen('chat')} onHome={() => setScreen('home')} />}

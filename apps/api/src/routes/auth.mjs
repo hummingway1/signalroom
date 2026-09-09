@@ -5,7 +5,7 @@
 // 어댑터(oauth-providers/*.mjs)에 위임하고, 이 라우트 파일은 provider 이름과 무관하다.
 import { Router } from 'express';
 import { randomUUID } from 'node:crypto';
-import { buildOAuthAuthorizeUrl, handleOAuthCallback, OAUTH_PROVIDERS } from '../services/auth-service.mjs';
+import { buildOAuthAuthorizeUrl, handleOAuthCallback, OAUTH_PROVIDERS, signupWithEmail, loginWithEmail, AuthValidationError } from '../services/auth-service.mjs';
 import { deleteSession, updateNickname } from '../repositories/auth-repository.mjs';
 import { SESSION_COOKIE_NAME, SESSION_COOKIE_OPTIONS, requireAuth } from '../middleware/session.mjs';
 
@@ -85,6 +85,42 @@ export function authRouter({ frontendBaseUrl = 'http://localhost:5173' } = {}) {
     }
   });
 
+  // POST /api/auth/signup — 이메일/비밀번호 회원가입. 인증정보(이메일/비밀번호)만 다루고,
+  // 이름/성별/생년월일/출생시간 같은 서비스 프로필 정보는 여기서 받지 않는다(§역할 분리
+  // 원칙) — 회원가입 성공 후 프론트가 기존 POST /api/charts로 별도 처리한다.
+  router.post('/signup', async (req, res) => {
+    const { email, password, nickname, anonymousUserId } = req.body ?? {};
+    try {
+      const { session, user, isNewUser } = await signupWithEmail({ email, password, nickname, anonymousUserId: typeof anonymousUserId === 'string' ? anonymousUserId : null });
+      res.cookie(SESSION_COOKIE_NAME, session.id, SESSION_COOKIE_OPTIONS);
+      return res.status(201).json({ user, isNewUser });
+    } catch (err) {
+      if (err instanceof AuthValidationError) {
+        const status = err.code === 'EMAIL_ALREADY_EXISTS' ? 409 : 400;
+        return res.status(status).json({ error: { code: err.code, message: err.message } });
+      }
+      console.error('[이메일 회원가입 실패]', err.message);
+      return res.status(500).json({ error: { code: 'INTERNAL_ERROR', message: '회원가입 중 문제가 발생했습니다.' } });
+    }
+  });
+
+  // POST /api/auth/login — 이메일/비밀번호 로그인. 성공 시 기존 OAuth 로그인과 동일한
+  // 세션/쿠키 체계를 그대로 사용한다(별도 인증 경로 아님).
+  router.post('/login', async (req, res) => {
+    const { email, password } = req.body ?? {};
+    try {
+      const { session, user } = await loginWithEmail({ email, password });
+      res.cookie(SESSION_COOKIE_NAME, session.id, SESSION_COOKIE_OPTIONS);
+      return res.json({ user });
+    } catch (err) {
+      if (err instanceof AuthValidationError) {
+        return res.status(401).json({ error: { code: err.code, message: err.message } });
+      }
+      console.error('[이메일 로그인 실패]', err.message);
+      return res.status(500).json({ error: { code: 'INTERNAL_ERROR', message: '로그인 중 문제가 발생했습니다.' } });
+    }
+  });
+
   // GET /api/auth/me — 현재 로그인 상태 확인(프론트가 앱 시작 시 호출).
   router.get('/me', (req, res) => {
     if (!req.user) return res.json({ user: null });
@@ -112,7 +148,7 @@ export function authRouter({ frontendBaseUrl = 'http://localhost:5173' } = {}) {
         // 세션 삭제 실패해도 쿠키는 지워서 클라이언트 쪽에서는 로그아웃된 것처럼 처리
       }
     }
-    res.clearCookie(SESSION_COOKIE_NAME);
+    res.clearCookie(SESSION_COOKIE_NAME, SESSION_COOKIE_OPTIONS);
     return res.json({ ok: true });
   });
 

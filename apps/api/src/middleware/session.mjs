@@ -11,7 +11,15 @@ export const SESSION_COOKIE_NAME = 'sid';
 export const SESSION_COOKIE_OPTIONS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production', // 로컬 http 개발 환경 고려 — 운영(https)에서만 secure 강제
-  sameSite: 'lax',
+  // §Toss 심사 준비 — 프론트(Vercel)와 백엔드가 서로 다른 도메인으로 배포되는 크로스도메인
+  // 구조를 실제로 확인했다. SameSite=Lax는 top-level GET navigation(예: OAuth 콜백 리다이렉트)
+  // 에는 쿠키를 보내지만, 그 이후 프론트 JS가 fetch()로 백엔드를 호출하는 크로스사이트 요청에는
+  // 쿠키를 전송하지 않는다 — 즉 로그인 리다이렉트는 성공해도 로그인 이후 모든 API 호출이
+  // 비로그인으로 처리되는 심각한 버그가 될 수 있었다(로컬 개발처럼 같은 origin이면 드러나지
+  // 않는 문제). SameSite=None(+secure 필수, 이미 위에서 강제됨)으로 바꿔서 크로스도메인
+  // fetch에서도 쿠키가 정상 전송되게 한다. CSRF는 기존 OAuth state 파라미터로 이미 방지되고
+  // 있고, 세션 쿠키 자체는 여전히 httpOnly라 이 변경이 새로운 인증 취약점을 만들지 않는다.
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   maxAge: 30 * 24 * 60 * 60 * 1000, // 30일, sessions.expires_at과 맞춘다
 };
 

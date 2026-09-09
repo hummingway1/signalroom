@@ -2,6 +2,113 @@
 
 프로젝트 지시사항에 따라, 기존 구조/파일과 충돌하거나 임의 판단이 필요했던 지점을 여기에 기록한다.
 
+## [Unreleased] — 이메일/비밀번호 로그인 추가 (Toss 심사용 실제 로그인 방식)
+
+### 조사 결과 — DB 스키마가 이미 email/password를 지원하도록 준비되어 있었음
+`migrations/001_auth_schema.sql`을 확인한 결과, `auth_accounts.provider` CHECK 제약에 이미
+`'email'`이 포함되어 있고 `password_hash` 컬럼도 이미 존재 — **마이그레이션이 전혀 필요
+없음**. `auth-repository.mjs`에도 `createEmailAccount`/`findEmailAuthAccount` 리포지토리
+함수가 이미 구현되어 있었고, `package.json`에 `bcryptjs`도 이미 설치되어 있었으나 실제로
+사용하는 코드는 어디에도 없었음(설치만 되어 있고 미완성 상태) — 이번 작업은 이 준비된
+기반 위에 실제 서비스/라우트/프론트를 완성하는 것.
+
+### 구현
+- **`apps/api/src/services/auth-service.mjs`** — `signupWithEmail`/`loginWithEmail` 추가.
+  - `bcryptjs`로 해싱(반올림 10라운드), 평문 저장 없음.
+  - 이메일 형식/비밀번호 8자 이상/닉네임 2~20자 입력 검증을 DB 호출 전에 수행(실제 실행
+    테스트로 확인 — DB 없이도 정확히 검증 에러가 남).
+  - 로그인 실패 시 "계정 없음"과 "비밀번호 틀림" 모두 동일한 `INVALID_CREDENTIALS`만
+    반환(계정 존재 여부 비노출), 계정이 없어도 더미 해시와 `bcrypt.compare`를 수행해서
+    타이밍 차이로 계정 존재 여부가 새지 않도록 함.
+  - 익명 상태에서 만든 데이터(자녀 프로필 등) 연결은 **기존 `linkAnonymousData` 함수를
+    그대로 재사용**(OAuth 가입과 완전히 동일한 절차, 새 로직 없음).
+  - 인증 정보(이메일/비밀번호)와 서비스 프로필 정보(이름/성별/생년월일/출생시간)를 역할
+    분리 — 회원가입 API는 이메일/비밀번호/닉네임만 받고, 프로필 정보는 저장하지 않는다
+    (기존 `POST /api/charts` 흐름을 그대로 재사용해서 프론트가 자연스럽게 이어지게 함).
+- **`apps/api/src/routes/auth.mjs`** — `POST /signup`, `POST /login` 추가. 기존 OAuth 콜백과
+  **완전히 동일한 `SESSION_COOKIE_OPTIONS`**로 세션 쿠키 설정(별도 인증 경로 아님, 크로스
+  도메인 SameSite 수정사항도 그대로 적용됨). 이메일 중복은 409로 매핑.
+- **`apps/web/src/api/client.js`** — `signupWithEmail`/`loginWithEmail` 추가.
+- **`apps/web/src/components/NicknameSignup.jsx`** — 이메일 로그인/회원가입 폼 + 로그인·
+  가입 모드 토글 추가. 기존 소셜 로그인 버튼, 기존 닉네임 전용 경량 계정(localStorage
+  기반)은 전부 그대로 유지(제거/변경 없음, 같은 화면에 병렬로 제공).
+- **`apps/web/src/App.jsx`** — `handleEmailAuthSuccess` 추가(OAuth 로그인 성공 처리와
+  동일한 패턴 — userId/nickname state 반영, localStorage 저장, `pendingAfterSignup`으로
+  이동).
+
+### 실제 브라우저 테스트 중 발견하고 고친 버그 2건
+1. **레이아웃 붕괴** — `NicknameSignup`에 이메일 폼을 형제 요소로 추가했더니, 부모
+   `.intake-screen`이 `display:flex`(flex-direction 미지정, 기본값 `row`)라서 여러 카드가
+   가로로 나열되며 화면이 깨졌다(기존엔 자식이 `intake-card` 1개뿐이라 드러나지 않던 문제).
+   전체를 다시 하나의 `intake-card`로 감싸서 해결, 실제 스크린샷으로 정상 세로 배치 확인.
+2. **SIGNAL ROOM에 로그인 화면 진입점이 아예 없었음** — `MyPage.jsx`가 "이미 로그인된
+   사용자"만 가정하고 있어서, 비로그인 방문자(신규 사용자, **Toss 심사자 포함**)가 로그인
+   화면(`screen==='signup'`) 자체에 도달할 방법이 전혀 없었다. `MyPage`에 `onLogin` prop과
+   비로그인 시 "로그인이 필요해요" + "로그인/회원가입" 버튼을 추가해서 해결 — 실제
+   Playwright로 비로그인 상태 재현 후 로그인 화면 도달까지 확인.
+
+### 신규 파일
+- `tests/62-email-auth.test.mjs`(15개).
+
+### 실제 브라우저 검증
+비로그인 상태(새 브라우저 컨텍스트) → SIGNAL ROOM → footer 링크 → 마이페이지("로그인이
+필요해요" 표시 확인) → "로그인/회원가입" 클릭 → 이메일 로그인 폼 정상 렌더링 → "회원가입"
+모드 전환 시 닉네임 필드 추가 표시 및 역할 분리 안내 문구 확인 — 전부 스크린샷으로 확인.
+
+### 테스트 결과
+신규 15/15 통과. **전체 backend 696/696 통과**(재실행 확인). 프론트 빌드 성공(75 모듈).
+
+### 절대 하지 않은 것 확인
+테스트 계정 정보 하드코딩 없음, entitlement/quota 강제 지급 없음, 결제 승인 우회 없음,
+관리자 전용 bypass 계정 없음 — §Toss 심사용 테스트 계정은 실제 이메일 회원가입 절차로
+직접 만들어야 한다(§최종 정리 참고).
+
+## [Unreleased] — Toss 심사 테스트 계정 준비: 실제 로그인 구조 확인 + 크로스도메인 세션 버그 발견/수정
+
+### 조사 결과 — 이 서비스는 OAuth 로그인만 지원, ID/비밀번호 로그인 없음
+`apps/api/src/routes/auth.mjs` 확인 결과, 이 서비스는 **카카오/네이버/구글 OAuth만** 지원하고
+이메일/비밀번호 방식 로그인 자체가 없다. 즉 "테스트 계정 ID/비밀번호"를 코드로 만들어낼 수
+없는 구조 — 별도 로그인 방식을 새로 추가하는 건 "기존 auth 구조를 임의로 바꾸지 않는다"는
+원칙에 위배되므로 하지 않았다. **대신 실제 카카오(또는 네이버/구글) 계정 하나를 정상적으로
+회원가입시켜서, 그 OAuth 계정의 로그인 정보를 Toss에 "테스트 계정"으로 제출하는 것이 유일하게
+안전한 방법**이다(§4 최종 정리 참고). 회원가입/로그인 후 별도의 승인 대기, 이메일 인증,
+관리자 approval 같은 추가 게이트가 전혀 없음을 확인 — OAuth 로그인만 성공하면 즉시 일반
+사용자와 완전히 동일한 정상 권한을 갖는다(추가 코드 불필요, §7 원칙 자동 충족).
+
+### 실제로 발견하고 고친 버그 — 크로스도메인 세션 쿠키
+`SESSION_COOKIE_OPTIONS`가 `sameSite: 'lax'`로 고정되어 있었는데, 이 프로젝트는 프론트
+(Vercel)와 백엔드가 서로 다른 도메인으로 배포되는 구조다. `SameSite=Lax` 쿠키는 top-level
+GET navigation(OAuth 콜백의 리다이렉트)에는 전송되지만, **그 이후 프론트 JS가 fetch()로
+백엔드를 호출하는 크로스사이트 요청에는 전송되지 않는다** — 즉 로그인 리다이렉트 자체는
+성공한 것처럼 보여도, 그 다음 모든 API 호출(상품 조회/구매/결과 조회 등)이 브라우저에서
+쿠키 없이 나가서 전부 비로그인(401)으로 처리될 심각한 위험이 있었다. 로컬 개발(같은
+origin)에서는 이 문제가 드러나지 않아 지금까지 발견되지 않았던 것으로 보인다. **Toss
+심사자가 정확히 이 시나리오(실제 배포된 크로스도메인 환경에서 로그인 후 화면 확인)를
+시도하게 되므로, 이번에 미리 발견하지 못했다면 심사 도중 실제로 막혔을 문제.**
+
+### 수정
+- `apps/api/src/middleware/session.mjs` — 프로덕션(`NODE_ENV=production`)에서는
+  `sameSite: 'none'`(크로스도메인 fetch에서도 쿠키 전송), 개발 환경에서는 기존 `'lax'`
+  유지(로컬 http 환경에서 `None`은 애초에 `Secure` 요구사항과 충돌해 불필요). `SameSite=None`
+  은 `Secure` 필수인데 `secure`도 이미 `NODE_ENV=production` 조건이라 자동으로 함께 켜짐.
+  CSRF는 기존 OAuth `state` 파라미터로 이미 방지되고 있어 새로운 인증 취약점이 생기지 않음.
+- `apps/api/src/routes/auth.mjs` — `res.clearCookie(SESSION_COOKIE_NAME)`이 옵션 없이
+  호출되고 있던 것을 `SESSION_COOKIE_OPTIONS`를 명시적으로 전달하도록 수정. 쿠키 삭제 시
+  설정 당시와 속성(`sameSite`/`secure`)이 다르면 브라우저가 다른 쿠키로 취급해 실제로
+  지워지지 않을 수 있어, 로그아웃이 안 되는 문제로 이어질 수 있었다.
+
+### 신규 파일
+- `tests/61-cross-domain-session-cookie.test.mjs`(4개) — 프로덕션/개발 환경별 쿠키 옵션,
+  로그아웃 시 옵션 일치 여부 검증.
+
+### 테스트 결과
+신규 4/4 통과. **전체 backend 681/681 통과**(방금 실행).
+
+### 절대 하지 않은 것 확인
+결제 승인 로직/entitlement 강제 지급/우회 관리자 계정/하드코딩된 계정 정보 — 전혀 만들지
+않았다. 이번 수정 2건은 순수하게 "이미 배포된 크로스도메인 구조에서 기존 세션 인증이
+정상 작동하도록 쿠키 전송 설정을 맞추는 것"이며, 인증/권한 로직 자체는 전혀 바뀌지 않았다.
+
 ## [Unreleased] — Vercel 배포 준비 2차: SIGNAL ROOM에 법적 페이지 진입점 자체가 없던 버그 발견/수정
 
 ### 배경

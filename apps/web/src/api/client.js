@@ -84,6 +84,17 @@ export function signUpWithNickname(nickname) {
   return request('/api/users', { method: 'POST', body: JSON.stringify({ nickname }) });
 }
 
+// §이메일/비밀번호 회원가입/로그인 — 기존 OAuth와 동일한 세션 쿠키 체계를 그대로 사용한다
+// (signUpWithNickname의 localStorage 기반 경량 계정과는 별개의, requireAuth가 적용되는
+// 정식 인증 경로).
+export function signupWithEmail({ email, password, nickname, anonymousUserId }) {
+  return request('/api/auth/signup', { method: 'POST', body: JSON.stringify({ email, password, nickname, anonymousUserId }) });
+}
+
+export function loginWithEmail({ email, password }) {
+  return request('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+}
+
 export function generateRanking(category, chartId, userId) {
   return request(`/api/ranking/${category}`, { method: 'POST', body: JSON.stringify({ chartId, userId }) });
 }
