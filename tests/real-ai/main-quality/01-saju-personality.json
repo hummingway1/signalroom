@@ -1,0 +1,358 @@
+{
+  "question": "내 성격의 핵심 구조를 사주로 설명해줘.",
+  "category": "saju_only",
+  "routing": {
+    "categories": [
+      "PERSONALITY"
+    ],
+    "saju_fields": [
+      "day_master",
+      "pillars",
+      "hidden_stem_borrowing",
+      "relations",
+      "special_stars",
+      "void_branches"
+    ],
+    "ziwei_fields": [],
+    "ziwei_palace_focus": [],
+    "reasoning": "사용자가 사주만 명시했고 성격의 핵심 구조를 요청했으므로, 일간과 사주 원국을 중심으로 지장간 차용·관계·신살·공망을 함께 확인해야 한다."
+  },
+  "extracted_data": {
+    "subject": {
+      "birth_date": "1988-11-22",
+      "birth_time": "14:30",
+      "time_known": true,
+      "gender": "female",
+      "birth_place": {
+        "name": "Seoul",
+        "resolved_name": "서울",
+        "latitude": 37.5665,
+        "longitude": 126.978
+      },
+      "timezone": "Asia/Seoul"
+    },
+    "saju": {
+      "day_master": {
+        "heavenly_stem": "辛",
+        "element": "metal",
+        "yin_yang": "yin"
+      },
+      "pillars": [
+        {
+          "position": "year",
+          "ganzi": "戊辰",
+          "heavenly_stem": "戊",
+          "earthly_branch": "辰",
+          "ten_god": {
+            "stem": "正印",
+            "branch": "正印"
+          },
+          "twelve_stage": "墓",
+          "twelve_spirit": "華蓋",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "乙",
+              "ten_god": "偏財",
+              "twelve_stage": "沐浴"
+            },
+            {
+              "heavenly_stem": "癸",
+              "ten_god": "食神",
+              "twelve_stage": "胎"
+            },
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "正印",
+              "twelve_stage": "乾祿"
+            }
+          ]
+        },
+        {
+          "position": "month",
+          "ganzi": "癸亥",
+          "heavenly_stem": "癸",
+          "earthly_branch": "亥",
+          "ten_god": {
+            "stem": "食神",
+            "branch": "傷官"
+          },
+          "twelve_stage": "沐浴",
+          "twelve_spirit": "亡身",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "正印",
+              "twelve_stage": "乾祿"
+            },
+            {
+              "heavenly_stem": "甲",
+              "ten_god": "正財",
+              "twelve_stage": "病"
+            },
+            {
+              "heavenly_stem": "壬",
+              "ten_god": "傷官",
+              "twelve_stage": "絶"
+            }
+          ]
+        },
+        {
+          "position": "day",
+          "ganzi": "辛巳",
+          "heavenly_stem": "辛",
+          "earthly_branch": "巳",
+          "ten_god": {
+            "stem": null,
+            "branch": "正官"
+          },
+          "twelve_stage": "死",
+          "twelve_spirit": "劫殺",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "正印",
+              "twelve_stage": "乾祿"
+            },
+            {
+              "heavenly_stem": "庚",
+              "ten_god": "劫財",
+              "twelve_stage": "長生"
+            },
+            {
+              "heavenly_stem": "丙",
+              "ten_god": "正官",
+              "twelve_stage": "乾祿"
+            }
+          ]
+        },
+        {
+          "position": "hour",
+          "ganzi": "乙未",
+          "heavenly_stem": "乙",
+          "earthly_branch": "未",
+          "ten_god": {
+            "stem": "偏財",
+            "branch": "偏印"
+          },
+          "twelve_stage": "衰",
+          "twelve_spirit": "天殺",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "丁",
+              "ten_god": "偏官",
+              "twelve_stage": "帝旺"
+            },
+            {
+              "heavenly_stem": "乙",
+              "ten_god": "偏財",
+              "twelve_stage": "沐浴"
+            },
+            {
+              "heavenly_stem": "己",
+              "ten_god": "偏印",
+              "twelve_stage": "帝旺"
+            }
+          ]
+        }
+      ],
+      "hidden_stem_borrowing": [
+        {
+          "category": "食傷",
+          "borrowed_from_stem": "壬",
+          "twelve_stage": "絶"
+        },
+        {
+          "category": "財星",
+          "borrowed_from_stem": "甲",
+          "twelve_stage": "病"
+        }
+      ],
+      "relations": {
+        "pillar_pairs": [],
+        "triple_combinations": [],
+        "directional_combinations": []
+      },
+      "special_stars": {
+        "yangin": [],
+        "baekho": false,
+        "goegang": false,
+        "dohwa": [],
+        "cheoneul_gwiin": [],
+        "cheondeok_gwiin": [
+          "hour"
+        ],
+        "woldeok_gwiin": [],
+        "munchang_gwiin": [],
+        "hongyeom": false,
+        "geumyeo": [
+          "month"
+        ],
+        "gwimun": [
+          {
+            "positions": [
+              "month",
+              "year"
+            ],
+            "detail": null
+          }
+        ]
+      },
+      "void_branches": {
+        "branches": [
+          "申",
+          "酉"
+        ],
+        "affected_pillars": []
+      },
+      "calculation_provenance": {
+        "gwimun": {
+          "calculation_method": "orrery-core-branch-gwimun-v1",
+          "pairs_used": [
+            "子,酉",
+            "丑,午",
+            "寅,未",
+            "卯,申",
+            "辰,亥",
+            "巳,戌"
+          ],
+          "engine_functions": [
+            "getBranchRelation",
+            "analyzePillarRelations"
+          ]
+        }
+      }
+    },
+    "ziwei": {}
+  },
+  "extraction_stats": {
+    "full_chars": 25154,
+    "extracted_chars": 2427,
+    "reduction_ratio": 0.904,
+    "approx_full_tokens": 6289,
+    "approx_extracted_tokens": 607
+  },
+  "model": "gpt-5.6",
+  "usage": {
+    "input_tokens": 23967,
+    "output_tokens": 2016,
+    "total_tokens": 25983,
+    "cached_input_tokens": 0,
+    "reasoning_tokens": 568
+  },
+  "estimated_cost": null,
+  "response": "[해석 안내]\n이 해석은 사용자가 제공한 만세력 정보와 전통 명리학의 상징 체계에 따른 참고 관점입니다. 검증된 예측·의학적 진단·법률·투자 조언이 아닙니다.\n\n한 줄로 말하면, **섬세한 판단 기준을 가진 사람이 자기 생각을 분석하고 표현하려는 힘이 강한 구조**예요.\n\n[Fact]\n일간은 음금(陰金)인 **辛**이고, 월주에는 식신·상관, 년주에는 정인, 일지에는 정관, 시주에는 편재·편인이 배치되어 있습니다.\n\n[Claim]\n辛은 전통적으로 정교함, 분별력, 완성도에 대한 기준을 상징합니다. 여기에 식신·상관이 강하게 드러나는 월주가 결합되어, 주어진 것을 그대로 받아들이기보다 **분석하고 문제점을 찾아 자기 방식으로 개선하거나 설명하려는 성향**이 나타날 수 있어요.\n\n동시에 정인과 정관도 있어서 무작정 반항적인 성격이라기보다는, 충분히 이해하고 납득한 뒤 책임 있게 움직이려는 편에 가깝습니다. 그래서 **합리적인 규칙에는 성실하지만, 비효율적이거나 근거 없는 지시에는 속으로 강하게 반발하는 모습**이 생길 수 있습니다.\n\n성격의 핵심 긴장은 다음과 같아요.\n\n- 제대로 이해하고 신중하게 처리하려는 마음\n- 내 생각을 솔직하고 정확하게 표현하려는 마음\n- 현실적인 결과와 효율까지 챙기려는 마음\n\n이 세 가지가 잘 맞으면 분석력, 기획력, 교정·개선 능력으로 이어질 수 있습니다. 반대로 어긋나면 생각이 많아 결정을 늦추거나, 참다가 표현이 날카로워지거나, 자신과 타인에게 지나치게 높은 기준을 적용할 가능성이 있어요.\n\n귀문관살은 제공된 계산 기준에서 년지 辰과 월지 亥의 조합으로 확인되지만, 이는 유파에 따라 판정 범위가 달라지는 보조 지표입니다. 초자연적인 의미로 볼 근거는 없고, 굳이 현실적으로 풀면 **예민한 관찰, 깊은 몰입, 생각을 오래 붙드는 경향**을 보조적으로 시사하는 정도입니다.\n\n[Disclosure]\n일간의 강약, 격국, 용신·조후에 대한 확정 데이터는 이번 추출 자료에 없으므로 성격의 강도나 유불리까지 단정하기는 어렵습니다. 현실에서는 ‘결정 전에 검토가 길어지는지’, ‘납득되지 않는 규칙에 유독 답답한지’, ‘의견을 참다가 한 번에 날카롭게 말하는지’를 살펴보면 이 해석이 실제 성향과 맞는지 확인할 수 있어요.",
+  "full_analysis": {
+    "saju": {
+      "relevant_structure": "음금(陰金)인 辛 일간을 중심으로, 월주의 식신·상관, 년주의 정인, 일지의 정관, 시주의 편재·편인 구조를 근거로 삼았다. 제공된 관계표에는 주간 합충·삼합·방합이 확인되지 않는다. 귀문관살은 계산 엔진의 한 기준에서만 보조적으로 참고했다.",
+      "interpretation": "핵심은 ‘정교한 기준과 판단력’에 ‘표현·분석 욕구’가 강하게 결합된 구조다. 辛 일간은 전통적으로 세밀함, 분별력, 완성도에 대한 기준을 상징한다. 월주에 식신과 상관이 놓여 있어 생각을 분석하고 자기 방식으로 설명하거나 개선하려는 성향이 두드러질 수 있다. 반면 정인과 정관도 함께 있어 단순히 자유분방하기보다는, 충분히 이해하고 검토한 뒤 책임 있게 행동하려는 면도 공존한다. 따라서 납득되는 규칙에는 성실하지만 비효율적이거나 근거 없는 지시에는 내적 반발이 커질 수 있다. 편재와 편인은 현실적 성과를 찾는 감각과 독자적인 관점을 보태지만, 생각과 기준이 많아지면 과도한 검토·비판·예민함으로 이어질 가능성도 있다."
+    },
+    "ziwei": {
+      "relevant_structure": "해당 정보 없음. 이번 요청은 사주로 한정되었고 자미두수 데이터가 제공되지 않았다.",
+      "interpretation": "자미두수 관점은 데이터 부족으로 해석하지 않았다."
+    },
+    "cross_analysis": {
+      "common_direction": "이번 질문에서는 사주 데이터만 제공되어 두 체계의 공통 방향을 비교할 수 없다.",
+      "differences": "자미두수 데이터가 없어 체계 간 차이를 판단할 수 없다.",
+      "overall_judgment": "사주 관점에서 보면 섬세한 판단 기준, 표현·분석 욕구, 책임감이 함께 작동하는 성향으로 읽힌다. 강점은 정교함과 개선 능력이고, 주의점은 높은 기준이 자기검열이나 타인에 대한 날카로운 평가로 바뀔 수 있다는 점이다. 이는 전통 명리학의 경향성 해석이며 고정된 성격 판정은 아니다.",
+      "real_world_checks": "결정을 내리기 전에 자료를 오래 검토하는지, 비효율적인 규칙이나 설명이 부족한 지시에 특히 답답함을 느끼는지, 의견을 참다가 한 번에 날카롭게 표현하는지, 결과물의 완성도를 높이는 일에서 만족감을 느끼는지 확인해볼 수 있다."
+    },
+    "response": "[해석 안내]\n이 해석은 사용자가 제공한 만세력 정보와 전통 명리학의 상징 체계에 따른 참고 관점입니다. 검증된 예측·의학적 진단·법률·투자 조언이 아닙니다.\n\n한 줄로 말하면, **섬세한 판단 기준을 가진 사람이 자기 생각을 분석하고 표현하려는 힘이 강한 구조**예요.\n\n[Fact]\n일간은 음금(陰金)인 **辛**이고, 월주에는 식신·상관, 년주에는 정인, 일지에는 정관, 시주에는 편재·편인이 배치되어 있습니다.\n\n[Claim]\n辛은 전통적으로 정교함, 분별력, 완성도에 대한 기준을 상징합니다. 여기에 식신·상관이 강하게 드러나는 월주가 결합되어, 주어진 것을 그대로 받아들이기보다 **분석하고 문제점을 찾아 자기 방식으로 개선하거나 설명하려는 성향**이 나타날 수 있어요.\n\n동시에 정인과 정관도 있어서 무작정 반항적인 성격이라기보다는, 충분히 이해하고 납득한 뒤 책임 있게 움직이려는 편에 가깝습니다. 그래서 **합리적인 규칙에는 성실하지만, 비효율적이거나 근거 없는 지시에는 속으로 강하게 반발하는 모습**이 생길 수 있습니다.\n\n성격의 핵심 긴장은 다음과 같아요.\n\n- 제대로 이해하고 신중하게 처리하려는 마음\n- 내 생각을 솔직하고 정확하게 표현하려는 마음\n- 현실적인 결과와 효율까지 챙기려는 마음\n\n이 세 가지가 잘 맞으면 분석력, 기획력, 교정·개선 능력으로 이어질 수 있습니다. 반대로 어긋나면 생각이 많아 결정을 늦추거나, 참다가 표현이 날카로워지거나, 자신과 타인에게 지나치게 높은 기준을 적용할 가능성이 있어요.\n\n귀문관살은 제공된 계산 기준에서 년지 辰과 월지 亥의 조합으로 확인되지만, 이는 유파에 따라 판정 범위가 달라지는 보조 지표입니다. 초자연적인 의미로 볼 근거는 없고, 굳이 현실적으로 풀면 **예민한 관찰, 깊은 몰입, 생각을 오래 붙드는 경향**을 보조적으로 시사하는 정도입니다.\n\n[Disclosure]\n일간의 강약, 격국, 용신·조후에 대한 확정 데이터는 이번 추출 자료에 없으므로 성격의 강도나 유불리까지 단정하기는 어렵습니다. 현실에서는 ‘결정 전에 검토가 길어지는지’, ‘납득되지 않는 규칙에 유독 답답한지’, ‘의견을 참다가 한 번에 날카롭게 말하는지’를 살펴보면 이 해석이 실제 성향과 맞는지 확인할 수 있어요.",
+    "sources": {
+      "saju": [
+        "saju.day_master",
+        "saju.pillars",
+        "saju.hidden_stem_borrowing",
+        "saju.relations",
+        "saju.special_stars.gwimun",
+        "saju.calculation_provenance.gwimun"
+      ],
+      "ziwei": []
+    }
+  },
+  "validation": {
+    "overall_pass": true,
+    "checks": {
+      "json_schema_valid": {
+        "pass": true,
+        "details": null
+      },
+      "required_fields_non_empty": {
+        "pass": true,
+        "details": {
+          "response": true,
+          "saju": true,
+          "ziwei": true,
+          "cross_analysis": true
+        }
+      },
+      "forbidden_certainty_phrases": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "raw_match_count": 0,
+          "hedged_and_excluded": 0
+        }
+      },
+      "missing_data_hallucination": {
+        "pass": true,
+        "details": {
+          "mentionedButAbsentStars": [],
+          "suspiciousStemBranchMentions": [],
+          "note": "휴리스틱 — false positive 가능, 사람 검토 필요"
+        }
+      },
+      "routing_correctness": {
+        "pass": true,
+        "details": {
+          "expectedScope": "saju_only",
+          "sajuFilled": true,
+          "ziweiFilled": false,
+          "informational_only": false
+        }
+      },
+      "extraction_correctness": {
+        "pass": true,
+        "details": null
+      },
+      "no_annual_period_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "has_annual_periods_field": false,
+          "note": "세운 데이터가 없는 상태에서 구체적 간지를 세운과 함께 제시하면 hallucination."
+        }
+      },
+      "no_gwimun_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "has_gwimun_field": true,
+          "actually_present": true,
+          "note": "실제 special_stars.gwimun 값과 대조함."
+        }
+      },
+      "no_daewoon_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "present_ganzi": []
+        }
+      },
+      "current_daewoon_handling": {
+        "pass": true,
+        "details": {
+          "note": "대운 데이터가 추출되지 않은 질문 — 해당 없음(N/A)."
+        }
+      },
+      "data_limitation_disclosure": {
+        "pass": true,
+        "details": {
+          "note": "데이터 제한 상황이 아님 — 해당 없음(N/A)."
+        }
+      }
+    }
+  },
+  "timestamp": "2026-08-17T04:40:08.164Z",
+  "mock_mode": false,
+  "fixture": "main_quality"
+}

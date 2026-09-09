@@ -1,0 +1,288 @@
+{
+  "question": "자미두수에서 내 성격의 핵심 구조를 설명해줘.",
+  "category": "ziwei_only",
+  "routing": {
+    "categories": [
+      "PERSONALITY"
+    ],
+    "saju_fields": [],
+    "ziwei_fields": [
+      "five_elements_bureau",
+      "life_palace",
+      "body_palace",
+      "palaces",
+      "transformations"
+    ],
+    "ziwei_palace_focus": [
+      "life",
+      "fortune"
+    ],
+    "reasoning": "자미두수만 명시한 성격 질문이므로 명궁·신궁을 중심으로 오행국, 명궁과 복덕궁의 별 구성, 사화 정보를 함께 확인해야 핵심 성향과 내면 구조를 설명할 수 있다."
+  },
+  "extracted_data": {
+    "subject": {
+      "birth_date": "2026-08-06",
+      "birth_time": "10:59",
+      "time_known": true,
+      "gender": "male",
+      "birth_place": {
+        "name": "Incheon",
+        "resolved_name": "인천",
+        "latitude": 37.4563,
+        "longitude": 126.7052
+      },
+      "timezone": "Asia/Seoul"
+    },
+    "saju": {},
+    "ziwei": {
+      "five_elements_bureau": {
+        "name": "木三局",
+        "number": 3
+      },
+      "life_palace": {
+        "earthly_branch": "寅",
+        "stem_branch": "庚寅"
+      },
+      "body_palace": {
+        "earthly_branch": "子",
+        "palace_position": "spouse"
+      },
+      "palaces": [
+        {
+          "position": "life",
+          "stem_branch": "庚寅",
+          "is_body_palace": false,
+          "stars": []
+        },
+        {
+          "position": "spouse",
+          "stem_branch": "庚子",
+          "is_body_palace": true,
+          "stars": [
+            {
+              "name": "天梁",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "wealth",
+          "stem_branch": "戊戌",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "巨門",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "travel",
+          "stem_branch": "丙申",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天機",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": "化權"
+            },
+            {
+              "name": "太陰",
+              "category": "main_star",
+              "brightness": "得",
+              "transformation": null
+            },
+            {
+              "name": "鈴星",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "天馬",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "career",
+          "stem_branch": "甲午",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "太陽",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": null
+            },
+            {
+              "name": "地空",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "擎羊",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "火星",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "fortune",
+          "stem_branch": "壬辰",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天同",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": "化祿"
+            },
+            {
+              "name": "地劫",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "陀羅",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        }
+      ],
+      "transformations": [
+        {
+          "star": "廉貞",
+          "type": "化忌",
+          "palace_position": "siblings"
+        },
+        {
+          "star": "天機",
+          "type": "化權",
+          "palace_position": "travel"
+        },
+        {
+          "star": "文昌",
+          "type": "化科",
+          "palace_position": "property"
+        },
+        {
+          "star": "天同",
+          "type": "化祿",
+          "palace_position": "fortune"
+        }
+      ]
+    }
+  },
+  "extraction_stats": {
+    "full_chars": 15926,
+    "extracted_chars": 2107,
+    "reduction_ratio": 0.868,
+    "approx_full_tokens": 3982,
+    "approx_extracted_tokens": 527
+  },
+  "model": "gpt-5.6",
+  "usage": {
+    "input_tokens": 22692,
+    "output_tokens": 2069,
+    "total_tokens": 24761,
+    "cached_input_tokens": 21335,
+    "reasoning_tokens": 353
+  },
+  "estimated_cost": null,
+  "response": "[해석 안내]\n이 해석은 제공된 자미두수 명반과 전통 해석 체계에 따른 참고 관점입니다. 검증된 성격검사나 과학적 진단은 아닙니다.\n\n한 줄로 정리하면, **상황을 빠르게 읽고 조정하면서도 실제 행동에서는 원칙과 책임을 중시하는 성향**이 핵심으로 나타납니다.\n\n[삼방사정 근거]\n- 본궁: 명궁 — 주성이 없는 공궁\n- 대궁: 천이궁 — 천기 화권, 태음, 영성, 천마\n- 삼합궁 1: 재백궁 — 거문\n- 삼합궁 2: 관록궁 — 태양, 지공, 경양, 화성\n- 함께 확인한 구조: 신궁이 부처궁에 있고 천량이 배치됨. 복덕궁에는 천동 화록과 지겁·타라가 있음\n\n[Fact]\n명궁은 공궁이고, 대궁인 천이궁에는 생각과 전략을 상징하는 천기가 화권과 함께 있습니다. 신궁에는 천량이 있으며, 내면과 휴식을 보는 복덕궁에는 천동 화록이 있습니다.\n\n[Claim]\n**1. 고정형보다 상황 대응형에 가깝습니다.**\n명궁이 공궁이므로 성격이 약하다는 뜻은 아닙니다. 주변 환경과 맡은 역할에 따라 서로 다른 면이 드러나기 쉬운 구조입니다. 특히 낯선 상황이나 외부 활동에서는 관찰하고 계산한 뒤 방향을 잡으려는 성향이 강해질 수 있습니다.\n\n**2. 생각은 유연하지만 행동에는 원칙이 있습니다.**\n천기 화권은 빠른 판단, 전략 수정, 주도권을 잡으려는 경향을 나타냅니다. 신궁의 천량은 실제 행동에서 공정성, 책임, 보호와 조정을 중요하게 여길 가능성을 더합니다. 사람 사이에서 중재자나 조언자 역할을 맡기 쉬운 편으로 읽힙니다.\n\n**3. 책임감이 커지면 날카롭고 조급해질 수 있습니다.**\n재백궁의 거문과 관록궁의 태양·살성 조합은 문제를 잘 발견하는 대신, 말이 비판적으로 들리거나 자신이 모든 것을 해결하려다 과부하가 생길 가능성을 시사합니다. 판단이 섰을 때 상대의 속도를 기다리지 못하는 것이 취약점이 될 수 있습니다.\n\n**4. 내면에서는 편안함과 정서적 만족을 상당히 중요하게 여깁니다.**\n복덕궁의 천동 화록은 다정함, 편안한 분위기, 소소한 즐거움에서 충전되는 경향을 보여줍니다. 다만 지겁과 타라가 함께 있어 쉬면서도 미해결 문제를 계속 생각하거나, 마음을 완전히 놓기까지 시간이 걸릴 수 있습니다.\n\n[Disclosure]\n공궁은 대궁을 참고해 해석하지만, 대궁의 성격을 명궁과 완전히 동일하게 보지는 않습니다. 또한 실제 성격은 성장 환경과 경험에 따라 다르게 나타날 수 있습니다.\n\n현실에서는 **낯선 환경에서 판단력이 더 살아나는지, 갈등 때 중재자 역할을 맡는지, 책임이 커질수록 말이 날카로워지는지, 쉬는 중에도 문제를 계속 생각하는지**를 확인해 보세요. 이 네 가지가 반복된다면 명반의 핵심 구조가 현실에서도 비교적 뚜렷하게 나타나는 편입니다.",
+  "full_analysis": {
+    "saju": {
+      "relevant_structure": "이번 질문은 자미두수만을 요청했고, 추출 데이터에도 사주 정보가 없어 사주 구조는 사용하지 않았습니다.",
+      "interpretation": "해당 정보 없음. 사주와의 교차 비교는 할 수 없습니다."
+    },
+    "ziwei": {
+      "relevant_structure": "명궁은 경인(庚寅)의 공궁이며, 명궁의 삼방사정인 천이궁·재백궁·관록궁과 신궁이 놓인 부처궁, 내면을 보는 복덕궁을 함께 보았습니다. 주요 근거는 천이궁의 천기 화권·태음, 재백궁의 거문, 관록궁의 태양, 신궁의 천량, 복덕궁의 천동 화록과 보조 살성입니다.",
+      "interpretation": "명궁이 공궁이므로 성격을 한 가지 고정된 색깔로 보기보다 외부 환경과 맡은 역할에 따라 발현 방식이 달라지는 구조로 읽습니다. 천이궁의 천기 화권과 태음은 관찰·계획·상황 판단을 바탕으로 주도권을 잡으려는 경향을, 관록궁의 태양은 책임지고 앞에 나서려는 면을 시사합니다. 신궁의 천량은 실제 행동에서는 원칙, 보호, 조정, 공정성을 중시할 가능성을 보여줍니다. 반면 거문과 관록궁의 살성들은 생각과 말이 비판적으로 흐르거나, 책임감이 조급함·논쟁·과부하로 바뀔 수 있음을 나타냅니다. 복덕궁의 천동 화록은 내면적으로 편안함과 정서적 만족을 중요하게 여기지만, 지겁·타라가 함께 있어 마음을 놓는 데 시간이 걸리거나 휴식 중에도 걸리는 문제를 반복해서 생각할 가능성을 시사합니다."
+    },
+    "cross_analysis": {
+      "common_direction": "사주 데이터가 없으므로 두 체계에서 공통적으로 나타나는 방향은 확인할 수 없습니다.",
+      "differences": "사주 관점은 해당 정보가 없으며, 이번 판단은 자미두수 명반만을 근거로 합니다.",
+      "overall_judgment": "자미두수상 핵심은 ‘상황을 빠르게 읽고 책임 있게 조정하려는 사람’에 가깝습니다. 겉으로는 유연하고 관찰적인데, 실제 행동에서는 원칙과 책임을 중시할 가능성이 있습니다. 다만 판단력과 책임감이 지나치면 과잉 통제, 말의 날카로움, 정신적 과부하로 이어질 수 있으므로 의도적으로 쉬고 결론을 늦추는 습관이 도움이 될 수 있습니다.",
+      "real_world_checks": "낯선 환경에서 오히려 판단과 행동이 빨라지는지, 갈등 상황에서 중재자나 보호자 역할을 자주 맡는지, 의견을 설명할 때 비판이나 반박부터 시작하는지, 쉬는 동안에도 해결되지 않은 문제를 계속 생각하는지 확인해 보세요. 반복된다면 이번 해석과 맞닿는 현실적 신호입니다."
+    },
+    "response": "[해석 안내]\n이 해석은 제공된 자미두수 명반과 전통 해석 체계에 따른 참고 관점입니다. 검증된 성격검사나 과학적 진단은 아닙니다.\n\n한 줄로 정리하면, **상황을 빠르게 읽고 조정하면서도 실제 행동에서는 원칙과 책임을 중시하는 성향**이 핵심으로 나타납니다.\n\n[삼방사정 근거]\n- 본궁: 명궁 — 주성이 없는 공궁\n- 대궁: 천이궁 — 천기 화권, 태음, 영성, 천마\n- 삼합궁 1: 재백궁 — 거문\n- 삼합궁 2: 관록궁 — 태양, 지공, 경양, 화성\n- 함께 확인한 구조: 신궁이 부처궁에 있고 천량이 배치됨. 복덕궁에는 천동 화록과 지겁·타라가 있음\n\n[Fact]\n명궁은 공궁이고, 대궁인 천이궁에는 생각과 전략을 상징하는 천기가 화권과 함께 있습니다. 신궁에는 천량이 있으며, 내면과 휴식을 보는 복덕궁에는 천동 화록이 있습니다.\n\n[Claim]\n**1. 고정형보다 상황 대응형에 가깝습니다.**\n명궁이 공궁이므로 성격이 약하다는 뜻은 아닙니다. 주변 환경과 맡은 역할에 따라 서로 다른 면이 드러나기 쉬운 구조입니다. 특히 낯선 상황이나 외부 활동에서는 관찰하고 계산한 뒤 방향을 잡으려는 성향이 강해질 수 있습니다.\n\n**2. 생각은 유연하지만 행동에는 원칙이 있습니다.**\n천기 화권은 빠른 판단, 전략 수정, 주도권을 잡으려는 경향을 나타냅니다. 신궁의 천량은 실제 행동에서 공정성, 책임, 보호와 조정을 중요하게 여길 가능성을 더합니다. 사람 사이에서 중재자나 조언자 역할을 맡기 쉬운 편으로 읽힙니다.\n\n**3. 책임감이 커지면 날카롭고 조급해질 수 있습니다.**\n재백궁의 거문과 관록궁의 태양·살성 조합은 문제를 잘 발견하는 대신, 말이 비판적으로 들리거나 자신이 모든 것을 해결하려다 과부하가 생길 가능성을 시사합니다. 판단이 섰을 때 상대의 속도를 기다리지 못하는 것이 취약점이 될 수 있습니다.\n\n**4. 내면에서는 편안함과 정서적 만족을 상당히 중요하게 여깁니다.**\n복덕궁의 천동 화록은 다정함, 편안한 분위기, 소소한 즐거움에서 충전되는 경향을 보여줍니다. 다만 지겁과 타라가 함께 있어 쉬면서도 미해결 문제를 계속 생각하거나, 마음을 완전히 놓기까지 시간이 걸릴 수 있습니다.\n\n[Disclosure]\n공궁은 대궁을 참고해 해석하지만, 대궁의 성격을 명궁과 완전히 동일하게 보지는 않습니다. 또한 실제 성격은 성장 환경과 경험에 따라 다르게 나타날 수 있습니다.\n\n현실에서는 **낯선 환경에서 판단력이 더 살아나는지, 갈등 때 중재자 역할을 맡는지, 책임이 커질수록 말이 날카로워지는지, 쉬는 중에도 문제를 계속 생각하는지**를 확인해 보세요. 이 네 가지가 반복된다면 명반의 핵심 구조가 현실에서도 비교적 뚜렷하게 나타나는 편입니다.",
+    "sources": {
+      "saju": [],
+      "ziwei": [
+        "ziwei.life_palace",
+        "ziwei.body_palace",
+        "ziwei.palaces[position=life]",
+        "ziwei.palaces[position=spouse]",
+        "ziwei.palaces[position=travel]",
+        "ziwei.palaces[position=wealth]",
+        "ziwei.palaces[position=career]",
+        "ziwei.palaces[position=fortune]",
+        "ziwei.transformations"
+      ]
+    }
+  },
+  "validation": {
+    "overall_pass": true,
+    "checks": {
+      "json_schema_valid": {
+        "pass": true,
+        "details": null
+      },
+      "required_fields_non_empty": {
+        "pass": true,
+        "details": {
+          "response": true,
+          "saju": true,
+          "ziwei": true,
+          "cross_analysis": true
+        }
+      },
+      "forbidden_certainty_phrases": {
+        "pass": true,
+        "details": []
+      },
+      "missing_data_hallucination": {
+        "pass": true,
+        "details": {
+          "mentionedButAbsentStars": [],
+          "suspiciousStemBranchMentions": [],
+          "note": "휴리스틱 — false positive 가능, 사람 검토 필요"
+        }
+      },
+      "routing_correctness": {
+        "pass": true,
+        "details": {
+          "expectedScope": "ziwei_only",
+          "sajuFilled": false,
+          "ziweiFilled": true,
+          "informational_only": false
+        }
+      },
+      "extraction_correctness": {
+        "pass": true,
+        "details": null
+      }
+    }
+  },
+  "timestamp": "2026-08-16T16:54:03.048Z",
+  "mock_mode": false
+}

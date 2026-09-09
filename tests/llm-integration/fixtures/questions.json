@@ -1,0 +1,38 @@
+[
+  { "id": "P1", "category": "parent", "text": "요즘 제가 육아를 잘하고 있는지 모르겠어요.", "note": "부모 자기평가 질문. child material leak되면 FAIL." },
+  { "id": "P2", "category": "parent", "text": "숙제 얘기만 나오면 저도 모르게 화를 내게 돼요. 제가 어떻게 하면 좋을까요?", "note": "숙제 키워드가 있어도 parent target 유지되어야 함(§BUG-1)." },
+  { "id": "P3", "category": "parent", "text": "아이가 요즘 말을 잘 안 들어서 제가 너무 지치고 힘들어요.", "note": "child 행동 언급 + parent 감정, parent target 기대." },
+  { "id": "P4", "category": "parent", "text": "내가 너무 엄격한 부모인가요?", "note": "부모 자기평가." },
+  { "id": "P5", "category": "parent", "text": "요즘 육아가 너무 버거워요.", "note": "무주어 감정 상태, parent target 기대." },
+  { "id": "P6", "category": "parent", "text": "아이 때문에 부부싸움이 늘었어요.", "note": "부모/가족 상황, leak 없어야 함." },
+
+  { "id": "C1", "category": "child", "text": "아이가 숙제를 죽어도 안 해요.", "note": "self-directed면 FOCUSED, 다른 fixture면 NONE 기대." },
+  { "id": "C2", "category": "child", "text": "게임 끄라고 하면 난리가 나요.", "note": "self-directed면 게임종료 scene 기대." },
+  { "id": "C3", "category": "child", "text": "왜 이렇게 고집이 센 걸까요?", "note": "self-directed면 concept매칭(고집) FOCUSED 기대." },
+  { "id": "C4", "category": "child", "text": "자기가 하고 싶은 것만 하려고 해요.", "note": "self-directed면 자기결정 concept LIGHT/FOCUSED 기대." },
+  { "id": "C5", "category": "child", "text": "우리 애가 말을 너무 안 들어요.", "note": "포괄적 질문, 관련 fixture 아니면 NONE." },
+  { "id": "C6", "category": "child", "text": "밥을 안 먹어요.", "note": "식사 관련 데이터 없음, NONE 기대." },
+  { "id": "C7", "category": "child", "text": "오늘 친구랑 싸웠어요.", "note": "교우관계 데이터 없음, NONE 기대." },
+  { "id": "C8", "category": "child", "text": "아이가 아침마다 일어나기 싫다고 울어요.", "note": "구체 상황 서술, child target 유지 확인." },
+
+  { "id": "R1", "category": "relationship", "text": "아이랑 매일 싸우는데 어떻게 이야기해야 할까요?", "note": "관계 상호작용 표현, relationship target 기대." },
+  { "id": "R2", "category": "relationship", "text": "제가 뭐라고 말해야 할까요?", "note": "순수 대사 요청, relationship 기대." },
+  { "id": "R3", "category": "relationship", "text": "아이가 아침마다 일어나기 싫다고 울어요. 이럴 때 뭐라고 말해야 좋을까요?", "note": "child situation + 대사요청, child target 우선 기대(§BUG-3)." },
+  { "id": "R4", "category": "relationship", "text": "아이와 자꾸 부딪혀요.", "note": "관계 상호작용 표현." },
+
+  { "id": "L1", "category": "longHow", "text": "요즘 숙제를 너무 안 하고 게임만 하려고 해서 매일 저녁마다 같은 문제로 부딪히고 있어요. 부모로서 어떻게 접근해야 할지 모르겠어요.", "note": "장문+how+child situation, guide ON 기대." },
+  { "id": "L2", "category": "longHow", "text": "아이가 게임을 끄라고 하면 매번 화를 내고 소리를 지르는데 이런 상황에서 어떻게 대응하는 게 좋을까요?", "note": "장문+how+child situation." },
+  { "id": "L3", "category": "longHow", "text": "제가 요즘 육아 때문에 너무 지치고 화도 자주 내게 되는데 제가 어떻게 하면 좋을까요?", "note": "장문+how+parent, guide는 있어도 child material 없어야 함." },
+
+  { "id": "E1", "category": "education", "text": "숙제를 시작하면 집중을 잘 못 하고 딴짓을 해요.", "note": "학습/집중 관련 조언, 근거 인용 및 학습유형 비분류 검증 대상." },
+  { "id": "E2", "category": "education", "text": "공부한 걸 자꾸 잊어버려요. 어떻게 하면 기억을 잘할까요?", "note": "기억 관련 조언, confidence 표현/출처 검증 대상." },
+  { "id": "E3", "category": "education", "text": "학원을 몇 개 보내봤는데 다 오래 못 다녀요.", "note": "교육철학 훅(아이마다 다르다) 검증 대상." },
+
+  { "id": "CT1", "category": "caution", "text": "아이가 한 가지에 너무 깊게 빠져요.", "note": "귀문 있는 fixture(receptive)에서 caution 노출 기대, 없는 fixture는 미노출." },
+  { "id": "CT2", "category": "caution", "text": "게임을 시작하면 다른 말을 잘 못 들어요.", "note": "몰입/집중 관련 caution 매칭 후보." },
+
+  { "id": "X1", "category": "edge", "text": "내가 부모로서 잘하고 있는지 자신이 없어요.", "note": "TASK2 검증용 parent self-state." },
+  { "id": "X2", "category": "edge", "text": "아이가 숙제를 안 해서 너무 힘들어요.", "note": "child 유지 확인(부모 힘듦 표현 있어도 child가 주체)." },
+  { "id": "X3", "category": "edge", "text": "시키면 미루는데 자기가 고른 건 잘해요.", "note": "숙제 무관 scene이 안 나와야 함(TASK1 검증)." },
+  { "id": "X4", "category": "edge", "text": "그건 내가할말 아니고? 이건 뭐하는 서비스야? 내가 무슨 도움을 받을수있지?", "note": "실사용에서 실제로 나왔던 반문형 메시지, 자연스러운 대응 확인." }
+]

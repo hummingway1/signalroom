@@ -1,0 +1,350 @@
+{
+  "question": "자미두수 기준으로 직업과 사업에서 어떤 환경이 맞는지 설명해줘.",
+  "category": "ziwei_only",
+  "routing": {
+    "categories": [
+      "CAREER",
+      "BUSINESS",
+      "STRENGTH"
+    ],
+    "saju_fields": [],
+    "ziwei_fields": [
+      "five_elements_bureau",
+      "life_palace",
+      "body_palace",
+      "palaces",
+      "transformations"
+    ],
+    "ziwei_palace_focus": [
+      "life",
+      "career",
+      "wealth",
+      "travel",
+      "friends"
+    ],
+    "reasoning": "자미두수만 명시했으므로 자미두수 필드만 선택한다. 직업·사업 적성과 맞는 활동 환경을 판단하려면 명궁·신궁의 기본 성향과 관록궁, 재백궁, 천이궁, 교우궁 및 사화 정보를 함께 확인해야 한다."
+  },
+  "extracted_data": {
+    "subject": {
+      "birth_date": "2026-08-06",
+      "birth_time": "10:59",
+      "time_known": true,
+      "gender": "male",
+      "birth_place": {
+        "name": "Incheon",
+        "resolved_name": "인천",
+        "latitude": 37.4563,
+        "longitude": 126.7052
+      },
+      "timezone": "Asia/Seoul"
+    },
+    "saju": {},
+    "ziwei": {
+      "five_elements_bureau": {
+        "name": "木三局",
+        "number": 3
+      },
+      "life_palace": {
+        "earthly_branch": "寅",
+        "stem_branch": "庚寅"
+      },
+      "body_palace": {
+        "earthly_branch": "子",
+        "palace_position": "spouse"
+      },
+      "palaces": [
+        {
+          "position": "life",
+          "stem_branch": "庚寅",
+          "is_body_palace": false,
+          "stars": []
+        },
+        {
+          "position": "siblings",
+          "stem_branch": "辛丑",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "廉貞",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": "化忌"
+            },
+            {
+              "name": "七殺",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "spouse",
+          "stem_branch": "庚子",
+          "is_body_palace": true,
+          "stars": [
+            {
+              "name": "天梁",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "children",
+          "stem_branch": "己亥",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天相",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            },
+            {
+              "name": "天魁",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "wealth",
+          "stem_branch": "戊戌",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "巨門",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "travel",
+          "stem_branch": "丙申",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天機",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": "化權"
+            },
+            {
+              "name": "太陰",
+              "category": "main_star",
+              "brightness": "得",
+              "transformation": null
+            },
+            {
+              "name": "鈴星",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "天馬",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "friends",
+          "stem_branch": "乙未",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天府",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "career",
+          "stem_branch": "甲午",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "太陽",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": null
+            },
+            {
+              "name": "地空",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "擎羊",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "火星",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "fortune",
+          "stem_branch": "壬辰",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天同",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": "化祿"
+            },
+            {
+              "name": "地劫",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "陀羅",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "parents",
+          "stem_branch": "辛卯",
+          "is_body_palace": false,
+          "stars": []
+        }
+      ],
+      "transformations": [
+        {
+          "star": "廉貞",
+          "type": "化忌",
+          "palace_position": "siblings"
+        },
+        {
+          "star": "天機",
+          "type": "化權",
+          "palace_position": "travel"
+        },
+        {
+          "star": "文昌",
+          "type": "化科",
+          "palace_position": "property"
+        },
+        {
+          "star": "天同",
+          "type": "化祿",
+          "palace_position": "fortune"
+        }
+      ]
+    }
+  },
+  "extraction_stats": {
+    "full_chars": 15926,
+    "extracted_chars": 2792,
+    "reduction_ratio": 0.825,
+    "approx_full_tokens": 3982,
+    "approx_extracted_tokens": 698
+  },
+  "model": "gpt-5.6",
+  "usage": {
+    "input_tokens": 23059,
+    "output_tokens": 3044,
+    "total_tokens": 26103,
+    "cached_input_tokens": 21335,
+    "reasoning_tokens": 994
+  },
+  "estimated_cost": null,
+  "response": "[해석 안내]\n이 해석은 제공된 자미두수 명반과 전통 해석 체계에 따른 참고 관점입니다. 검증된 직업 예측이나 사업·투자 조언은 아닙니다. 현재 만 0세이므로, 아래 내용은 현재 직업을 판단하는 것이 아니라 앞으로 성장 과정에서 확인할 수 있는 환경적 경향으로 봐야 합니다.\n\n한 줄로 정리하면, **사람들 앞에서 방향을 제시하면서 전략·기획을 실행으로 연결하는 환경**이 비교적 잘 맞고, 사업을 한다면 **전문성 중심의 사업에 강한 운영 체계를 붙이는 방식**이 유리할 가능성이 있습니다.\n\n[Fact]\n관록궁에는 밝기가 강한 태양이 있고, 지공·경양·화성도 함께 있습니다. 관록궁의 삼방사정에는 부처궁의 천량, 공궁인 명궁, 재백궁의 거문이 연결됩니다. 명궁의 대궁인 천이궁에는 천기화권·태음·천마가 있으며, 교우궁에는 천부가 있습니다.\n\n[삼방사정 근거]\n- 본궁: 관록궁 — 태양(旺), 지공, 경양, 화성\n- 대궁: 부처궁 — 천량(廟), 신궁 위치\n- 삼합궁 1: 명궁 — 주성이 없는 공궁\n- 삼합궁 2: 재백궁 — 거문(陷)\n- 함께 확인한 구조: 천이궁의 천기화권·태음·천마, 교우궁의 천부\n\n### 맞는 직업 환경\n- **역할과 책임이 분명한 환경:** 태양은 공개적인 책임, 리더십, 방향 제시와 관련된 상징입니다. 보조 역할에만 머물기보다 담당 영역을 맡고 결과를 설명하는 자리에서 강점이 커질 수 있습니다.\n- **기획과 변화가 함께 있는 환경:** 천기화권과 천마는 정보를 빠르게 정리하고 변화에 대응하는 힘을 강조합니다. 전략기획, 기술·데이터 기반 문제 해결, 컨설팅, 프로젝트 운영처럼 생각과 실행이 함께 필요한 일이 후보가 될 수 있습니다.\n- **외부 접점이 있는 환경:** 조직 내부의 반복 업무만 하기보다 고객·파트너·현장·다른 조직과 접촉하며 움직이는 업무가 더 잘 맞을 가능성이 있습니다.\n- **원칙과 전문성이 인정되는 환경:** 신궁이 천량이 있는 부처궁에 놓여 있어 실제 행동에서는 협업, 조언, 기준 수립, 문제 조정 같은 역할이 중요해질 수 있습니다. 단순히 권한만 큰 자리보다 책임과 명분이 함께 있는 환경이 낫습니다.\n\n### 사업을 한다면 맞을 가능성이 있는 구조\n특정 업종을 단정할 수는 없지만, **지식·기획·설명·분석·문제 해결을 상품화하는 전문성 중심 사업**이 비교적 자연스럽습니다. 예를 들면 자문, 교육, 콘텐츠, 기술·데이터 서비스, 프로젝트형 B2B처럼 고객의 문제를 파악하고 해결책을 설명하는 구조입니다.\n\n다만 창업자가 영업·기획·대외 활동을 맡고, 운영·재무·계약 관리에 강한 사람이 내부를 받쳐주는 형태가 더 안정적일 수 있습니다. 교우궁의 천부는 자원과 운영을 안정적으로 관리하는 동료의 중요성을 보여주는 상징으로 읽힙니다.\n\n### 피하는 편이 좋은 환경\n- 권한은 없는데 책임만 크거나, 의사결정 기준이 자주 바뀌는 조직\n- 속도만 강조하고 계약·품질·재무 통제가 약한 사업\n- 말로 합의하고 업무 범위나 정산 조건을 문서화하지 않는 동업\n- 경쟁과 긴장이 지나치게 높아 충동적으로 결정해야 하는 환경\n- 변화가 전혀 없고, 장기간 수동적으로 지시만 수행해야 하는 자리\n\n관록궁의 지공·경양·화성은 실패를 뜻하는 것이 아니라, 추진력이 급해지면 계획이 끊기거나 갈등과 과부하가 커질 수 있다는 보조 신호입니다. 재백궁의 거문도 소통과 설명을 수익으로 연결하는 가능성이 있는 한편, 표현·계약·책임 범위가 불명확하면 분쟁 비용이 생길 수 있음을 함께 시사합니다.\n\n### 현실적으로 중요한 보완 장치\n1. 계약 범위, 가격, 책임, 종료 조건을 문서화하기\n2. 큰 결정을 즉시 확정하지 않고 검토 시간을 두기\n3. 영업·기획과 운영·재무의 권한을 분리하기\n4. 여러 일을 동시에 벌이기보다 핵심 사업모델을 먼저 검증하기\n5. 성과뿐 아니라 현금흐름과 팀의 지속 가능성을 함께 점검하기\n\n[Disclosure]\n현재는 만 0세이므로 직업이나 사업 적성을 확정할 단계가 아닙니다. 성장하면서 실제로 설명력·기획력·리더십·변화 대응력이 발달하는지, 압박 상황에서 성급함과 갈등을 관리할 수 있는지를 관찰해야 합니다. 이 명반만으로 특정 직업이나 창업 여부를 결정해서는 안 됩니다.",
+  "full_analysis": {
+    "saju": {
+      "relevant_structure": "해당 정보 없음. 사용자가 자미두수 기준만 요청했고, 추출 데이터에도 사주 정보가 제공되지 않았다.",
+      "interpretation": "사주 관점은 이번 답변에 적용하지 않았다."
+    },
+    "ziwei": {
+      "relevant_structure": "관록궁의 태양(旺)·지공·경양·화성, 관록궁 삼방사정인 부처궁의 천량(廟)·명궁 공궁·재백궁의 거문(陷), 명궁 공궁의 대궁인 천이궁의 천기(旺·화권)·태음(得)·천마·영성, 교우궁의 천부(旺), 신궁이 부처궁에 놓인 구조를 근거로 삼았다. 생년사화는 천기화권 등 명반 내부 표기와 일치하는 항목만 반영했다.",
+      "interpretation": "직업에서는 사람들 앞에서 방향을 제시하고 책임지는 역할, 전략·기획·분석을 실제 실행으로 연결하는 환경이 비교적 잘 맞는 구조다. 변화와 외부 활동이 있는 프로젝트형 환경도 유리할 수 있다. 사업에서는 전문지식·기획·설명·문제 해결을 상품화하는 방식이 어울릴 가능성이 있지만, 속도와 추진력이 강해질수록 계약 분쟁·과잉 확장·팀 충돌을 막는 운영 장치가 중요하다. 혼자 모든 것을 통제하기보다 운영과 재무에 강한 파트너를 두고 역할과 권한을 문서화하는 방식이 안정적이다."
+    },
+    "cross_analysis": {
+      "common_direction": "이번 질문은 자미두수 단독 분석이므로 두 체계 사이의 공통 방향은 비교하지 않았다.",
+      "differences": "사주 데이터가 없어 체계 간 차이를 판단할 수 없다.",
+      "overall_judgment": "자미두수 관점에서는 공개성·책임·전략·변화 대응이 필요한 직업 환경과 전문성을 기반으로 한 사업 구조가 비교적 어울릴 가능성이 있다. 다만 직업이나 창업 성공을 확정하는 의미는 아니며, 실제 적성은 성장 과정에서 드러나는 역량과 경험을 함께 확인해야 한다.",
+      "real_world_checks": "성장 과정에서 ① 사람들에게 설명하고 방향을 잡아주는 일을 즐기는지, ② 반복 업무보다 변화가 있는 프로젝트에서 집중력이 높아지는지, ③ 분석·기획을 실제 결과로 연결하는 능력이 발달하는지, ④ 경쟁과 압박 속에서 성급해지거나 갈등이 커지는지, ⑤ 팀에서 운영·재무형 동료와 협업할 때 성과가 안정되는지를 확인할 수 있다."
+    },
+    "response": "[해석 안내]\n이 해석은 제공된 자미두수 명반과 전통 해석 체계에 따른 참고 관점입니다. 검증된 직업 예측이나 사업·투자 조언은 아닙니다. 현재 만 0세이므로, 아래 내용은 현재 직업을 판단하는 것이 아니라 앞으로 성장 과정에서 확인할 수 있는 환경적 경향으로 봐야 합니다.\n\n한 줄로 정리하면, **사람들 앞에서 방향을 제시하면서 전략·기획을 실행으로 연결하는 환경**이 비교적 잘 맞고, 사업을 한다면 **전문성 중심의 사업에 강한 운영 체계를 붙이는 방식**이 유리할 가능성이 있습니다.\n\n[Fact]\n관록궁에는 밝기가 강한 태양이 있고, 지공·경양·화성도 함께 있습니다. 관록궁의 삼방사정에는 부처궁의 천량, 공궁인 명궁, 재백궁의 거문이 연결됩니다. 명궁의 대궁인 천이궁에는 천기화권·태음·천마가 있으며, 교우궁에는 천부가 있습니다.\n\n[삼방사정 근거]\n- 본궁: 관록궁 — 태양(旺), 지공, 경양, 화성\n- 대궁: 부처궁 — 천량(廟), 신궁 위치\n- 삼합궁 1: 명궁 — 주성이 없는 공궁\n- 삼합궁 2: 재백궁 — 거문(陷)\n- 함께 확인한 구조: 천이궁의 천기화권·태음·천마, 교우궁의 천부\n\n### 맞는 직업 환경\n- **역할과 책임이 분명한 환경:** 태양은 공개적인 책임, 리더십, 방향 제시와 관련된 상징입니다. 보조 역할에만 머물기보다 담당 영역을 맡고 결과를 설명하는 자리에서 강점이 커질 수 있습니다.\n- **기획과 변화가 함께 있는 환경:** 천기화권과 천마는 정보를 빠르게 정리하고 변화에 대응하는 힘을 강조합니다. 전략기획, 기술·데이터 기반 문제 해결, 컨설팅, 프로젝트 운영처럼 생각과 실행이 함께 필요한 일이 후보가 될 수 있습니다.\n- **외부 접점이 있는 환경:** 조직 내부의 반복 업무만 하기보다 고객·파트너·현장·다른 조직과 접촉하며 움직이는 업무가 더 잘 맞을 가능성이 있습니다.\n- **원칙과 전문성이 인정되는 환경:** 신궁이 천량이 있는 부처궁에 놓여 있어 실제 행동에서는 협업, 조언, 기준 수립, 문제 조정 같은 역할이 중요해질 수 있습니다. 단순히 권한만 큰 자리보다 책임과 명분이 함께 있는 환경이 낫습니다.\n\n### 사업을 한다면 맞을 가능성이 있는 구조\n특정 업종을 단정할 수는 없지만, **지식·기획·설명·분석·문제 해결을 상품화하는 전문성 중심 사업**이 비교적 자연스럽습니다. 예를 들면 자문, 교육, 콘텐츠, 기술·데이터 서비스, 프로젝트형 B2B처럼 고객의 문제를 파악하고 해결책을 설명하는 구조입니다.\n\n다만 창업자가 영업·기획·대외 활동을 맡고, 운영·재무·계약 관리에 강한 사람이 내부를 받쳐주는 형태가 더 안정적일 수 있습니다. 교우궁의 천부는 자원과 운영을 안정적으로 관리하는 동료의 중요성을 보여주는 상징으로 읽힙니다.\n\n### 피하는 편이 좋은 환경\n- 권한은 없는데 책임만 크거나, 의사결정 기준이 자주 바뀌는 조직\n- 속도만 강조하고 계약·품질·재무 통제가 약한 사업\n- 말로 합의하고 업무 범위나 정산 조건을 문서화하지 않는 동업\n- 경쟁과 긴장이 지나치게 높아 충동적으로 결정해야 하는 환경\n- 변화가 전혀 없고, 장기간 수동적으로 지시만 수행해야 하는 자리\n\n관록궁의 지공·경양·화성은 실패를 뜻하는 것이 아니라, 추진력이 급해지면 계획이 끊기거나 갈등과 과부하가 커질 수 있다는 보조 신호입니다. 재백궁의 거문도 소통과 설명을 수익으로 연결하는 가능성이 있는 한편, 표현·계약·책임 범위가 불명확하면 분쟁 비용이 생길 수 있음을 함께 시사합니다.\n\n### 현실적으로 중요한 보완 장치\n1. 계약 범위, 가격, 책임, 종료 조건을 문서화하기\n2. 큰 결정을 즉시 확정하지 않고 검토 시간을 두기\n3. 영업·기획과 운영·재무의 권한을 분리하기\n4. 여러 일을 동시에 벌이기보다 핵심 사업모델을 먼저 검증하기\n5. 성과뿐 아니라 현금흐름과 팀의 지속 가능성을 함께 점검하기\n\n[Disclosure]\n현재는 만 0세이므로 직업이나 사업 적성을 확정할 단계가 아닙니다. 성장하면서 실제로 설명력·기획력·리더십·변화 대응력이 발달하는지, 압박 상황에서 성급함과 갈등을 관리할 수 있는지를 관찰해야 합니다. 이 명반만으로 특정 직업이나 창업 여부를 결정해서는 안 됩니다.",
+    "sources": {
+      "saju": [],
+      "ziwei": [
+        "ziwei.life_palace",
+        "ziwei.body_palace",
+        "ziwei.palaces[position=life]",
+        "ziwei.palaces[position=career]",
+        "ziwei.palaces[position=wealth]",
+        "ziwei.palaces[position=travel]",
+        "ziwei.palaces[position=friends]",
+        "ziwei.palaces[position=spouse]",
+        "ziwei.transformations"
+      ]
+    }
+  },
+  "validation": {
+    "overall_pass": true,
+    "checks": {
+      "json_schema_valid": {
+        "pass": true,
+        "details": null
+      },
+      "required_fields_non_empty": {
+        "pass": true,
+        "details": {
+          "response": true,
+          "saju": true,
+          "ziwei": true,
+          "cross_analysis": true
+        }
+      },
+      "forbidden_certainty_phrases": {
+        "pass": true,
+        "details": []
+      },
+      "missing_data_hallucination": {
+        "pass": true,
+        "details": {
+          "mentionedButAbsentStars": [],
+          "suspiciousStemBranchMentions": [],
+          "note": "휴리스틱 — false positive 가능, 사람 검토 필요"
+        }
+      },
+      "routing_correctness": {
+        "pass": true,
+        "details": {
+          "expectedScope": "ziwei_only",
+          "sajuFilled": false,
+          "ziweiFilled": true,
+          "informational_only": false
+        }
+      },
+      "extraction_correctness": {
+        "pass": true,
+        "details": null
+      }
+    }
+  },
+  "timestamp": "2026-08-16T16:55:38.326Z",
+  "mock_mode": false
+}

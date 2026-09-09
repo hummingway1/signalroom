@@ -1,0 +1,23 @@
+{
+  "name": "aisignal-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "아이시그널 — 아이의 기질/상황을 대화형으로 살펴보는 모바일 웹앱 (Figma Make 디자인 구현).",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lucide-react": "^0.487.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.12",
+    "@vitejs/plugin-react": "^4.7.0",
+    "tailwindcss": "^4.1.12",
+    "vite": "^6.3.5"
+  }
+}

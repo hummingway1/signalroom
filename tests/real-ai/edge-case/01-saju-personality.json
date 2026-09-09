@@ -1,0 +1,337 @@
+{
+  "question": "내 성격의 핵심 구조를 사주로 설명해줘.",
+  "category": "saju_only",
+  "routing": {
+    "categories": [
+      "PERSONALITY"
+    ],
+    "saju_fields": [
+      "day_master",
+      "pillars",
+      "relations"
+    ],
+    "ziwei_fields": [],
+    "ziwei_palace_focus": [],
+    "reasoning": "사주만 명시한 성격 질문이므로 자미두수 필드는 제외한다. 성격의 핵심 구조는 일간과 사주 원국의 오행·십신 구성을 도출할 수 있는 day_master와 pillars가 중심이며, 천간·지지 간 합충형해 등의 상호작용을 확인하기 위해 relations도 필요하다."
+  },
+  "extracted_data": {
+    "subject": {
+      "birth_date": "2026-08-06",
+      "birth_time": "10:59",
+      "time_known": true,
+      "gender": "male",
+      "birth_place": {
+        "name": "Incheon",
+        "resolved_name": "인천",
+        "latitude": 37.4563,
+        "longitude": 126.7052
+      },
+      "timezone": "Asia/Seoul"
+    },
+    "saju": {
+      "day_master": {
+        "heavenly_stem": "壬",
+        "element": "water",
+        "yin_yang": "yang"
+      },
+      "pillars": [
+        {
+          "position": "year",
+          "ganzi": "丙午",
+          "heavenly_stem": "丙",
+          "earthly_branch": "午",
+          "ten_god": {
+            "stem": "偏財",
+            "branch": "正財"
+          },
+          "twelve_stage": "胎",
+          "twelve_spirit": "將星",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "丙",
+              "ten_god": "偏財",
+              "twelve_stage": "胎"
+            },
+            {
+              "heavenly_stem": "己",
+              "ten_god": "正官",
+              "twelve_stage": "絶"
+            },
+            {
+              "heavenly_stem": "丁",
+              "ten_god": "正財",
+              "twelve_stage": "絶"
+            }
+          ]
+        },
+        {
+          "position": "month",
+          "ganzi": "乙未",
+          "heavenly_stem": "乙",
+          "earthly_branch": "未",
+          "ten_god": {
+            "stem": "傷官",
+            "branch": "正官"
+          },
+          "twelve_stage": "養",
+          "twelve_spirit": "攀鞍",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "丁",
+              "ten_god": "正財",
+              "twelve_stage": "絶"
+            },
+            {
+              "heavenly_stem": "乙",
+              "ten_god": "傷官",
+              "twelve_stage": "病"
+            },
+            {
+              "heavenly_stem": "己",
+              "ten_god": "正官",
+              "twelve_stage": "絶"
+            }
+          ]
+        },
+        {
+          "position": "day",
+          "ganzi": "壬子",
+          "heavenly_stem": "壬",
+          "earthly_branch": "子",
+          "ten_god": {
+            "stem": null,
+            "branch": "劫財"
+          },
+          "twelve_stage": "帝旺",
+          "twelve_spirit": "災殺",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "壬",
+              "ten_god": "比肩",
+              "twelve_stage": "帝旺"
+            },
+            {
+              "heavenly_stem": "癸",
+              "ten_god": "劫財",
+              "twelve_stage": "乾祿"
+            }
+          ]
+        },
+        {
+          "position": "hour",
+          "ganzi": "乙巳",
+          "heavenly_stem": "乙",
+          "earthly_branch": "巳",
+          "ten_god": {
+            "stem": "傷官",
+            "branch": "偏財"
+          },
+          "twelve_stage": "絶",
+          "twelve_spirit": "亡身",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "偏官",
+              "twelve_stage": "胎"
+            },
+            {
+              "heavenly_stem": "庚",
+              "ten_god": "偏印",
+              "twelve_stage": "死"
+            },
+            {
+              "heavenly_stem": "丙",
+              "ten_god": "偏財",
+              "twelve_stage": "胎"
+            }
+          ]
+        }
+      ],
+      "relations": {
+        "pillar_pairs": [
+          {
+            "positions": [
+              "day",
+              "month"
+            ],
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "害",
+                "detail": null
+              },
+              {
+                "type": "怨嗔",
+                "detail": null
+              }
+            ]
+          },
+          {
+            "positions": [
+              "day",
+              "year"
+            ],
+            "stem_relations": [
+              {
+                "type": "沖",
+                "detail": null
+              }
+            ],
+            "branch_relations": [
+              {
+                "type": "沖",
+                "detail": null
+              }
+            ]
+          },
+          {
+            "positions": [
+              "month",
+              "year"
+            ],
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "合",
+                "detail": "fire"
+              }
+            ]
+          }
+        ],
+        "triple_combinations": [],
+        "directional_combinations": [
+          {
+            "type": "方合",
+            "detail": "fire"
+          }
+        ]
+      }
+    },
+    "ziwei": {}
+  },
+  "extraction_stats": {
+    "full_chars": 15926,
+    "extracted_chars": 2075,
+    "reduction_ratio": 0.87,
+    "approx_full_tokens": 3982,
+    "approx_extracted_tokens": 519
+  },
+  "model": "gpt-5.6",
+  "usage": {
+    "input_tokens": 22849,
+    "output_tokens": 1923,
+    "total_tokens": 24772,
+    "cached_input_tokens": 0,
+    "reasoning_tokens": 293
+  },
+  "estimated_cost": null,
+  "response": "[해석 안내]\n이 해석은 제공된 만세력 정보와 전통 명리학의 상징 체계에 따른 참고 관점입니다. 검증된 성격검사나 미래 예측은 아닙니다.\n\n한 줄로 말하면, **자기 동력이 강하고 생각을 밖으로 표현·개선하려는 힘이 크지만, 자기 방식과 외부 기준이 부딪힐 때 예민해질 수 있는 구조**예요.\n\n[사주 관점]\n\n[Fact]\n- 일간은 큰물에 비유되는 양수(陽水) **壬水**입니다.\n- 일지 子에는 비견·겁재가 있고 십이운성은 제왕으로 표시되어 있습니다.\n- 월간과 시간에 모두 **乙 상관**, 즉 표현·비판·개선과 관련된 기운이 반복됩니다.\n- 재성은 성과와 현실 자원, 관성은 규칙과 책임을 상징하는데, 둘 다 원국에 나타납니다.\n- 일주와 연주는 천간과 지지 모두 충하고, 일지와 월지에는 해가 있습니다.\n\n[Claim]\n1. **자기 기준과 독립성**\n   남이 정한 방식에 수동적으로 맞추기보다 스스로 납득하고 움직이려는 성향이 핵심에 놓일 가능성이 있습니다. 선택권이 있을 때 추진력이 살아나지만, 강압적인 통제에는 반발하기 쉬울 수 있어요.\n\n2. **표현과 개선 욕구**\n   상관이 두 번 드러나므로 관찰한 문제를 그냥 넘기기보다 말하거나 고치고 싶어 하는 경향으로 읽힙니다. 잘 발달하면 창의성·질문하는 힘·문제 해결력이 되지만, 스트레스 상황에서는 말이 날카롭거나 규칙의 허점을 먼저 지적하는 모습으로 나타날 수 있습니다.\n\n3. **자유와 책임 사이의 긴장**\n   자기 방식대로 움직이려는 힘과 현실적 성과·규칙을 의식하는 힘이 함께 있습니다. 그래서 목표와 이유가 분명하면 결과를 잘 만들어낼 수 있지만, 이유 없는 통제나 지나친 경쟁 상황에서는 내적 긴장이 커질 가능성이 있어요.\n\n4. **내면과 외부 환경의 마찰**\n   일주와 연주의 충은 자신의 본래 리듬과 외부 환경의 요구가 맞부딪히는 상징으로 볼 수 있습니다. 이를 특정 가족관계나 사건으로 단정할 수는 없지만, 성장하면서 ‘내가 원하는 방식’과 ‘주변이 기대하는 방식’ 사이에서 조정 능력을 배우는 일이 중요한 과제가 될 수 있습니다.\n\n[Disclosure]\n현재 만 0세이므로 이런 성향은 아직 실제 행동으로 충분히 확인되지 않았습니다. 양육 방식과 경험에 따라 같은 구조도 주도성·창의성으로 나타날 수도 있고, 반발심·예민함으로 나타날 수도 있어요.\n\n현실적으로는 **명령만 하기보다 이유를 설명하고 제한된 선택권을 주는 방식**, 그리고 생각을 말·그림·놀이·문제 해결로 표현할 통로를 마련해주는 환경이 잘 맞을 가능성이 있습니다. 한두 번의 행동보다 여러 상황에서 반복되는 패턴을 관찰해 확인해보세요.",
+  "full_analysis": {
+    "saju": {
+      "relevant_structure": "양수(陽水) 일간인 壬을 중심으로, 일지 子의 제왕·비겁 구조, 월간과 시간의 乙 상관, 원국의 재성·관성, 일주와 연주의 천간·지지 충, 일지와 월지의 해, 월지와 연지의 화(火) 합 및 화 방합을 근거로 삼았다. 격국·용신·조후는 추출 데이터에 확정값이 없어 단정하지 않았다.",
+      "interpretation": "[Fact] 일간은 壬水이고, 일지 子에는 비견·겁재가 있으며 십이운성은 제왕이다. 월간과 시간에는 모두 乙 상관이 놓여 있고, 재성과 관성도 여러 기둥에 나타난다. 일주와 연주는 천간·지지 모두 충하고, 일지와 월지에는 해가 있다. [Claim] 핵심은 자기 추진력과 독립성이 강한 축 위에, 생각을 표현하고 기존 방식을 개선하려는 성향이 반복되는 구조다. 동시에 현실적 성과·자원과 규칙·책임도 의식하는 편으로 읽힌다. 따라서 자신의 판단대로 움직이고 싶은 마음과 외부 기준에 맞춰 결과를 내야 한다는 요구가 충돌하면 예민함, 반발, 말의 날카로움으로 나타날 가능성이 있다. 반대로 선택권과 분명한 목표가 함께 주어지면 관찰력과 개선 능력을 실제 결과로 연결하기 쉽다. [Disclosure] 아직 만 0세이므로 이런 성향이 실제 행동으로 확인된 단계는 아니다. 양육 환경과 경험에 따라 표현 방식이 크게 달라질 수 있으며, 관계 하나만으로 구체적인 사건이나 성격을 확정할 수 없다."
+    },
+    "ziwei": {
+      "relevant_structure": "해당 정보 없음. 이번 질문은 사주만 요청했고 추출된 자미두수 데이터도 비어 있다.",
+      "interpretation": "자미두수 관점은 데이터가 없어 분석하지 않았다."
+    },
+    "cross_analysis": {
+      "common_direction": "이번 질문에서는 사주만 분석했으므로 두 체계의 공통 방향을 비교할 수 없다.",
+      "differences": "자미두수 데이터가 없어 체계 간 차이를 판단할 수 없다.",
+      "overall_judgment": "사주상 성격의 중심축은 ‘강한 자기 동력과 독립성’, ‘표현·개선 욕구’, ‘현실적 결과와 규칙에 대한 의식’의 결합으로 읽힌다. 이 요소들이 잘 조율되면 주도성과 문제 해결력으로, 충돌하면 반발심이나 날카로운 표현으로 나타날 가능성이 있다.",
+      "real_world_checks": "성장 과정에서 ① 선택권이 있을 때 집중력이 높아지는지, ② 납득되지 않는 규칙에 강하게 반응하는지, ③ 생각을 말이나 창작·문제 해결로 풀어낼 때 안정되는지, ④ 경쟁 상황에서 지나치게 예민해지는지를 관찰해볼 수 있다. 한두 번의 행동보다 여러 환경에서 반복되는 패턴을 확인하는 것이 중요하다."
+    },
+    "response": "[해석 안내]\n이 해석은 제공된 만세력 정보와 전통 명리학의 상징 체계에 따른 참고 관점입니다. 검증된 성격검사나 미래 예측은 아닙니다.\n\n한 줄로 말하면, **자기 동력이 강하고 생각을 밖으로 표현·개선하려는 힘이 크지만, 자기 방식과 외부 기준이 부딪힐 때 예민해질 수 있는 구조**예요.\n\n[사주 관점]\n\n[Fact]\n- 일간은 큰물에 비유되는 양수(陽水) **壬水**입니다.\n- 일지 子에는 비견·겁재가 있고 십이운성은 제왕으로 표시되어 있습니다.\n- 월간과 시간에 모두 **乙 상관**, 즉 표현·비판·개선과 관련된 기운이 반복됩니다.\n- 재성은 성과와 현실 자원, 관성은 규칙과 책임을 상징하는데, 둘 다 원국에 나타납니다.\n- 일주와 연주는 천간과 지지 모두 충하고, 일지와 월지에는 해가 있습니다.\n\n[Claim]\n1. **자기 기준과 독립성**\n   남이 정한 방식에 수동적으로 맞추기보다 스스로 납득하고 움직이려는 성향이 핵심에 놓일 가능성이 있습니다. 선택권이 있을 때 추진력이 살아나지만, 강압적인 통제에는 반발하기 쉬울 수 있어요.\n\n2. **표현과 개선 욕구**\n   상관이 두 번 드러나므로 관찰한 문제를 그냥 넘기기보다 말하거나 고치고 싶어 하는 경향으로 읽힙니다. 잘 발달하면 창의성·질문하는 힘·문제 해결력이 되지만, 스트레스 상황에서는 말이 날카롭거나 규칙의 허점을 먼저 지적하는 모습으로 나타날 수 있습니다.\n\n3. **자유와 책임 사이의 긴장**\n   자기 방식대로 움직이려는 힘과 현실적 성과·규칙을 의식하는 힘이 함께 있습니다. 그래서 목표와 이유가 분명하면 결과를 잘 만들어낼 수 있지만, 이유 없는 통제나 지나친 경쟁 상황에서는 내적 긴장이 커질 가능성이 있어요.\n\n4. **내면과 외부 환경의 마찰**\n   일주와 연주의 충은 자신의 본래 리듬과 외부 환경의 요구가 맞부딪히는 상징으로 볼 수 있습니다. 이를 특정 가족관계나 사건으로 단정할 수는 없지만, 성장하면서 ‘내가 원하는 방식’과 ‘주변이 기대하는 방식’ 사이에서 조정 능력을 배우는 일이 중요한 과제가 될 수 있습니다.\n\n[Disclosure]\n현재 만 0세이므로 이런 성향은 아직 실제 행동으로 충분히 확인되지 않았습니다. 양육 방식과 경험에 따라 같은 구조도 주도성·창의성으로 나타날 수도 있고, 반발심·예민함으로 나타날 수도 있어요.\n\n현실적으로는 **명령만 하기보다 이유를 설명하고 제한된 선택권을 주는 방식**, 그리고 생각을 말·그림·놀이·문제 해결로 표현할 통로를 마련해주는 환경이 잘 맞을 가능성이 있습니다. 한두 번의 행동보다 여러 상황에서 반복되는 패턴을 관찰해 확인해보세요.",
+    "sources": {
+      "saju": [
+        "saju.day_master",
+        "saju.pillars",
+        "saju.relations.pillar_pairs",
+        "saju.relations.directional_combinations"
+      ],
+      "ziwei": []
+    }
+  },
+  "validation": {
+    "overall_pass": true,
+    "checks": {
+      "json_schema_valid": {
+        "pass": true,
+        "details": null
+      },
+      "required_fields_non_empty": {
+        "pass": true,
+        "details": {
+          "response": true,
+          "saju": true,
+          "ziwei": true,
+          "cross_analysis": true
+        }
+      },
+      "forbidden_certainty_phrases": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "raw_match_count": 0,
+          "hedged_and_excluded": 0
+        }
+      },
+      "missing_data_hallucination": {
+        "pass": true,
+        "details": {
+          "mentionedButAbsentStars": [],
+          "suspiciousStemBranchMentions": [],
+          "note": "휴리스틱 — false positive 가능, 사람 검토 필요"
+        }
+      },
+      "routing_correctness": {
+        "pass": true,
+        "details": {
+          "expectedScope": "saju_only",
+          "sajuFilled": true,
+          "ziweiFilled": false,
+          "informational_only": false
+        }
+      },
+      "extraction_correctness": {
+        "pass": true,
+        "details": null
+      },
+      "no_annual_period_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "note": "세운 데이터가 없는 상태에서 구체적 간지를 세운과 함께 제시하면 hallucination."
+        }
+      },
+      "no_gwimun_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "note": "귀문관살 데이터가 없는 상태에서 존재를 단정하면 hallucination. 부재를 설명하는 문맥은 제외."
+        }
+      },
+      "no_daewoon_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "present_ganzi": []
+        }
+      },
+      "current_daewoon_handling": {
+        "pass": true,
+        "details": {
+          "note": "대운 데이터가 추출되지 않은 질문 — 해당 없음(N/A)."
+        }
+      },
+      "data_limitation_disclosure": {
+        "pass": true,
+        "details": {
+          "note": "데이터 제한 상황이 아님 — 해당 없음(N/A)."
+        }
+      }
+    }
+  },
+  "timestamp": "2026-08-16T16:51:50.188Z",
+  "mock_mode": false
+}

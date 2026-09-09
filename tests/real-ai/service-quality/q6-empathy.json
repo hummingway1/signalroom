@@ -1,0 +1,1946 @@
+{
+  "file": "q6-empathy",
+  "question": "요즘 하는 일마다 잘 안 풀리는 것 같아서 자신감이 많이 떨어졌어요. 제 사주에 원인이 있을까요?",
+  "fixture": "main_quality",
+  "routing": {
+    "categories": [
+      "EMOTION",
+      "WEAKNESS",
+      "MAJOR_PERIOD",
+      "ANNUAL_PERIOD",
+      "GENERAL"
+    ],
+    "saju_fields": [
+      "day_master",
+      "pillars",
+      "hidden_stem_borrowing",
+      "relations",
+      "special_stars",
+      "void_branches",
+      "major_periods",
+      "annual_periods"
+    ],
+    "ziwei_fields": [],
+    "ziwei_palace_focus": [],
+    "reasoning": "전반적인 일이 풀리지 않는 원인과 자신감 저하를 묻는 현재 시점의 질문이므로, 원국의 기질·구조와 심리적 취약 요인뿐 아니라 현재 대운과 세운을 함께 확인해야 한다. 사용자가 사주를 명시했으므로 자미두수 필드는 제외한다."
+  },
+  "extracted_data": {
+    "subject": {
+      "birth_date": "1988-11-22",
+      "birth_time": "14:30",
+      "time_known": true,
+      "gender": "female",
+      "birth_place": {
+        "name": "Seoul",
+        "resolved_name": "서울",
+        "latitude": 37.5665,
+        "longitude": 126.978
+      },
+      "timezone": "Asia/Seoul"
+    },
+    "saju": {
+      "day_master": {
+        "heavenly_stem": "辛",
+        "element": "metal",
+        "yin_yang": "yin"
+      },
+      "pillars": [
+        {
+          "position": "year",
+          "ganzi": "戊辰",
+          "heavenly_stem": "戊",
+          "earthly_branch": "辰",
+          "ten_god": {
+            "stem": "正印",
+            "branch": "正印"
+          },
+          "twelve_stage": "墓",
+          "twelve_spirit": "華蓋",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "乙",
+              "ten_god": "偏財",
+              "twelve_stage": "沐浴"
+            },
+            {
+              "heavenly_stem": "癸",
+              "ten_god": "食神",
+              "twelve_stage": "胎"
+            },
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "正印",
+              "twelve_stage": "乾祿"
+            }
+          ]
+        },
+        {
+          "position": "month",
+          "ganzi": "癸亥",
+          "heavenly_stem": "癸",
+          "earthly_branch": "亥",
+          "ten_god": {
+            "stem": "食神",
+            "branch": "傷官"
+          },
+          "twelve_stage": "沐浴",
+          "twelve_spirit": "亡身",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "正印",
+              "twelve_stage": "乾祿"
+            },
+            {
+              "heavenly_stem": "甲",
+              "ten_god": "正財",
+              "twelve_stage": "病"
+            },
+            {
+              "heavenly_stem": "壬",
+              "ten_god": "傷官",
+              "twelve_stage": "絶"
+            }
+          ]
+        },
+        {
+          "position": "day",
+          "ganzi": "辛巳",
+          "heavenly_stem": "辛",
+          "earthly_branch": "巳",
+          "ten_god": {
+            "stem": null,
+            "branch": "正官"
+          },
+          "twelve_stage": "死",
+          "twelve_spirit": "劫殺",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "正印",
+              "twelve_stage": "乾祿"
+            },
+            {
+              "heavenly_stem": "庚",
+              "ten_god": "劫財",
+              "twelve_stage": "長生"
+            },
+            {
+              "heavenly_stem": "丙",
+              "ten_god": "正官",
+              "twelve_stage": "乾祿"
+            }
+          ]
+        },
+        {
+          "position": "hour",
+          "ganzi": "乙未",
+          "heavenly_stem": "乙",
+          "earthly_branch": "未",
+          "ten_god": {
+            "stem": "偏財",
+            "branch": "偏印"
+          },
+          "twelve_stage": "衰",
+          "twelve_spirit": "天殺",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "丁",
+              "ten_god": "偏官",
+              "twelve_stage": "帝旺"
+            },
+            {
+              "heavenly_stem": "乙",
+              "ten_god": "偏財",
+              "twelve_stage": "沐浴"
+            },
+            {
+              "heavenly_stem": "己",
+              "ten_god": "偏印",
+              "twelve_stage": "帝旺"
+            }
+          ]
+        }
+      ],
+      "hidden_stem_borrowing": [
+        {
+          "category": "食傷",
+          "borrowed_from_stem": "壬",
+          "twelve_stage": "絶"
+        },
+        {
+          "category": "財星",
+          "borrowed_from_stem": "甲",
+          "twelve_stage": "病"
+        }
+      ],
+      "relations": {
+        "pillar_pairs": [],
+        "triple_combinations": [],
+        "directional_combinations": []
+      },
+      "special_stars": {
+        "yangin": [],
+        "baekho": false,
+        "goegang": false,
+        "dohwa": [],
+        "cheoneul_gwiin": [],
+        "cheondeok_gwiin": [
+          "hour"
+        ],
+        "woldeok_gwiin": [],
+        "munchang_gwiin": [],
+        "hongyeom": false,
+        "geumyeo": [
+          "month"
+        ],
+        "gwimun": [
+          {
+            "positions": [
+              "month",
+              "year"
+            ],
+            "detail": null
+          }
+        ]
+      },
+      "void_branches": {
+        "branches": [
+          "申",
+          "酉"
+        ],
+        "affected_pillars": []
+      },
+      "major_periods": [
+        {
+          "sequence": 1,
+          "ganzi": "壬戌",
+          "heavenly_stem": "壬",
+          "earthly_branch": "戌",
+          "start_age": 5,
+          "start_date": "1993-11-26T12:50:41.000Z",
+          "ten_god": {
+            "stem": "傷官",
+            "branch": "正印"
+          },
+          "twelve_stage": "冠帶",
+          "twelve_spirit": "月殺",
+          "is_void": false
+        },
+        {
+          "sequence": 2,
+          "ganzi": "辛酉",
+          "heavenly_stem": "辛",
+          "earthly_branch": "酉",
+          "start_age": 15,
+          "start_date": "2003-11-26T12:50:41.000Z",
+          "ten_god": {
+            "stem": "比肩",
+            "branch": "比肩"
+          },
+          "twelve_stage": "乾祿",
+          "twelve_spirit": "年殺",
+          "is_void": true
+        },
+        {
+          "sequence": 3,
+          "ganzi": "庚申",
+          "heavenly_stem": "庚",
+          "earthly_branch": "申",
+          "start_age": 25,
+          "start_date": "2013-11-26T12:50:41.000Z",
+          "ten_god": {
+            "stem": "劫財",
+            "branch": "劫財"
+          },
+          "twelve_stage": "帝旺",
+          "twelve_spirit": "地殺",
+          "is_void": true
+        },
+        {
+          "sequence": 4,
+          "ganzi": "己未",
+          "heavenly_stem": "己",
+          "earthly_branch": "未",
+          "start_age": 35,
+          "start_date": "2023-11-26T12:50:41.000Z",
+          "ten_god": {
+            "stem": "偏印",
+            "branch": "偏印"
+          },
+          "twelve_stage": "衰",
+          "twelve_spirit": "天殺",
+          "is_void": false
+        },
+        {
+          "sequence": 5,
+          "ganzi": "戊午",
+          "heavenly_stem": "戊",
+          "earthly_branch": "午",
+          "start_age": 45,
+          "start_date": "2033-11-26T12:50:41.000Z",
+          "ten_god": {
+            "stem": "正印",
+            "branch": "偏官"
+          },
+          "twelve_stage": "病",
+          "twelve_spirit": "災殺",
+          "is_void": false
+        },
+        {
+          "sequence": 6,
+          "ganzi": "丁巳",
+          "heavenly_stem": "丁",
+          "earthly_branch": "巳",
+          "start_age": 55,
+          "start_date": "2043-11-26T12:50:41.000Z",
+          "ten_god": {
+            "stem": "偏官",
+            "branch": "正官"
+          },
+          "twelve_stage": "死",
+          "twelve_spirit": "劫殺",
+          "is_void": false
+        },
+        {
+          "sequence": 7,
+          "ganzi": "丙辰",
+          "heavenly_stem": "丙",
+          "earthly_branch": "辰",
+          "start_age": 65,
+          "start_date": "2053-11-26T12:50:41.000Z",
+          "ten_god": {
+            "stem": "正官",
+            "branch": "正印"
+          },
+          "twelve_stage": "墓",
+          "twelve_spirit": "華蓋",
+          "is_void": false
+        },
+        {
+          "sequence": 8,
+          "ganzi": "乙卯",
+          "heavenly_stem": "乙",
+          "earthly_branch": "卯",
+          "start_age": 75,
+          "start_date": "2063-11-26T12:50:41.000Z",
+          "ten_god": {
+            "stem": "偏財",
+            "branch": "偏財"
+          },
+          "twelve_stage": "絶",
+          "twelve_spirit": "六害",
+          "is_void": false
+        },
+        {
+          "sequence": 9,
+          "ganzi": "甲寅",
+          "heavenly_stem": "甲",
+          "earthly_branch": "寅",
+          "start_age": 85,
+          "start_date": "2073-11-26T12:50:41.000Z",
+          "ten_god": {
+            "stem": "正財",
+            "branch": "正財"
+          },
+          "twelve_stage": "胎",
+          "twelve_spirit": "驛馬",
+          "is_void": false
+        },
+        {
+          "sequence": 10,
+          "ganzi": "癸丑",
+          "heavenly_stem": "癸",
+          "earthly_branch": "丑",
+          "start_age": 95,
+          "start_date": "2083-11-26T12:50:41.000Z",
+          "ten_god": {
+            "stem": "食神",
+            "branch": "偏印"
+          },
+          "twelve_stage": "養",
+          "twelve_spirit": "攀鞍",
+          "is_void": false
+        }
+      ],
+      "annual_periods": [
+        {
+          "year": 2026,
+          "ganzi": "丙午",
+          "heavenly_stem": "丙",
+          "earthly_branch": "午",
+          "ten_god": {
+            "stem": "正官",
+            "branch": "偏官"
+          },
+          "twelve_stage": "病",
+          "twelve_spirit": "災殺",
+          "is_void": false,
+          "related_major_period": {
+            "index": 4,
+            "ganzi": "己未"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "合",
+                  "detail": "fire"
+                }
+              ]
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [
+                {
+                  "type": "合",
+                  "detail": "water"
+                }
+              ],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": []
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "己未",
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "合",
+                "detail": "fire"
+              }
+            ]
+          }
+        },
+        {
+          "year": 2027,
+          "ganzi": "丁未",
+          "heavenly_stem": "丁",
+          "earthly_branch": "未",
+          "ten_god": {
+            "stem": "偏官",
+            "branch": "偏印"
+          },
+          "twelve_stage": "衰",
+          "twelve_spirit": "天殺",
+          "is_void": false,
+          "related_major_period": {
+            "index": 4,
+            "ganzi": "己未"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                }
+              ],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": []
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "己未",
+            "stem_relations": [],
+            "branch_relations": []
+          }
+        },
+        {
+          "year": 2028,
+          "ganzi": "戊申",
+          "heavenly_stem": "戊",
+          "earthly_branch": "申",
+          "ten_god": {
+            "stem": "正印",
+            "branch": "劫財"
+          },
+          "twelve_stage": "帝旺",
+          "twelve_spirit": "地殺",
+          "is_void": true,
+          "related_major_period": {
+            "index": 4,
+            "ganzi": "己未"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "合",
+                  "detail": "water"
+                },
+                {
+                  "type": "破",
+                  "detail": null
+                },
+                {
+                  "type": "刑",
+                  "detail": "無恩"
+                }
+              ]
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [
+                {
+                  "type": "合",
+                  "detail": "fire"
+                }
+              ],
+              "branch_relations": [
+                {
+                  "type": "害",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": []
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "己未",
+            "stem_relations": [],
+            "branch_relations": []
+          }
+        },
+        {
+          "year": 2029,
+          "ganzi": "己酉",
+          "heavenly_stem": "己",
+          "earthly_branch": "酉",
+          "ten_god": {
+            "stem": "偏印",
+            "branch": "比肩"
+          },
+          "twelve_stage": "乾祿",
+          "twelve_spirit": "年殺",
+          "is_void": true,
+          "related_major_period": {
+            "index": 4,
+            "ganzi": "己未"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "半合",
+                  "detail": "metal"
+                }
+              ]
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "合",
+                  "detail": "metal"
+                }
+              ]
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "己未",
+            "stem_relations": [],
+            "branch_relations": []
+          }
+        },
+        {
+          "year": 2030,
+          "ganzi": "庚戌",
+          "heavenly_stem": "庚",
+          "earthly_branch": "戌",
+          "ten_god": {
+            "stem": "劫財",
+            "branch": "正印"
+          },
+          "twelve_stage": "冠帶",
+          "twelve_spirit": "月殺",
+          "is_void": false,
+          "related_major_period": {
+            "index": 4,
+            "ganzi": "己未"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [
+                {
+                  "type": "合",
+                  "detail": "metal"
+                }
+              ],
+              "branch_relations": [
+                {
+                  "type": "破",
+                  "detail": null
+                },
+                {
+                  "type": "刑",
+                  "detail": "無禮"
+                }
+              ]
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "怨嗔",
+                  "detail": null
+                },
+                {
+                  "type": "鬼門",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                }
+              ]
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "己未",
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "破",
+                "detail": null
+              },
+              {
+                "type": "刑",
+                "detail": "無禮"
+              }
+            ]
+          }
+        },
+        {
+          "year": 2031,
+          "ganzi": "辛亥",
+          "heavenly_stem": "辛",
+          "earthly_branch": "亥",
+          "ten_god": {
+            "stem": "比肩",
+            "branch": "傷官"
+          },
+          "twelve_stage": "沐浴",
+          "twelve_spirit": "亡身",
+          "is_void": false,
+          "related_major_period": {
+            "index": 4,
+            "ganzi": "己未"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                }
+              ],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "刑",
+                  "detail": "自刑"
+                }
+              ]
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "怨嗔",
+                  "detail": null
+                },
+                {
+                  "type": "鬼門",
+                  "detail": null
+                }
+              ]
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "己未",
+            "stem_relations": [],
+            "branch_relations": []
+          }
+        },
+        {
+          "year": 2032,
+          "ganzi": "壬子",
+          "heavenly_stem": "壬",
+          "earthly_branch": "子",
+          "ten_god": {
+            "stem": "傷官",
+            "branch": "食神"
+          },
+          "twelve_stage": "長生",
+          "twelve_spirit": "將星",
+          "is_void": false,
+          "related_major_period": {
+            "index": 4,
+            "ganzi": "己未"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "害",
+                  "detail": null
+                },
+                {
+                  "type": "怨嗔",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "半合",
+                  "detail": "water"
+                }
+              ]
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "己未",
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "害",
+                "detail": null
+              },
+              {
+                "type": "怨嗔",
+                "detail": null
+              }
+            ]
+          }
+        },
+        {
+          "year": 2033,
+          "ganzi": "癸丑",
+          "heavenly_stem": "癸",
+          "earthly_branch": "丑",
+          "ten_god": {
+            "stem": "食神",
+            "branch": "偏印"
+          },
+          "twelve_stage": "養",
+          "twelve_spirit": "攀鞍",
+          "is_void": false,
+          "related_major_period": {
+            "index": 5,
+            "ganzi": "戊午"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                },
+                {
+                  "type": "刑",
+                  "detail": "無禮"
+                }
+              ]
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [
+                {
+                  "type": "合",
+                  "detail": "fire"
+                }
+              ],
+              "branch_relations": [
+                {
+                  "type": "破",
+                  "detail": null
+                }
+              ]
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "戊午",
+            "stem_relations": [
+              {
+                "type": "合",
+                "detail": "fire"
+              }
+            ],
+            "branch_relations": [
+              {
+                "type": "害",
+                "detail": null
+              },
+              {
+                "type": "怨嗔",
+                "detail": null
+              },
+              {
+                "type": "鬼門",
+                "detail": null
+              }
+            ]
+          }
+        },
+        {
+          "year": 2034,
+          "ganzi": "甲寅",
+          "heavenly_stem": "甲",
+          "earthly_branch": "寅",
+          "ten_god": {
+            "stem": "正財",
+            "branch": "正財"
+          },
+          "twelve_stage": "胎",
+          "twelve_spirit": "驛馬",
+          "is_void": false,
+          "related_major_period": {
+            "index": 5,
+            "ganzi": "戊午"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "鬼門",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "害",
+                  "detail": null
+                },
+                {
+                  "type": "刑",
+                  "detail": "無恩"
+                }
+              ]
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "合",
+                  "detail": "tree"
+                },
+                {
+                  "type": "破",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": []
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "戊午",
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "半合",
+                "detail": "fire"
+              }
+            ]
+          }
+        },
+        {
+          "year": 2035,
+          "ganzi": "乙卯",
+          "heavenly_stem": "乙",
+          "earthly_branch": "卯",
+          "ten_god": {
+            "stem": "偏財",
+            "branch": "偏財"
+          },
+          "twelve_stage": "絶",
+          "twelve_spirit": "六害",
+          "is_void": false,
+          "related_major_period": {
+            "index": 5,
+            "ganzi": "戊午"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "半合",
+                  "detail": "tree"
+                }
+              ]
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                }
+              ],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "半合",
+                  "detail": "tree"
+                }
+              ]
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "害",
+                  "detail": null
+                }
+              ]
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "戊午",
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "破",
+                "detail": null
+              }
+            ]
+          }
+        },
+        {
+          "year": 2036,
+          "ganzi": "丙辰",
+          "heavenly_stem": "丙",
+          "earthly_branch": "辰",
+          "ten_god": {
+            "stem": "正官",
+            "branch": "正印"
+          },
+          "twelve_stage": "墓",
+          "twelve_spirit": "華蓋",
+          "is_void": false,
+          "related_major_period": {
+            "index": 5,
+            "ganzi": "戊午"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [
+                {
+                  "type": "合",
+                  "detail": "water"
+                }
+              ],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "怨嗔",
+                  "detail": null
+                },
+                {
+                  "type": "鬼門",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "刑",
+                  "detail": "自刑"
+                }
+              ]
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "戊午",
+            "stem_relations": [],
+            "branch_relations": []
+          }
+        },
+        {
+          "year": 2037,
+          "ganzi": "丁巳",
+          "heavenly_stem": "丁",
+          "earthly_branch": "巳",
+          "ten_god": {
+            "stem": "偏官",
+            "branch": "正官"
+          },
+          "twelve_stage": "死",
+          "twelve_spirit": "劫殺",
+          "is_void": false,
+          "related_major_period": {
+            "index": 5,
+            "ganzi": "戊午"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                }
+              ],
+              "branch_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": []
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "戊午",
+            "stem_relations": [],
+            "branch_relations": []
+          }
+        },
+        {
+          "year": 2038,
+          "ganzi": "戊午",
+          "heavenly_stem": "戊",
+          "earthly_branch": "午",
+          "ten_god": {
+            "stem": "正印",
+            "branch": "偏官"
+          },
+          "twelve_stage": "病",
+          "twelve_spirit": "災殺",
+          "is_void": false,
+          "related_major_period": {
+            "index": 5,
+            "ganzi": "戊午"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "合",
+                  "detail": "fire"
+                }
+              ]
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [
+                {
+                  "type": "合",
+                  "detail": "fire"
+                }
+              ],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": []
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "戊午",
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "刑",
+                "detail": "自刑"
+              }
+            ]
+          }
+        },
+        {
+          "year": 2039,
+          "ganzi": "己未",
+          "heavenly_stem": "己",
+          "earthly_branch": "未",
+          "ten_god": {
+            "stem": "偏印",
+            "branch": "偏印"
+          },
+          "twelve_stage": "衰",
+          "twelve_spirit": "天殺",
+          "is_void": false,
+          "related_major_period": {
+            "index": 5,
+            "ganzi": "戊午"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": []
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "戊午",
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "合",
+                "detail": "fire"
+              }
+            ]
+          }
+        },
+        {
+          "year": 2040,
+          "ganzi": "庚申",
+          "heavenly_stem": "庚",
+          "earthly_branch": "申",
+          "ten_god": {
+            "stem": "劫財",
+            "branch": "劫財"
+          },
+          "twelve_stage": "帝旺",
+          "twelve_spirit": "地殺",
+          "is_void": true,
+          "related_major_period": {
+            "index": 5,
+            "ganzi": "戊午"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [
+                {
+                  "type": "合",
+                  "detail": "metal"
+                }
+              ],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "合",
+                  "detail": "water"
+                },
+                {
+                  "type": "破",
+                  "detail": null
+                },
+                {
+                  "type": "刑",
+                  "detail": "無恩"
+                }
+              ]
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "害",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": []
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "戊午",
+            "stem_relations": [],
+            "branch_relations": []
+          }
+        },
+        {
+          "year": 2041,
+          "ganzi": "辛酉",
+          "heavenly_stem": "辛",
+          "earthly_branch": "酉",
+          "ten_god": {
+            "stem": "比肩",
+            "branch": "比肩"
+          },
+          "twelve_stage": "乾祿",
+          "twelve_spirit": "年殺",
+          "is_void": true,
+          "related_major_period": {
+            "index": 5,
+            "ganzi": "戊午"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                }
+              ],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "半合",
+                  "detail": "metal"
+                }
+              ]
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "合",
+                  "detail": "metal"
+                }
+              ]
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "戊午",
+            "stem_relations": [],
+            "branch_relations": []
+          }
+        },
+        {
+          "year": 2042,
+          "ganzi": "壬戌",
+          "heavenly_stem": "壬",
+          "earthly_branch": "戌",
+          "ten_god": {
+            "stem": "傷官",
+            "branch": "正印"
+          },
+          "twelve_stage": "冠帶",
+          "twelve_spirit": "月殺",
+          "is_void": false,
+          "related_major_period": {
+            "index": 5,
+            "ganzi": "戊午"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "破",
+                  "detail": null
+                },
+                {
+                  "type": "刑",
+                  "detail": "無禮"
+                }
+              ]
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "怨嗔",
+                  "detail": null
+                },
+                {
+                  "type": "鬼門",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                }
+              ]
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "戊午",
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "半合",
+                "detail": "fire"
+              }
+            ]
+          }
+        },
+        {
+          "year": 2043,
+          "ganzi": "癸亥",
+          "heavenly_stem": "癸",
+          "earthly_branch": "亥",
+          "ten_god": {
+            "stem": "食神",
+            "branch": "傷官"
+          },
+          "twelve_stage": "沐浴",
+          "twelve_spirit": "亡身",
+          "is_void": false,
+          "related_major_period": {
+            "index": 6,
+            "ganzi": "丁巳"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "刑",
+                  "detail": "自刑"
+                }
+              ]
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [
+                {
+                  "type": "合",
+                  "detail": "fire"
+                }
+              ],
+              "branch_relations": [
+                {
+                  "type": "怨嗔",
+                  "detail": null
+                },
+                {
+                  "type": "鬼門",
+                  "detail": null
+                }
+              ]
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "丁巳",
+            "stem_relations": [
+              {
+                "type": "沖",
+                "detail": null
+              }
+            ],
+            "branch_relations": [
+              {
+                "type": "沖",
+                "detail": null
+              }
+            ]
+          }
+        },
+        {
+          "year": 2044,
+          "ganzi": "甲子",
+          "heavenly_stem": "甲",
+          "earthly_branch": "子",
+          "ten_god": {
+            "stem": "正財",
+            "branch": "食神"
+          },
+          "twelve_stage": "長生",
+          "twelve_spirit": "將星",
+          "is_void": false,
+          "related_major_period": {
+            "index": 6,
+            "ganzi": "丁巳"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "害",
+                  "detail": null
+                },
+                {
+                  "type": "怨嗔",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "半合",
+                  "detail": "water"
+                }
+              ]
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "丁巳",
+            "stem_relations": [],
+            "branch_relations": []
+          }
+        },
+        {
+          "year": 2045,
+          "ganzi": "乙丑",
+          "heavenly_stem": "乙",
+          "earthly_branch": "丑",
+          "ten_god": {
+            "stem": "偏財",
+            "branch": "偏印"
+          },
+          "twelve_stage": "養",
+          "twelve_spirit": "攀鞍",
+          "is_void": false,
+          "related_major_period": {
+            "index": 6,
+            "ganzi": "丁巳"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                },
+                {
+                  "type": "刑",
+                  "detail": "無禮"
+                }
+              ]
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [
+                {
+                  "type": "沖",
+                  "detail": null
+                }
+              ],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": []
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "破",
+                  "detail": null
+                }
+              ]
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "丁巳",
+            "stem_relations": [],
+            "branch_relations": []
+          }
+        },
+        {
+          "year": 2046,
+          "ganzi": "丙寅",
+          "heavenly_stem": "丙",
+          "earthly_branch": "寅",
+          "ten_god": {
+            "stem": "正官",
+            "branch": "正財"
+          },
+          "twelve_stage": "胎",
+          "twelve_spirit": "驛馬",
+          "is_void": false,
+          "related_major_period": {
+            "index": 6,
+            "ganzi": "丁巳"
+          },
+          "relations_to_natal": [
+            {
+              "pillar_position": "hour",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "鬼門",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "day",
+              "stem_relations": [
+                {
+                  "type": "合",
+                  "detail": "water"
+                }
+              ],
+              "branch_relations": [
+                {
+                  "type": "害",
+                  "detail": null
+                },
+                {
+                  "type": "刑",
+                  "detail": "無恩"
+                }
+              ]
+            },
+            {
+              "pillar_position": "month",
+              "stem_relations": [],
+              "branch_relations": [
+                {
+                  "type": "合",
+                  "detail": "tree"
+                },
+                {
+                  "type": "破",
+                  "detail": null
+                }
+              ]
+            },
+            {
+              "pillar_position": "year",
+              "stem_relations": [],
+              "branch_relations": []
+            }
+          ],
+          "relations_to_major_period": {
+            "major_period_ganzi": "丁巳",
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "害",
+                "detail": null
+              },
+              {
+                "type": "刑",
+                "detail": "無恩"
+              }
+            ]
+          }
+        }
+      ],
+      "calculation_provenance": {
+        "annual_periods": {
+          "calculation_method": "orrery-core-composed-v1",
+          "engine_functions": [
+            "getYearGanzi",
+            "getRelation",
+            "getJeonggi",
+            "getTwelveMeteor",
+            "getTwelveSpirit",
+            "getGongmang",
+            "analyzePillarRelations"
+          ]
+        },
+        "gwimun": {
+          "calculation_method": "orrery-core-branch-gwimun-v1",
+          "pairs_used": [
+            "子,酉",
+            "丑,午",
+            "寅,未",
+            "卯,申",
+            "辰,亥",
+            "巳,戌"
+          ],
+          "engine_functions": [
+            "getBranchRelation",
+            "analyzePillarRelations"
+          ]
+        }
+      }
+    },
+    "ziwei": {}
+  },
+  "usage": {
+    "input_tokens": 32961,
+    "output_tokens": 2085,
+    "total_tokens": 35046,
+    "cached_input_tokens": 0,
+    "reasoning_tokens": 517
+  },
+  "response": "[해석 안내]\n이 해석은 제공된 만세력 정보와 전통 명리학의 상징 체계에 따른 참고 관점입니다. 검증된 예측이나 의학적 진단이 아닙니다.\n\n한 줄로 말하면, **사주가 일이 안 풀리는 유일한 원인은 아니지만, 지금은 성과를 밀어붙이기보다 자신과 방식을 지나치게 검토하기 쉬운 흐름**으로 읽혀요.\n\n[사주 관점]\n\n**확인된 사실:** 2023년 11월 말부터 35세 시작의 **己未 대운**에 들어와 있고, 이 대운은 편인 성향이 강합니다. 편인은 전통적으로 재검토, 학습, 전문화, 혼자 깊이 파고드는 힘을 뜻하지만, 과해지면 생각이 많아지고 실행 전에 스스로 제동을 거는 모습으로도 나타납니다.\n\n원국에는 식신·상관, 즉 무언가를 표현하고 결과로 만들어내려는 성향도 드러납니다. 그래서 원래는 “내가 해낸 결과”를 통해 자신감을 얻는 편일 수 있는데, 현재처럼 검토와 의심이 강해지는 흐름에서는 다음과 같은 패턴이 생길 가능성이 있어요.\n\n- 충분히 준비될 때까지 시작을 미룸\n- 작은 결과를 성과로 인정하지 않음\n- 피드백 하나를 전체 능력에 대한 평가로 받아들임\n- 이전에 잘되던 방식이 안 통하면 자신감부터 깎음\n\n즉, **실력이 없어졌다기보다 평가 기준이 높아지고 실행 리듬이 무거워졌을 가능성**이 있습니다. 25세부터의 이전 대운과 35세 이후의 흐름이 달라졌기 때문에, 예전처럼 경쟁과 추진력만으로 밀어붙이는 방식보다 지금은 전문성 정리와 작업 방식의 재설계가 더 중요할 수 있어요.\n\n다만 제공된 연도별 세운은 2026년부터라서, ‘요즘’의 구체적인 연도 작용은 확인할 수 없습니다. 최근 일이 막힌 원인을 특정 사건이나 운 하나로 단정하기는 어려워요.\n\n**지금 필요한 현실적 대응**\n\n1. 결과보다 먼저 ‘이번 주 완료한 것’을 기록하세요. 자신감은 감정보다 완료 경험에서 회복시키는 편이 좋습니다.\n2. 목표를 2주 안에 끝낼 수 있는 크기로 줄이고, 준비 시간에 상한선을 두세요.\n3. 혼자 판단을 반복하지 말고 신뢰할 만한 사람에게 중간 결과물을 보여주세요.\n4. 최근 3개월의 시도 횟수·완료율·외부 반응을 적어, 실제 성과 저하와 자기평가 저하를 구분해 보세요.\n5. 수면 저하나 무기력, 자기비난이 지속되어 일상 기능까지 떨어진다면 사주로만 해석하지 말고 상담이나 의료 전문가의 도움도 검토하세요.\n\n지금은 “나는 안 되는 사람인가?”보다 **“내가 목표를 너무 크게 잡거나, 검토만 하느라 완료 경험을 잃고 있지는 않은가?”**를 먼저 확인해 보는 것이 좋겠습니다.",
+  "full_analysis": {
+    "saju": {
+      "relevant_structure": "일간은 辛금이며, 월주에 식신·상관이 있고 현재는 35세부터 시작된 己未 대운(편인·편인)에 해당한다. 직전 25세 대운은 庚申(겁재·겁재)이었다. 제공된 세운은 2026년부터이므로 ‘요즘’의 연도별 작용은 확인할 수 없다.",
+      "interpretation": "현재의 己未 편인 대운은 외부 성과를 빠르게 확장하기보다 기존 방식에 의문을 품고, 재정비·학습·내적 검토에 에너지가 쏠리기 쉬운 흐름으로 해석할 수 있다. 원국의 식신·상관은 결과를 만들고 표현하려는 욕구와 자기 기준을 나타내는데, 편인의 검토 성향이 강해지면 실행 전에 지나치게 생각하거나 결과를 스스로 깎아내리는 식으로 작동할 가능성이 있다. 따라서 실제 능력이 사라졌다기보다 평가 기준과 일하는 방식이 바뀌는 과정에서 체감 성과와 자신감이 함께 낮아졌을 수 있다. 다만 현재 연도의 세운 데이터가 없어 최근의 구체적인 막힘을 사주만으로 특정할 수는 없다."
+    },
+    "ziwei": {
+      "relevant_structure": "해당 정보 없음 — 이번 질문에는 자미두수 명반 데이터가 제공되지 않았다.",
+      "interpretation": "자미두수 관점은 데이터 부족으로 해석할 수 없다."
+    },
+    "cross_analysis": {
+      "common_direction": "이번 질문에서는 자미두수 데이터가 없어 두 체계의 공통 방향을 비교할 수 없다. 사주만 보면 현재는 빠른 외적 확장보다 재검토와 기반 정비에 무게가 실릴 가능성이 있다.",
+      "differences": "자미두수 자료가 없으므로 차이를 판단할 수 없다.",
+      "overall_judgment": "사주가 모든 실패의 원인이라고 보기는 어렵다. 다만 2023년 말부터 시작된 대운 변화가 생각과 자기검열을 늘리고, 기존의 성취 방식이 잘 통하지 않는 듯한 체감을 키웠을 가능성은 있다. 이는 능력의 상실보다 전략을 다시 설계해야 하는 시기로 보는 편이 적절하다.",
+      "real_world_checks": "최근 3개월의 업무를 ‘시도 횟수·완료율·외부 평가·실제 성과’로 나누어 기록해 보면 막힘이 객관적 성과 저하인지 자기평가 악화인지 구분할 수 있다. 시작 전 검토 시간이 길어졌는지, 목표가 지나치게 커졌는지, 피드백 한 번을 전체 실패로 확대하는지, 수면과 피로가 집중력에 영향을 주는지도 확인하는 것이 좋다."
+    },
+    "response": "[해석 안내]\n이 해석은 제공된 만세력 정보와 전통 명리학의 상징 체계에 따른 참고 관점입니다. 검증된 예측이나 의학적 진단이 아닙니다.\n\n한 줄로 말하면, **사주가 일이 안 풀리는 유일한 원인은 아니지만, 지금은 성과를 밀어붙이기보다 자신과 방식을 지나치게 검토하기 쉬운 흐름**으로 읽혀요.\n\n[사주 관점]\n\n**확인된 사실:** 2023년 11월 말부터 35세 시작의 **己未 대운**에 들어와 있고, 이 대운은 편인 성향이 강합니다. 편인은 전통적으로 재검토, 학습, 전문화, 혼자 깊이 파고드는 힘을 뜻하지만, 과해지면 생각이 많아지고 실행 전에 스스로 제동을 거는 모습으로도 나타납니다.\n\n원국에는 식신·상관, 즉 무언가를 표현하고 결과로 만들어내려는 성향도 드러납니다. 그래서 원래는 “내가 해낸 결과”를 통해 자신감을 얻는 편일 수 있는데, 현재처럼 검토와 의심이 강해지는 흐름에서는 다음과 같은 패턴이 생길 가능성이 있어요.\n\n- 충분히 준비될 때까지 시작을 미룸\n- 작은 결과를 성과로 인정하지 않음\n- 피드백 하나를 전체 능력에 대한 평가로 받아들임\n- 이전에 잘되던 방식이 안 통하면 자신감부터 깎음\n\n즉, **실력이 없어졌다기보다 평가 기준이 높아지고 실행 리듬이 무거워졌을 가능성**이 있습니다. 25세부터의 이전 대운과 35세 이후의 흐름이 달라졌기 때문에, 예전처럼 경쟁과 추진력만으로 밀어붙이는 방식보다 지금은 전문성 정리와 작업 방식의 재설계가 더 중요할 수 있어요.\n\n다만 제공된 연도별 세운은 2026년부터라서, ‘요즘’의 구체적인 연도 작용은 확인할 수 없습니다. 최근 일이 막힌 원인을 특정 사건이나 운 하나로 단정하기는 어려워요.\n\n**지금 필요한 현실적 대응**\n\n1. 결과보다 먼저 ‘이번 주 완료한 것’을 기록하세요. 자신감은 감정보다 완료 경험에서 회복시키는 편이 좋습니다.\n2. 목표를 2주 안에 끝낼 수 있는 크기로 줄이고, 준비 시간에 상한선을 두세요.\n3. 혼자 판단을 반복하지 말고 신뢰할 만한 사람에게 중간 결과물을 보여주세요.\n4. 최근 3개월의 시도 횟수·완료율·외부 반응을 적어, 실제 성과 저하와 자기평가 저하를 구분해 보세요.\n5. 수면 저하나 무기력, 자기비난이 지속되어 일상 기능까지 떨어진다면 사주로만 해석하지 말고 상담이나 의료 전문가의 도움도 검토하세요.\n\n지금은 “나는 안 되는 사람인가?”보다 **“내가 목표를 너무 크게 잡거나, 검토만 하느라 완료 경험을 잃고 있지는 않은가?”**를 먼저 확인해 보는 것이 좋겠습니다.",
+    "sources": {
+      "saju": [
+        "saju.day_master",
+        "saju.pillars",
+        "saju.major_periods",
+        "saju.annual_periods"
+      ],
+      "ziwei": []
+    }
+  },
+  "base_validation": {
+    "overall_pass": true,
+    "checks": {
+      "json_schema_valid": {
+        "pass": true,
+        "details": null
+      },
+      "required_fields_non_empty": {
+        "pass": true,
+        "details": {
+          "response": true,
+          "saju": true,
+          "ziwei": true,
+          "cross_analysis": true
+        }
+      },
+      "forbidden_certainty_phrases": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "raw_match_count": 0,
+          "hedged_and_excluded": 0
+        }
+      },
+      "missing_data_hallucination": {
+        "pass": true,
+        "details": {
+          "mentionedButAbsentStars": [],
+          "suspiciousStemBranchMentions": [],
+          "note": "휴리스틱 — false positive 가능, 사람 검토 필요"
+        }
+      },
+      "routing_correctness": {
+        "pass": true,
+        "details": {
+          "expectedScope": "unconstrained",
+          "sajuFilled": true,
+          "ziweiFilled": false,
+          "informational_only": true
+        }
+      },
+      "extraction_correctness": {
+        "pass": true,
+        "details": null
+      },
+      "no_annual_period_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "has_annual_periods_field": true,
+          "note": "실제 annual_periods 값과 대조함."
+        }
+      },
+      "no_gwimun_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "has_gwimun_field": true,
+          "actually_present": true,
+          "note": "실제 special_stars.gwimun 값과 대조함."
+        }
+      },
+      "no_daewoon_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "present_major_ganzi": [
+            "壬戌",
+            "辛酉",
+            "庚申",
+            "己未",
+            "戊午",
+            "丁巳",
+            "丙辰",
+            "乙卯",
+            "甲寅",
+            "癸丑"
+          ],
+          "present_annual_ganzi": [
+            "丙午",
+            "丁未",
+            "戊申",
+            "己酉",
+            "庚戌",
+            "辛亥",
+            "壬子",
+            "癸丑",
+            "甲寅",
+            "乙卯",
+            "丙辰",
+            "丁巳",
+            "戊午",
+            "己未",
+            "庚申",
+            "辛酉",
+            "壬戌",
+            "癸亥",
+            "甲子",
+            "乙丑",
+            "丙寅"
+          ]
+        }
+      },
+      "current_daewoon_handling": {
+        "pass": true,
+        "details": {
+          "note": "현재 나이가 유효한 대운 구간에 속함 — 특정 자체가 정상 동작.",
+          "age": 37
+        }
+      },
+      "data_limitation_disclosure": {
+        "pass": true,
+        "details": {
+          "note": "데이터 제한 상황이 아님 — 해당 없음(N/A)."
+        }
+      }
+    }
+  },
+  "semantic_validation": {
+    "overall_pass": true,
+    "checks": {
+      "empathyOpeningStructure": {
+        "pass": true,
+        "details": {
+          "starts_with_cold_formula": false,
+          "hanja_dense_opening": false,
+          "hanja_count_in_first_40_chars": 0,
+          "opening_excerpt": "한 줄로 말하면, **사주가 일이 안 풀리는 유일한 원인은 아니지만, 지",
+          "skipped_mandatory_disclosure": true,
+          "note": "이 체크는 최소 안전망일 뿐 — 통과해도 공감 품질 자체는 사람이 평가해야 함. [해석 안내] 필수 고지문은 건너뛰고 그 다음 실제 내용을 검사함."
+        }
+      }
+    }
+  },
+  "overall_pass": true,
+  "model": "gpt-5.6",
+  "mock_mode": false,
+  "timestamp": "2026-08-17T10:26:46.068Z",
+  "human_review_required": [
+    "공감의 질(형식적인지 실질적인지)",
+    "위로가 근거 없는 낙관으로 새는지"
+  ]
+}

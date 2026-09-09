@@ -1,0 +1,315 @@
+{
+  "question": "자미두수에서 내 성격의 핵심 구조를 설명해줘.",
+  "category": "ziwei_only",
+  "routing": {
+    "categories": [
+      "PERSONALITY"
+    ],
+    "saju_fields": [],
+    "ziwei_fields": [
+      "five_elements_bureau",
+      "life_palace",
+      "body_palace",
+      "palaces",
+      "transformations"
+    ],
+    "ziwei_palace_focus": [
+      "life",
+      "fortune"
+    ],
+    "reasoning": "자미두수만 명시한 성격 질문이므로 명궁·신궁과 오행국, 성격의 내면 구조를 보여주는 명궁·복덕궁 및 사화 정보를 선택한다."
+  },
+  "extracted_data": {
+    "subject": {
+      "birth_date": "1988-11-22",
+      "birth_time": "14:30",
+      "time_known": true,
+      "gender": "female",
+      "birth_place": {
+        "name": "Seoul",
+        "resolved_name": "서울",
+        "latitude": 37.5665,
+        "longitude": 126.978
+      },
+      "timezone": "Asia/Seoul"
+    },
+    "saju": {},
+    "ziwei": {
+      "five_elements_bureau": {
+        "name": "土五局",
+        "number": 5
+      },
+      "life_palace": {
+        "earthly_branch": "辰",
+        "stem_branch": "丙辰"
+      },
+      "body_palace": {
+        "earthly_branch": "午",
+        "palace_position": "fortune"
+      },
+      "palaces": [
+        {
+          "position": "life",
+          "stem_branch": "丙辰",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "巨門",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            },
+            {
+              "name": "地空",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "陀羅",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "spouse",
+          "stem_branch": "甲寅",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天機",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": "化忌"
+            },
+            {
+              "name": "太陰",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": "化權"
+            },
+            {
+              "name": "天馬",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "wealth",
+          "stem_branch": "甲子",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "太陽",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "travel",
+          "stem_branch": "壬戌",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天同",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "career",
+          "stem_branch": "庚申",
+          "is_body_palace": false,
+          "stars": []
+        },
+        {
+          "position": "fortune",
+          "stem_branch": "戊午",
+          "is_body_palace": true,
+          "stars": [
+            {
+              "name": "天梁",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            },
+            {
+              "name": "地劫",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "擎羊",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        }
+      ],
+      "transformations": [
+        {
+          "star": "貪狼",
+          "type": "化祿",
+          "palace_position": "siblings"
+        },
+        {
+          "star": "天機",
+          "type": "化忌",
+          "palace_position": "spouse"
+        },
+        {
+          "star": "太陰",
+          "type": "化權",
+          "palace_position": "spouse"
+        },
+        {
+          "star": "右弼",
+          "type": "化科",
+          "palace_position": "children"
+        }
+      ]
+    }
+  },
+  "extraction_stats": {
+    "full_chars": 25154,
+    "extracted_chars": 1946,
+    "reduction_ratio": 0.923,
+    "approx_full_tokens": 6289,
+    "approx_extracted_tokens": 487
+  },
+  "model": "gpt-5.6",
+  "usage": {
+    "input_tokens": 23546,
+    "output_tokens": 2204,
+    "total_tokens": 25750,
+    "cached_input_tokens": 22273,
+    "reasoning_tokens": 377
+  },
+  "estimated_cost": null,
+  "response": "[해석 안내]\n이 해석은 제공된 자미두수 명반과 전통 해석 체계에 따른 참고 관점입니다. 검증된 심리 진단이나 과학적 성격검사가 아닙니다.\n\n한 줄로 말하면, **당신의 핵심 성격은 ‘의문을 끝까지 파고드는 분석력’과 ‘옳고 그름을 중시하는 책임감’이 결합된 구조**예요.\n\n[삼방사정 근거]\n- 본궁: 명궁 — 거문, 지공, 타라\n- 대궁: 천이궁 — 천동\n- 삼합궁 1: 재백궁 — 태양\n- 삼합궁 2: 관록궁 — 주성이 없는 공궁\n- 내면·행동축: 신궁이 복덕궁에 있으며 천량, 지겁, 경양이 배치됨\n\n### 겉으로 드러나는 성향\n명궁의 **거문**은 말, 질문, 분석, 의심, 논리적 검증을 상징해요. 설명이 모호하거나 앞뒤가 맞지 않으면 그냥 넘어가기보다 원인을 캐고 확인하려는 편으로 읽힙니다. 문제점을 포착하고 언어로 정리하는 능력이 강점이 될 수 있어요.\n\n다만 거문의 밝기가 함이고 지공·타라가 함께 있어, 확신이 부족할 때는 생각이 길어지거나 상대의 말에 숨은 뜻을 지나치게 찾을 가능성이 있습니다. 스트레스를 받으면 정확한 지적이 날카로운 말이나 방어적인 반박으로 전달될 수도 있고요.\n\n### 실제 행동을 움직이는 내면\n신궁이 복덕궁에 있고 **천량이 묘**한 점이 중요합니다. 겉에서는 까다롭고 비판적으로 보일 수 있지만, 실제 내면에서는 공정성·책임·보호·장기적인 원칙을 중요하게 여기는 경향이 있어요. 단순히 이기려는 것보다 “무엇이 옳은가, 누가 책임져야 하는가”를 따지는 쪽에 가깝습니다.\n\n그래서 부당하거나 무책임한 상황에서는 평소보다 훨씬 단호해질 수 있어요. 다만 복덕궁의 경양·지겁은 이런 책임감이 과해질 때 혼자 긴장하고 버티거나, 마음속에서 문제를 크게 키우는 패턴으로 바뀔 수 있음을 보조적으로 보여줍니다.\n\n### 관계에서 나타날 수 있는 패턴\n부처궁의 천기 화기와 태음 화권은 가까운 관계일수록 생각과 감정의 움직임이 복잡해질 가능성을 나타냅니다. 상대를 이해하려는 마음이 강하지만, 불안할 때는 말뜻을 반복 분석하거나 상황을 통제하려는 모습으로 이어질 수 있어요. 추측을 확정하기 전에 직접 확인하는 습관이 중요합니다.\n\n### 핵심 강점과 주의점\n- **강점:** 문제의 허점을 발견하고 말로 구조화하는 능력, 책임감, 공정성, 사람이나 원칙을 지키려는 태도\n- **주의점:** 과잉 분석, 의심의 장기화, 직설적인 방어, 타인의 문제까지 책임지려다 생기는 소진\n- **활용법:** 중요한 대화에서는 ‘확인된 사실·내 추정·내 감정’을 나눠 표현하고, 결정을 재검토하는 횟수나 기한을 미리 정해두는 것이 좋아요.\n\n현실에서는 최근 반복되는 갈등을 돌아보세요. 실제 문제를 정확히 짚었지만 **표현 방식 때문에 갈등이 커졌는지**, 혹은 증거가 부족한 상태에서 **상대의 의도를 너무 오래 추측했는지**가 이 구조를 확인하는 핵심 기준입니다.",
+  "full_analysis": {
+    "saju": {
+      "relevant_structure": "이번 질문에는 사주 데이터가 추출되지 않았습니다.",
+      "interpretation": "해당 정보 없음. 자미두수만을 요청한 질문이므로 사주 관점은 해석하지 않습니다."
+    },
+    "ziwei": {
+      "relevant_structure": "명궁 丙辰의 거문(陷)·지공·타라, 명궁의 삼방사정인 천이궁 천동(陷)·재백궁 태양(陷)·공궁인 관록궁, 그리고 신궁이 겹친 복덕궁의 천량(廟)·지겁·경양을 중심으로 보았습니다. 보조적으로 부처궁의 천기 화기·태음 화권을 참고했습니다.",
+      "interpretation": "성격의 핵심은 ‘의문을 그냥 넘기지 않고 말과 생각으로 구조를 파악하려는 사람’에 가깝습니다. 명궁의 거문은 분석·질문·언어·비판적 사고를 강조합니다. 다만 함지이고 지공·타라가 함께 있어, 확신이 서지 않으면 의심과 재검토가 길어지거나 표현이 날카로워질 수 있습니다. 반면 신궁이 복덕궁에 있고 천량이 묘한 것은 실제 행동의 깊은 기준이 공정성·책임감·보호 본능에 놓이기 쉽다는 뜻으로 읽힙니다. 겉으로는 따지고 경계하는 모습이 먼저 보이더라도, 내면에서는 ‘무엇이 옳고 오래가는가’를 중요하게 여기는 구조입니다. 경양·지겁은 이 기준이 압박을 받을 때 단호함, 과민한 방어, 심리적 소진으로 치우칠 가능성을 보조적으로 나타냅니다. 친밀한 관계에서는 천기 화기와 태음 화권 때문에 상대의 말과 감정을 많이 분석하고, 불안할수록 상황을 이해하거나 통제하려는 경향이 강해질 수 있습니다."
+    },
+    "cross_analysis": {
+      "common_direction": "사주 데이터가 없어 두 체계의 공통 방향을 비교할 수 없습니다.",
+      "differences": "사주 관점은 해당 정보가 없으며, 이번 답변은 자미두수 관점에 한정됩니다.",
+      "overall_judgment": "자미두수상 핵심 성격은 ‘비판적으로 생각하고 표현하는 힘’과 ‘도덕적 기준 및 책임감’이 함께 있는 구조로 읽힙니다. 잘 쓰면 문제의 본질을 찾아 설명하고 조정하는 능력이 되지만, 압박이 커지면 의심·과잉 분석·직설적인 방어로 바뀔 가능성이 있습니다. 이는 고정된 성격 판정이 아니라 전통적 상징에 따른 경향성입니다.",
+      "real_world_checks": "최근 3개월을 돌아보며 ① 애매한 설명을 들으면 바로 질문하거나 반박하는지, ② 결정을 내린 뒤에도 반복 검토하는지, ③ 불공정하거나 무책임한 상황에 유난히 예민한지, ④ 가까운 관계에서 불안할수록 상대의 말뜻을 과도하게 분석하거나 통제하려 하는지 확인해 보세요. 반복된다면 ‘사실·추정·감정’을 구분해 적고, 중요한 대화는 즉시 반응하기보다 한 번 정리한 뒤 표현하는 방식이 도움이 될 수 있습니다."
+    },
+    "response": "[해석 안내]\n이 해석은 제공된 자미두수 명반과 전통 해석 체계에 따른 참고 관점입니다. 검증된 심리 진단이나 과학적 성격검사가 아닙니다.\n\n한 줄로 말하면, **당신의 핵심 성격은 ‘의문을 끝까지 파고드는 분석력’과 ‘옳고 그름을 중시하는 책임감’이 결합된 구조**예요.\n\n[삼방사정 근거]\n- 본궁: 명궁 — 거문, 지공, 타라\n- 대궁: 천이궁 — 천동\n- 삼합궁 1: 재백궁 — 태양\n- 삼합궁 2: 관록궁 — 주성이 없는 공궁\n- 내면·행동축: 신궁이 복덕궁에 있으며 천량, 지겁, 경양이 배치됨\n\n### 겉으로 드러나는 성향\n명궁의 **거문**은 말, 질문, 분석, 의심, 논리적 검증을 상징해요. 설명이 모호하거나 앞뒤가 맞지 않으면 그냥 넘어가기보다 원인을 캐고 확인하려는 편으로 읽힙니다. 문제점을 포착하고 언어로 정리하는 능력이 강점이 될 수 있어요.\n\n다만 거문의 밝기가 함이고 지공·타라가 함께 있어, 확신이 부족할 때는 생각이 길어지거나 상대의 말에 숨은 뜻을 지나치게 찾을 가능성이 있습니다. 스트레스를 받으면 정확한 지적이 날카로운 말이나 방어적인 반박으로 전달될 수도 있고요.\n\n### 실제 행동을 움직이는 내면\n신궁이 복덕궁에 있고 **천량이 묘**한 점이 중요합니다. 겉에서는 까다롭고 비판적으로 보일 수 있지만, 실제 내면에서는 공정성·책임·보호·장기적인 원칙을 중요하게 여기는 경향이 있어요. 단순히 이기려는 것보다 “무엇이 옳은가, 누가 책임져야 하는가”를 따지는 쪽에 가깝습니다.\n\n그래서 부당하거나 무책임한 상황에서는 평소보다 훨씬 단호해질 수 있어요. 다만 복덕궁의 경양·지겁은 이런 책임감이 과해질 때 혼자 긴장하고 버티거나, 마음속에서 문제를 크게 키우는 패턴으로 바뀔 수 있음을 보조적으로 보여줍니다.\n\n### 관계에서 나타날 수 있는 패턴\n부처궁의 천기 화기와 태음 화권은 가까운 관계일수록 생각과 감정의 움직임이 복잡해질 가능성을 나타냅니다. 상대를 이해하려는 마음이 강하지만, 불안할 때는 말뜻을 반복 분석하거나 상황을 통제하려는 모습으로 이어질 수 있어요. 추측을 확정하기 전에 직접 확인하는 습관이 중요합니다.\n\n### 핵심 강점과 주의점\n- **강점:** 문제의 허점을 발견하고 말로 구조화하는 능력, 책임감, 공정성, 사람이나 원칙을 지키려는 태도\n- **주의점:** 과잉 분석, 의심의 장기화, 직설적인 방어, 타인의 문제까지 책임지려다 생기는 소진\n- **활용법:** 중요한 대화에서는 ‘확인된 사실·내 추정·내 감정’을 나눠 표현하고, 결정을 재검토하는 횟수나 기한을 미리 정해두는 것이 좋아요.\n\n현실에서는 최근 반복되는 갈등을 돌아보세요. 실제 문제를 정확히 짚었지만 **표현 방식 때문에 갈등이 커졌는지**, 혹은 증거가 부족한 상태에서 **상대의 의도를 너무 오래 추측했는지**가 이 구조를 확인하는 핵심 기준입니다.",
+    "sources": {
+      "saju": [],
+      "ziwei": [
+        "ziwei.life_palace",
+        "ziwei.body_palace",
+        "ziwei.palaces[position=life]",
+        "ziwei.palaces[position=travel]",
+        "ziwei.palaces[position=wealth]",
+        "ziwei.palaces[position=career]",
+        "ziwei.palaces[position=fortune]",
+        "ziwei.palaces[position=spouse]",
+        "ziwei.transformations"
+      ]
+    }
+  },
+  "validation": {
+    "overall_pass": true,
+    "checks": {
+      "json_schema_valid": {
+        "pass": true,
+        "details": null
+      },
+      "required_fields_non_empty": {
+        "pass": true,
+        "details": {
+          "response": true,
+          "saju": true,
+          "ziwei": true,
+          "cross_analysis": true
+        }
+      },
+      "forbidden_certainty_phrases": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "raw_match_count": 0,
+          "hedged_and_excluded": 0
+        }
+      },
+      "missing_data_hallucination": {
+        "pass": true,
+        "details": {
+          "mentionedButAbsentStars": [],
+          "suspiciousStemBranchMentions": [],
+          "note": "휴리스틱 — false positive 가능, 사람 검토 필요"
+        }
+      },
+      "routing_correctness": {
+        "pass": true,
+        "details": {
+          "expectedScope": "ziwei_only",
+          "sajuFilled": false,
+          "ziweiFilled": true,
+          "informational_only": false
+        }
+      },
+      "extraction_correctness": {
+        "pass": true,
+        "details": null
+      },
+      "no_annual_period_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "has_annual_periods_field": false,
+          "note": "세운 데이터가 없는 상태에서 구체적 간지를 세운과 함께 제시하면 hallucination."
+        }
+      },
+      "no_gwimun_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "note": "귀문관살 데이터가 없는 상태에서 존재를 단정하면 hallucination. 부재를 설명하는 문맥은 제외."
+        }
+      },
+      "no_daewoon_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "present_ganzi": []
+        }
+      },
+      "current_daewoon_handling": {
+        "pass": true,
+        "details": {
+          "note": "대운 데이터가 추출되지 않은 질문 — 해당 없음(N/A)."
+        }
+      },
+      "data_limitation_disclosure": {
+        "pass": true,
+        "details": {
+          "note": "데이터 제한 상황이 아님 — 해당 없음(N/A)."
+        }
+      }
+    }
+  },
+  "timestamp": "2026-08-17T04:42:36.195Z",
+  "mock_mode": false,
+  "fixture": "main_quality"
+}

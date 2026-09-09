@@ -1,0 +1,1171 @@
+{
+  "meta": {
+    "generatedAt": "2026-08-14T23:06:27.216Z",
+    "engine": "@orrery/core",
+    "engineVersion": "0.4.2",
+    "input": {
+      "birthDate": "2026-08-06",
+      "birthTime": "10:59",
+      "gender": "male",
+      "city": "Incheon",
+      "timezone": "Asia/Seoul",
+      "resolvedCity": {
+        "query": "Incheon",
+        "matched": true,
+        "name": "인천",
+        "region": "인천광역시",
+        "lat": 37.4563,
+        "lon": 126.7052
+      },
+      "birthInputUsed": {
+        "year": 2026,
+        "month": 8,
+        "day": 6,
+        "hour": 10,
+        "minute": 59,
+        "gender": "M",
+        "latitude": 37.4563,
+        "longitude": 126.7052
+      }
+    }
+  },
+  "saju": {
+    "pillars": [
+      {
+        "pillar": {
+          "ganzi": "乙巳",
+          "stem": "乙",
+          "branch": "巳"
+        },
+        "stemSipsin": "傷官",
+        "branchSipsin": "偏財",
+        "unseong": "絶",
+        "sinsal": "亡身",
+        "jigang": "戊庚丙"
+      },
+      {
+        "pillar": {
+          "ganzi": "壬子",
+          "stem": "壬",
+          "branch": "子"
+        },
+        "stemSipsin": "本元",
+        "branchSipsin": "劫財",
+        "unseong": "帝旺",
+        "sinsal": "災殺",
+        "jigang": "壬 癸"
+      },
+      {
+        "pillar": {
+          "ganzi": "乙未",
+          "stem": "乙",
+          "branch": "未"
+        },
+        "stemSipsin": "傷官",
+        "branchSipsin": "正官",
+        "unseong": "養",
+        "sinsal": "攀鞍",
+        "jigang": "丁乙己"
+      },
+      {
+        "pillar": {
+          "ganzi": "丙午",
+          "stem": "丙",
+          "branch": "午"
+        },
+        "stemSipsin": "偏財",
+        "branchSipsin": "正財",
+        "unseong": "胎",
+        "sinsal": "將星",
+        "jigang": "丙己丁"
+      }
+    ],
+    "jwabeop": [
+      [
+        {
+          "stem": "戊",
+          "sipsin": "偏官",
+          "unseong": "胎"
+        },
+        {
+          "stem": "庚",
+          "sipsin": "偏印",
+          "unseong": "死"
+        },
+        {
+          "stem": "丙",
+          "sipsin": "偏財",
+          "unseong": "胎"
+        }
+      ],
+      [
+        {
+          "stem": "壬",
+          "sipsin": "比肩",
+          "unseong": "帝旺"
+        },
+        {
+          "stem": "癸",
+          "sipsin": "劫財",
+          "unseong": "乾祿"
+        }
+      ],
+      [
+        {
+          "stem": "丁",
+          "sipsin": "正財",
+          "unseong": "絶"
+        },
+        {
+          "stem": "乙",
+          "sipsin": "傷官",
+          "unseong": "病"
+        },
+        {
+          "stem": "己",
+          "sipsin": "正官",
+          "unseong": "絶"
+        }
+      ],
+      [
+        {
+          "stem": "丙",
+          "sipsin": "偏財",
+          "unseong": "胎"
+        },
+        {
+          "stem": "己",
+          "sipsin": "正官",
+          "unseong": "絶"
+        },
+        {
+          "stem": "丁",
+          "sipsin": "正財",
+          "unseong": "絶"
+        }
+      ]
+    ],
+    "injongbeop": [
+      {
+        "category": "食傷",
+        "yangStem": "甲",
+        "unseong": "沐浴"
+      },
+      {
+        "category": "財星",
+        "yangStem": "丙",
+        "unseong": "胎"
+      },
+      {
+        "category": "官星",
+        "yangStem": "戊",
+        "unseong": "胎"
+      },
+      {
+        "category": "印星",
+        "yangStem": "庚",
+        "unseong": "死"
+      }
+    ],
+    "relations": {
+      "pairs": {
+        "1,2": {
+          "stem": [],
+          "branch": [
+            {
+              "type": "害",
+              "detail": null
+            },
+            {
+              "type": "怨嗔",
+              "detail": null
+            }
+          ]
+        },
+        "1,3": {
+          "stem": [
+            {
+              "type": "沖",
+              "detail": null
+            }
+          ],
+          "branch": [
+            {
+              "type": "沖",
+              "detail": null
+            }
+          ]
+        },
+        "2,3": {
+          "stem": [],
+          "branch": [
+            {
+              "type": "合",
+              "detail": "fire"
+            }
+          ]
+        }
+      },
+      "triple": [],
+      "directional": [
+        {
+          "type": "方合",
+          "detail": "fire"
+        }
+      ]
+    },
+    "specialSals": {
+      "yangin": [
+        1
+      ],
+      "baekho": false,
+      "goegang": false,
+      "dohwa": [],
+      "cheonul": [
+        0
+      ],
+      "cheonduk": [],
+      "wolduk": [],
+      "munchang": [],
+      "hongyeom": true,
+      "geumyeo": []
+    },
+    "gongmang": {
+      "branches": [
+        "寅",
+        "卯"
+      ],
+      "pillarIndices": []
+    },
+    "daewoon": [
+      {
+        "index": 1,
+        "ganzi": "丙申",
+        "startDate": "2027-01-27T02:48:09.000Z",
+        "age": 1,
+        "stemSipsin": "偏財",
+        "branchSipsin": "偏印",
+        "unseong": "長生",
+        "sinsal": "驛馬",
+        "isGongmang": false
+      },
+      {
+        "index": 2,
+        "ganzi": "丁酉",
+        "startDate": "2037-01-27T02:48:09.000Z",
+        "age": 11,
+        "stemSipsin": "正財",
+        "branchSipsin": "正印",
+        "unseong": "沐浴",
+        "sinsal": "六害",
+        "isGongmang": false
+      },
+      {
+        "index": 3,
+        "ganzi": "戊戌",
+        "startDate": "2047-01-27T02:48:09.000Z",
+        "age": 21,
+        "stemSipsin": "偏官",
+        "branchSipsin": "偏官",
+        "unseong": "冠帶",
+        "sinsal": "華蓋",
+        "isGongmang": false
+      },
+      {
+        "index": 4,
+        "ganzi": "己亥",
+        "startDate": "2057-01-27T02:48:09.000Z",
+        "age": 31,
+        "stemSipsin": "正官",
+        "branchSipsin": "比肩",
+        "unseong": "乾祿",
+        "sinsal": "劫殺",
+        "isGongmang": false
+      },
+      {
+        "index": 5,
+        "ganzi": "庚子",
+        "startDate": "2067-01-27T02:48:09.000Z",
+        "age": 41,
+        "stemSipsin": "偏印",
+        "branchSipsin": "劫財",
+        "unseong": "帝旺",
+        "sinsal": "災殺",
+        "isGongmang": false
+      },
+      {
+        "index": 6,
+        "ganzi": "辛丑",
+        "startDate": "2077-01-27T02:48:09.000Z",
+        "age": 51,
+        "stemSipsin": "正印",
+        "branchSipsin": "正官",
+        "unseong": "衰",
+        "sinsal": "天殺",
+        "isGongmang": false
+      },
+      {
+        "index": 7,
+        "ganzi": "壬寅",
+        "startDate": "2087-01-27T02:48:09.000Z",
+        "age": 61,
+        "stemSipsin": "比肩",
+        "branchSipsin": "食神",
+        "unseong": "病",
+        "sinsal": "地殺",
+        "isGongmang": true
+      },
+      {
+        "index": 8,
+        "ganzi": "癸卯",
+        "startDate": "2097-01-27T02:48:09.000Z",
+        "age": 71,
+        "stemSipsin": "劫財",
+        "branchSipsin": "傷官",
+        "unseong": "死",
+        "sinsal": "年殺",
+        "isGongmang": true
+      },
+      {
+        "index": 9,
+        "ganzi": "甲辰",
+        "startDate": "2107-01-27T02:48:09.000Z",
+        "age": 81,
+        "stemSipsin": "食神",
+        "branchSipsin": "偏官",
+        "unseong": "墓",
+        "sinsal": "月殺",
+        "isGongmang": false
+      },
+      {
+        "index": 10,
+        "ganzi": "乙巳",
+        "startDate": "2117-01-27T02:48:09.000Z",
+        "age": 91,
+        "stemSipsin": "傷官",
+        "branchSipsin": "偏財",
+        "unseong": "絶",
+        "sinsal": "亡身",
+        "isGongmang": false
+      }
+    ]
+  },
+  "ziwei": {
+    "chart": {
+      "solarYear": 2026,
+      "solarMonth": 8,
+      "solarDay": 6,
+      "hour": 10,
+      "minute": 59,
+      "isMale": true,
+      "lunarYear": 2026,
+      "lunarMonth": 6,
+      "lunarDay": 24,
+      "isLeapMonth": false,
+      "yearGan": "丙",
+      "yearZhi": "午",
+      "mingGongZhi": "寅",
+      "shenGongZhi": "子",
+      "wuXingJu": {
+        "name": "木三局",
+        "number": 3
+      },
+      "palaces": {
+        "命宮": {
+          "name": "命宮",
+          "zhi": "寅",
+          "gan": "庚",
+          "ganZhi": "庚寅",
+          "stars": [],
+          "isShenGong": false
+        },
+        "兄弟": {
+          "name": "兄弟",
+          "zhi": "丑",
+          "gan": "辛",
+          "ganZhi": "辛丑",
+          "stars": [
+            {
+              "name": "廉貞",
+              "brightness": "廟",
+              "siHua": "化忌"
+            },
+            {
+              "name": "七殺",
+              "brightness": "廟",
+              "siHua": ""
+            }
+          ],
+          "isShenGong": false
+        },
+        "夫妻": {
+          "name": "夫妻",
+          "zhi": "子",
+          "gan": "庚",
+          "ganZhi": "庚子",
+          "stars": [
+            {
+              "name": "天梁",
+              "brightness": "廟",
+              "siHua": ""
+            }
+          ],
+          "isShenGong": true
+        },
+        "子女": {
+          "name": "子女",
+          "zhi": "亥",
+          "gan": "己",
+          "ganZhi": "己亥",
+          "stars": [
+            {
+              "name": "天相",
+              "brightness": "廟",
+              "siHua": ""
+            },
+            {
+              "name": "天魁",
+              "brightness": "",
+              "siHua": ""
+            }
+          ],
+          "isShenGong": false
+        },
+        "財帛": {
+          "name": "財帛",
+          "zhi": "戌",
+          "gan": "戊",
+          "ganZhi": "戊戌",
+          "stars": [
+            {
+              "name": "巨門",
+              "brightness": "陷",
+              "siHua": ""
+            }
+          ],
+          "isShenGong": false
+        },
+        "疾厄": {
+          "name": "疾厄",
+          "zhi": "酉",
+          "gan": "丁",
+          "ganZhi": "丁酉",
+          "stars": [
+            {
+              "name": "紫微",
+              "brightness": "利",
+              "siHua": ""
+            },
+            {
+              "name": "貪狼",
+              "brightness": "陷",
+              "siHua": ""
+            },
+            {
+              "name": "左輔",
+              "brightness": "",
+              "siHua": ""
+            },
+            {
+              "name": "文曲",
+              "brightness": "",
+              "siHua": ""
+            },
+            {
+              "name": "天鉞",
+              "brightness": "",
+              "siHua": ""
+            }
+          ],
+          "isShenGong": false
+        },
+        "遷移": {
+          "name": "遷移",
+          "zhi": "申",
+          "gan": "丙",
+          "ganZhi": "丙申",
+          "stars": [
+            {
+              "name": "天機",
+              "brightness": "旺",
+              "siHua": "化權"
+            },
+            {
+              "name": "太陰",
+              "brightness": "得",
+              "siHua": ""
+            },
+            {
+              "name": "鈴星",
+              "brightness": "",
+              "siHua": ""
+            },
+            {
+              "name": "天馬",
+              "brightness": "",
+              "siHua": ""
+            }
+          ],
+          "isShenGong": false
+        },
+        "交友": {
+          "name": "交友",
+          "zhi": "未",
+          "gan": "乙",
+          "ganZhi": "乙未",
+          "stars": [
+            {
+              "name": "天府",
+              "brightness": "旺",
+              "siHua": ""
+            }
+          ],
+          "isShenGong": false
+        },
+        "官祿": {
+          "name": "官祿",
+          "zhi": "午",
+          "gan": "甲",
+          "ganZhi": "甲午",
+          "stars": [
+            {
+              "name": "太陽",
+              "brightness": "旺",
+              "siHua": ""
+            },
+            {
+              "name": "地空",
+              "brightness": "",
+              "siHua": ""
+            },
+            {
+              "name": "擎羊",
+              "brightness": "",
+              "siHua": ""
+            },
+            {
+              "name": "火星",
+              "brightness": "",
+              "siHua": ""
+            }
+          ],
+          "isShenGong": false
+        },
+        "田宅": {
+          "name": "田宅",
+          "zhi": "巳",
+          "gan": "癸",
+          "ganZhi": "癸巳",
+          "stars": [
+            {
+              "name": "武曲",
+              "brightness": "利",
+              "siHua": ""
+            },
+            {
+              "name": "破軍",
+              "brightness": "廟",
+              "siHua": ""
+            },
+            {
+              "name": "右弼",
+              "brightness": "",
+              "siHua": ""
+            },
+            {
+              "name": "文昌",
+              "brightness": "",
+              "siHua": "化科"
+            },
+            {
+              "name": "祿存",
+              "brightness": "",
+              "siHua": ""
+            }
+          ],
+          "isShenGong": false
+        },
+        "福德": {
+          "name": "福德",
+          "zhi": "辰",
+          "gan": "壬",
+          "ganZhi": "壬辰",
+          "stars": [
+            {
+              "name": "天同",
+              "brightness": "陷",
+              "siHua": "化祿"
+            },
+            {
+              "name": "地劫",
+              "brightness": "",
+              "siHua": ""
+            },
+            {
+              "name": "陀羅",
+              "brightness": "",
+              "siHua": ""
+            }
+          ],
+          "isShenGong": false
+        },
+        "父母": {
+          "name": "父母",
+          "zhi": "卯",
+          "gan": "辛",
+          "ganZhi": "辛卯",
+          "stars": [],
+          "isShenGong": false
+        }
+      },
+      "daXianStartAge": 3
+    },
+    "sihuaSummary": [
+      {
+        "palace": "兄弟",
+        "palaceName": "兄弟",
+        "star": "廉貞",
+        "siHua": "化忌"
+      },
+      {
+        "palace": "遷移",
+        "palaceName": "遷移",
+        "star": "天機",
+        "siHua": "化權"
+      },
+      {
+        "palace": "田宅",
+        "palaceName": "田宅",
+        "star": "文昌",
+        "siHua": "化科"
+      },
+      {
+        "palace": "福德",
+        "palaceName": "福德",
+        "star": "天同",
+        "siHua": "化祿"
+      }
+    ],
+    "daxian": [
+      {
+        "ageStart": 3,
+        "ageEnd": 12,
+        "palaceName": "命宮",
+        "ganZhi": "庚寅",
+        "mainStars": []
+      },
+      {
+        "ageStart": 13,
+        "ageEnd": 22,
+        "palaceName": "父母",
+        "ganZhi": "辛卯",
+        "mainStars": []
+      },
+      {
+        "ageStart": 23,
+        "ageEnd": 32,
+        "palaceName": "福德",
+        "ganZhi": "壬辰",
+        "mainStars": [
+          "天同"
+        ]
+      },
+      {
+        "ageStart": 33,
+        "ageEnd": 42,
+        "palaceName": "田宅",
+        "ganZhi": "癸巳",
+        "mainStars": [
+          "武曲",
+          "破軍"
+        ]
+      },
+      {
+        "ageStart": 43,
+        "ageEnd": 52,
+        "palaceName": "官祿",
+        "ganZhi": "甲午",
+        "mainStars": [
+          "太陽"
+        ]
+      },
+      {
+        "ageStart": 53,
+        "ageEnd": 62,
+        "palaceName": "交友",
+        "ganZhi": "乙未",
+        "mainStars": [
+          "天府"
+        ]
+      },
+      {
+        "ageStart": 63,
+        "ageEnd": 72,
+        "palaceName": "遷移",
+        "ganZhi": "丙申",
+        "mainStars": [
+          "天機",
+          "太陰"
+        ]
+      },
+      {
+        "ageStart": 73,
+        "ageEnd": 82,
+        "palaceName": "疾厄",
+        "ganZhi": "丁酉",
+        "mainStars": [
+          "紫微",
+          "貪狼"
+        ]
+      },
+      {
+        "ageStart": 83,
+        "ageEnd": 92,
+        "palaceName": "財帛",
+        "ganZhi": "戊戌",
+        "mainStars": [
+          "巨門"
+        ]
+      },
+      {
+        "ageStart": 93,
+        "ageEnd": 102,
+        "palaceName": "子女",
+        "ganZhi": "己亥",
+        "mainStars": [
+          "天相"
+        ]
+      },
+      {
+        "ageStart": 103,
+        "ageEnd": 112,
+        "palaceName": "夫妻",
+        "ganZhi": "庚子",
+        "mainStars": [
+          "天梁"
+        ]
+      },
+      {
+        "ageStart": 113,
+        "ageEnd": 122,
+        "palaceName": "兄弟",
+        "ganZhi": "辛丑",
+        "mainStars": [
+          "廉貞",
+          "七殺"
+        ]
+      }
+    ]
+  },
+  "natal": {
+    "houseSystem": "Placidus",
+    "planets": [
+      {
+        "id": "Sun",
+        "longitude": 133.65824432024996,
+        "latitude": 0.00019481930613627867,
+        "speed": 0.9578768293938122,
+        "sign": "Leo",
+        "degreeInSign": 13.658244320249992,
+        "isRetrograde": false,
+        "house": 10
+      },
+      {
+        "id": "Moon",
+        "longitude": 43.439716043442864,
+        "latitude": 5.048726428002102,
+        "speed": 13.943043128086074,
+        "sign": "Taurus",
+        "degreeInSign": 13.439716043442843,
+        "isRetrograde": false,
+        "house": 7
+      },
+      {
+        "id": "Mercury",
+        "longitude": 114.84532750308765,
+        "latitude": -0.8487640189077063,
+        "speed": 1.2743118767579222,
+        "sign": "Cancer",
+        "degreeInSign": 24.845327503087674,
+        "isRetrograde": false,
+        "house": 10
+      },
+      {
+        "id": "Venus",
+        "longitude": 179.2775051435152,
+        "latitude": -0.47540831293402736,
+        "speed": 1.0145985475340187,
+        "sign": "Virgo",
+        "degreeInSign": 29.277505143515214,
+        "isRetrograde": false,
+        "house": 12
+      },
+      {
+        "id": "Mars",
+        "longitude": 86.49435979391339,
+        "latitude": 0.162318103372167,
+        "speed": 0.6697227062834269,
+        "sign": "Gemini",
+        "degreeInSign": 26.494359793913418,
+        "isRetrograde": false,
+        "house": 9
+      },
+      {
+        "id": "Jupiter",
+        "longitude": 128.0936084753579,
+        "latitude": 0.48454707508094136,
+        "speed": 0.2208424828667725,
+        "sign": "Leo",
+        "degreeInSign": 8.093608475357883,
+        "isRetrograde": false,
+        "house": 10
+      },
+      {
+        "id": "Saturn",
+        "longitude": 14.659517178406198,
+        "latitude": -2.549103732706317,
+        "speed": -0.01743463069099894,
+        "sign": "Aries",
+        "degreeInSign": 14.65951717840619,
+        "isRetrograde": true,
+        "house": 6
+      },
+      {
+        "id": "Uranus",
+        "longitude": 65.16935617250648,
+        "latitude": -0.15469592412557756,
+        "speed": 0.0288929341646607,
+        "sign": "Gemini",
+        "degreeInSign": 5.169356172506468,
+        "isRetrograde": false,
+        "house": 8
+      },
+      {
+        "id": "Neptune",
+        "longitude": 4.185862638709153,
+        "latitude": -1.3966676656719543,
+        "speed": -0.015137311027786749,
+        "sign": "Aries",
+        "degreeInSign": 4.185862638709182,
+        "isRetrograde": true,
+        "house": 6
+      },
+      {
+        "id": "Pluto",
+        "longitude": 304.05268968997734,
+        "latitude": -4.284736112024779,
+        "speed": -0.023068430610900338,
+        "sign": "Aquarius",
+        "degreeInSign": 4.052689689977342,
+        "isRetrograde": true,
+        "house": 4
+      },
+      {
+        "id": "Chiron",
+        "longitude": 30.864605016777777,
+        "latitude": 0,
+        "speed": -0.0019783594806995343,
+        "sign": "Taurus",
+        "degreeInSign": 0.864605016777773,
+        "isRetrograde": true,
+        "house": 7
+      },
+      {
+        "id": "NorthNode",
+        "longitude": 330.67387419275315,
+        "latitude": 0,
+        "speed": -0.05295373542935522,
+        "sign": "Pisces",
+        "degreeInSign": 0.6738741927531464,
+        "isRetrograde": true,
+        "house": 4
+      },
+      {
+        "id": "SouthNode",
+        "longitude": 150.67387419275315,
+        "latitude": 0,
+        "speed": -0.05295373542935522,
+        "sign": "Virgo",
+        "degreeInSign": 0.6738741927531464,
+        "isRetrograde": false,
+        "house": 10
+      },
+      {
+        "id": "Fortuna",
+        "longitude": 107.00099723429247,
+        "latitude": 0,
+        "speed": 0,
+        "sign": "Cancer",
+        "degreeInSign": 17.00099723429247,
+        "isRetrograde": false,
+        "house": 9
+      }
+    ],
+    "angles": {
+      "asc": {
+        "longitude": 197.21952551109956,
+        "sign": "Libra",
+        "degreeInSign": 17.21952551109962
+      },
+      "mc": {
+        "longitude": 109.4817487449636,
+        "sign": "Cancer",
+        "degreeInSign": 19.481748744963625
+      },
+      "desc": {
+        "longitude": 17.21952551109956,
+        "sign": "Aries",
+        "degreeInSign": 17.21952551109956
+      },
+      "ic": {
+        "longitude": 289.4817487449636,
+        "sign": "Capricorn",
+        "degreeInSign": 19.481748744963625
+      }
+    },
+    "houses": [
+      {
+        "number": 1,
+        "cuspLongitude": 197.21952551109956,
+        "sign": "Libra",
+        "degreeInSign": 17.21952551109962
+      },
+      {
+        "number": 2,
+        "cuspLongitude": 228.898329797808,
+        "sign": "Scorpio",
+        "degreeInSign": 18.898329797807946
+      },
+      {
+        "number": 3,
+        "cuspLongitude": 250.63527679712743,
+        "sign": "Sagittarius",
+        "degreeInSign": 10.635276797127403
+      },
+      {
+        "number": 4,
+        "cuspLongitude": 289.4817487449636,
+        "sign": "Capricorn",
+        "degreeInSign": 19.481748744963625
+      },
+      {
+        "number": 5,
+        "cuspLongitude": 330.6909637324336,
+        "sign": "Pisces",
+        "degreeInSign": 0.6909637324336018
+      },
+      {
+        "number": 6,
+        "cuspLongitude": 353.7463142670199,
+        "sign": "Pisces",
+        "degreeInSign": 23.746314267019898
+      },
+      {
+        "number": 7,
+        "cuspLongitude": 17.21952551109956,
+        "sign": "Aries",
+        "degreeInSign": 17.21952551109956
+      },
+      {
+        "number": 8,
+        "cuspLongitude": 48.898329797808,
+        "sign": "Taurus",
+        "degreeInSign": 18.898329797808003
+      },
+      {
+        "number": 9,
+        "cuspLongitude": 70.6352767971274,
+        "sign": "Gemini",
+        "degreeInSign": 10.635276797127403
+      },
+      {
+        "number": 10,
+        "cuspLongitude": 109.4817487449636,
+        "sign": "Cancer",
+        "degreeInSign": 19.481748744963625
+      },
+      {
+        "number": 11,
+        "cuspLongitude": 150.6909637324336,
+        "sign": "Virgo",
+        "degreeInSign": 0.6909637324336018
+      },
+      {
+        "number": 12,
+        "cuspLongitude": 173.74631426701993,
+        "sign": "Virgo",
+        "degreeInSign": 23.746314267019898
+      }
+    ],
+    "aspects": [
+      {
+        "planet1": "Neptune",
+        "planet2": "Pluto",
+        "type": "sextile",
+        "angle": 60,
+        "orb": 0.1
+      },
+      {
+        "planet1": "Sun",
+        "planet2": "Moon",
+        "type": "square",
+        "angle": 90,
+        "orb": 0.2
+      },
+      {
+        "planet1": "Chiron",
+        "planet2": "NorthNode",
+        "type": "sextile",
+        "angle": 60,
+        "orb": 0.2
+      },
+      {
+        "planet1": "Sun",
+        "planet2": "Saturn",
+        "type": "trine",
+        "angle": 120,
+        "orb": 1
+      },
+      {
+        "planet1": "Uranus",
+        "planet2": "Neptune",
+        "type": "sextile",
+        "angle": 60,
+        "orb": 1
+      },
+      {
+        "planet1": "Uranus",
+        "planet2": "Pluto",
+        "type": "trine",
+        "angle": 120,
+        "orb": 1.1
+      },
+      {
+        "planet1": "Venus",
+        "planet2": "Mars",
+        "type": "square",
+        "angle": 90,
+        "orb": 2.8
+      },
+      {
+        "planet1": "Jupiter",
+        "planet2": "Uranus",
+        "type": "sextile",
+        "angle": 60,
+        "orb": 2.9
+      },
+      {
+        "planet1": "Pluto",
+        "planet2": "Chiron",
+        "type": "square",
+        "angle": 90,
+        "orb": 3.2
+      },
+      {
+        "planet1": "Jupiter",
+        "planet2": "Neptune",
+        "type": "trine",
+        "angle": 120,
+        "orb": 3.9
+      },
+      {
+        "planet1": "Jupiter",
+        "planet2": "Pluto",
+        "type": "opposition",
+        "angle": 180,
+        "orb": 4
+      },
+      {
+        "planet1": "Mars",
+        "planet2": "NorthNode",
+        "type": "trine",
+        "angle": 120,
+        "orb": 4.2
+      },
+      {
+        "planet1": "Mercury",
+        "planet2": "Venus",
+        "type": "sextile",
+        "angle": 60,
+        "orb": 4.4
+      },
+      {
+        "planet1": "Mars",
+        "planet2": "Chiron",
+        "type": "sextile",
+        "angle": 60,
+        "orb": 4.4
+      },
+      {
+        "planet1": "Uranus",
+        "planet2": "NorthNode",
+        "type": "square",
+        "angle": 90,
+        "orb": 4.5
+      },
+      {
+        "planet1": "Venus",
+        "planet2": "Pluto",
+        "type": "trine",
+        "angle": 120,
+        "orb": 4.8
+      },
+      {
+        "planet1": "Venus",
+        "planet2": "Neptune",
+        "type": "opposition",
+        "angle": 180,
+        "orb": 4.9
+      },
+      {
+        "planet1": "Moon",
+        "planet2": "Jupiter",
+        "type": "square",
+        "angle": 90,
+        "orb": 5.3
+      },
+      {
+        "planet1": "Sun",
+        "planet2": "Jupiter",
+        "type": "conjunction",
+        "angle": 0,
+        "orb": 5.6
+      },
+      {
+        "planet1": "Venus",
+        "planet2": "Uranus",
+        "type": "trine",
+        "angle": 120,
+        "orb": 5.9
+      },
+      {
+        "planet1": "Mercury",
+        "planet2": "Chiron",
+        "type": "square",
+        "angle": 90,
+        "orb": 6
+      },
+      {
+        "planet1": "Jupiter",
+        "planet2": "Saturn",
+        "type": "trine",
+        "angle": 120,
+        "orb": 6.6
+      },
+      {
+        "planet1": "Jupiter",
+        "planet2": "Chiron",
+        "type": "square",
+        "angle": 90,
+        "orb": 7.2
+      },
+      {
+        "planet1": "Mars",
+        "planet2": "Neptune",
+        "type": "square",
+        "angle": 90,
+        "orb": 7.7
+      }
+    ]
+  }
+}

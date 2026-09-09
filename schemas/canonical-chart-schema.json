@@ -1,0 +1,476 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://internal.example/schemas/canonical-chart-schema.json",
+  "title": "Canonical Birth Chart Schema",
+  "description": "엔진 독립적(engine-agnostic) 출생 차트 표준 스키마. 사주팔자(Saju), 자미두수(Ziwei Doushu), 서양 점성술(Western Natal Chart) 세 체계를 하나의 JSON으로 통합한다. 이 스키마는 특정 계산 엔진(현재: @orrery/core)의 필드명을 그대로 노출하지 않는다 — 엔진을 교체해도 이 구조는 바뀌지 않아야 한다. 각 엔진의 raw 출력은 output/canonical-transform.mjs 같은 어댑터에서 이 구조로 변환한 뒤 서비스/AI 프롬프트에 전달한다.",
+  "type": "object",
+  "required": ["schema_version", "generated_at", "source", "subject", "saju", "ziwei", "natal"],
+  "additionalProperties": false,
+  "properties": {
+
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "이 캐노니컬 스키마 자체의 버전. 계산 엔진 버전과는 별개로 관리한다."
+    },
+
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "이 캐노니컬 JSON이 생성된 시각 (ISO 8601)."
+    },
+
+    "source": {
+      "type": "object",
+      "description": "이 데이터를 생성한 계산 엔진에 대한 출처 메타데이터. 서비스 로직/AI 프롬프트는 이 블록에 의존해서는 안 된다 — 디버깅/감사(audit) 목적으로만 사용.",
+      "required": ["engine_name", "engine_version", "adapter_version"],
+      "properties": {
+        "engine_name": { "type": "string", "description": "예: '@orrery/core'. 엔진 교체 시 이 값만 바뀐다." },
+        "engine_version": { "type": "string" },
+        "adapter_version": { "type": "string", "description": "raw 엔진 출력을 이 캐노니컬 구조로 변환한 어댑터 스크립트의 버전." }
+      }
+    },
+
+    "subject": {
+      "type": "object",
+      "description": "출생 정보 원본 (모든 계산의 입력값). 세 체계가 공유한다.",
+      "required": ["birth_date", "birth_time", "time_known", "gender", "birth_place", "timezone"],
+      "properties": {
+        "birth_date": { "type": "string", "format": "date", "description": "YYYY-MM-DD (양력 기준)" },
+        "birth_time": { "type": "string", "pattern": "^[0-2][0-9]:[0-5][0-9]$", "description": "HH:mm, 24시간제. time_known=false면 관례값(예: 12:00)일 수 있음." },
+        "time_known": { "type": "boolean", "description": "출생 시각을 정확히 아는지 여부. false면 사주는 3주(년/월/일)만, 자미두수/natal의 시각 의존 필드(命宮/ASC/House)는 신뢰도 낮음으로 표시해야 한다." },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "birth_place": {
+          "type": "object",
+          "required": ["latitude", "longitude"],
+          "properties": {
+            "name": { "type": "string", "description": "원 입력 지명 (예: 'Incheon')" },
+            "resolved_name": { "type": "string", "description": "엔진이 실제로 매칭한 지명 (예: '인천')" },
+            "latitude": { "type": "number" },
+            "longitude": { "type": "number" }
+          }
+        },
+        "timezone": { "type": "string", "description": "IANA 타임존 (예: 'Asia/Seoul'). 참고: 현재 어댑터는 이 값이 'Asia/Seoul'이 아닐 경우 호출 전 KST 벽시계 시각으로 변환하는 책임을 진다 — 스키마 자체는 변환 로직을 담지 않는다." }
+      }
+    },
+
+    "saju": {
+      "type": "object",
+      "description": "사주팔자 (四柱八字, Four Pillars of Destiny).",
+      "required": ["day_master", "pillars", "relations", "special_stars", "void_branches", "major_periods"],
+      "properties": {
+
+        "day_master": {
+          "type": "object",
+          "description": "일간(日干) — 사주 해석의 기준점.",
+          "required": ["heavenly_stem", "element", "yin_yang"],
+          "properties": {
+            "heavenly_stem": { "type": "string", "description": "한자 1글자, 예: '壬'" },
+            "element": { "type": "string", "enum": ["wood", "fire", "earth", "metal", "water"] },
+            "yin_yang": { "type": "string", "enum": ["yang", "yin"] }
+          }
+        },
+
+        "pillars": {
+          "type": "array",
+          "description": "4주 (년/월/일/시). 배열 순서는 고정: [hour, day, month, year] 가 아니라 관례상 연대기 순인 [year, month, day, hour]로 정규화한다 (주의: 원본 엔진은 [시,일,월,년] 순서를 쓸 수 있으므로 어댑터가 재정렬한다).",
+          "minItems": 3,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["position", "ganzi", "heavenly_stem", "earthly_branch", "ten_god", "twelve_stage", "hidden_stems"],
+            "properties": {
+              "position": { "type": "string", "enum": ["year", "month", "day", "hour"] },
+              "ganzi": { "type": "string", "description": "60갑자, 예: '壬子'" },
+              "heavenly_stem": { "type": "string" },
+              "earthly_branch": { "type": "string" },
+              "ten_god": {
+                "type": "object",
+                "description": "십신(十神). 일간 자기 자신(일주의 천간)은 stem=null (엔진에 따라 '本元'/'日主' 등으로 표기되던 것).",
+                "properties": {
+                  "stem": { "type": ["string", "null"] },
+                  "branch": { "type": "string", "description": "지지의 십신은 관례상 지장간 정기(正氣) 기준." }
+                }
+              },
+              "twelve_stage": { "type": "string", "description": "12운성 (포태법), 예: '帝旺'" },
+              "twelve_spirit": { "type": ["string", "null"], "description": "12신살 (년지 기준), 예: '亡身'. 특수신살(special_stars)과는 별개 체계." },
+              "hidden_stems": {
+                "type": "array",
+                "description": "지장간(支藏干) — 해당 지지에 숨은 천간들과 각각의 십신/운성 (구 '좌법').",
+                "items": {
+                  "type": "object",
+                  "required": ["heavenly_stem", "ten_god", "twelve_stage"],
+                  "properties": {
+                    "heavenly_stem": { "type": "string" },
+                    "ten_god": { "type": "string" },
+                    "twelve_stage": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "hidden_stem_borrowing": {
+          "type": "array",
+          "description": "인종법(引從法) — 일지에 해당 십성 카테고리가 없을 때 빌려오는 규칙. 선택적 고급 필드.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category": { "type": "string", "description": "십성 카테고리, 예: '食傷','財星','官星','印星'" },
+              "borrowed_from_stem": { "type": "string" },
+              "twelve_stage": { "type": "string" }
+            }
+          }
+        },
+
+        "relations": {
+          "type": "object",
+          "description": "합충형파해 (干支 상호작용) 분석.",
+          "required": ["pillar_pairs", "triple_combinations", "directional_combinations"],
+          "properties": {
+            "pillar_pairs": {
+              "type": "array",
+              "description": "두 주(柱) 사이의 관계. positions는 subject.pillars의 position 값 쌍.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "positions": { "type": "array", "items": { "type": "string", "enum": ["year", "month", "day", "hour"] }, "minItems": 2, "maxItems": 2 },
+                  "stem_relations": { "type": "array", "items": { "type": "object", "properties": { "type": { "type": "string", "description": "예: '沖','合'" }, "detail": { "type": ["string", "null"] } } } },
+                  "branch_relations": { "type": "array", "items": { "type": "object", "properties": { "type": { "type": "string", "description": "예: '沖','合','刑','破','害','怨嗔'" }, "detail": { "type": ["string", "null"], "description": "예: 삼합/육합의 결과 오행 'fire'" } } } }
+                }
+              }
+            },
+            "triple_combinations": { "type": "array", "description": "삼합(三合)/반합(半合) 등 3주 이상 관여하는 조합.", "items": { "type": "object", "properties": { "type": { "type": "string" }, "detail": { "type": ["string", "null"] } } } },
+            "directional_combinations": { "type": "array", "description": "방합(方合) 등 방위성 조합.", "items": { "type": "object", "properties": { "type": { "type": "string" }, "detail": { "type": ["string", "null"] } } } }
+          }
+        },
+
+        "special_stars": {
+          "type": "object",
+          "description": "신살(神殺) — 특수 길흉성. 값이 배열이면 해당하는 pillar position 목록, boolean이면 사주 전체에 대한 존재 여부.",
+          "properties": {
+            "yangin": { "description": "양인살", "oneOf": [{ "type": "array", "items": { "type": "string", "enum": ["year", "month", "day", "hour"] } }, { "type": "boolean" }] },
+            "baekho": { "description": "백호살", "type": "boolean" },
+            "goegang": { "description": "괴강살", "type": "boolean" },
+            "dohwa": { "description": "도화살", "oneOf": [{ "type": "array" }, { "type": "boolean" }] },
+            "cheoneul_gwiin": { "description": "천을귀인", "oneOf": [{ "type": "array" }, { "type": "boolean" }] },
+            "cheondeok_gwiin": { "description": "천덕귀인", "oneOf": [{ "type": "array" }, { "type": "boolean" }] },
+            "woldeok_gwiin": { "description": "월덕귀인", "oneOf": [{ "type": "array" }, { "type": "boolean" }] },
+            "munchang_gwiin": { "description": "문창귀인", "oneOf": [{ "type": "array" }, { "type": "boolean" }] },
+            "hongyeom": { "description": "홍염살", "type": "boolean" },
+            "geumyeo": { "description": "금여록", "oneOf": [{ "type": "array" }, { "type": "boolean" }] },
+            "gwimun": {
+              "description": "귀문관살(鬼門關殺). 다른 특수신살과 달리 두 주(柱) 사이의 '관계'로 성립하므로(단일 주에 붙는 플래그가 아님) pair 객체 배열로 표현한다. 계산 기준은 saju.calculation_provenance.gwimun 참고 (유파에 따라 판정 범위가 달라질 수 있는 항목이므로 반드시 provenance와 함께 해석할 것).",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["positions"],
+                "properties": {
+                  "positions": {
+                    "type": "array",
+                    "items": { "type": "string", "enum": ["year", "month", "day", "hour"] },
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "detail": { "type": ["string", "null"] }
+                }
+              }
+            }
+          }
+        },
+
+        "void_branches": {
+          "type": "object",
+          "description": "공망(空亡).",
+          "properties": {
+            "branches": { "type": "array", "items": { "type": "string" }, "minItems": 2, "maxItems": 2 },
+            "affected_pillars": { "type": "array", "items": { "type": "string", "enum": ["year", "month", "day", "hour"] } }
+          }
+        },
+
+        "major_periods": {
+          "type": "array",
+          "description": "대운(大運). 10년 단위 인생 주기.",
+          "items": {
+            "type": "object",
+            "required": ["sequence", "ganzi", "start_age"],
+            "properties": {
+              "sequence": { "type": "integer", "minimum": 1 },
+              "ganzi": { "type": "string" },
+              "heavenly_stem": { "type": "string" },
+              "earthly_branch": { "type": "string" },
+              "start_age": { "type": "integer" },
+              "start_date": { "type": "string", "format": "date-time" },
+              "ten_god": { "type": "object", "properties": { "stem": { "type": "string" }, "branch": { "type": "string" } } },
+              "twelve_stage": { "type": "string" },
+              "twelve_spirit": { "type": ["string", "null"] },
+              "is_void": { "type": "boolean", "description": "이 대운 간지가 공망에 해당하는지." }
+            }
+          }
+        },
+
+        "annual_periods": {
+          "type": "array",
+          "description": "세운(歲運). 연 단위 흐름. major_periods와 달리 선택 필드(optional) — 이 필드가 없는 Canonical JSON도 여전히 유효하다 (구버전 호환). packages/chart-engine/annual-periods.mjs가 생성하며, 계산에 사용한 함수 목록은 saju.calculation_provenance.annual_periods 참고.",
+          "items": {
+            "type": "object",
+            "required": ["year", "ganzi"],
+            "properties": {
+              "year": { "type": "integer" },
+              "ganzi": { "type": "string" },
+              "heavenly_stem": { "type": "string" },
+              "earthly_branch": { "type": "string" },
+              "ten_god": { "type": "object", "properties": { "stem": { "type": ["string", "null"] }, "branch": { "type": ["string", "null"] } } },
+              "twelve_stage": { "type": "string" },
+              "twelve_spirit": { "type": ["string", "null"] },
+              "is_void": { "type": "boolean", "description": "이 세운 지지가 일주 공망에 해당하는지." },
+              "related_major_period": {
+                "type": ["object", "null"],
+                "description": "이 세운이 속하는 대운. 대운이 아직 시작되지 않은 나이(예: 유아)의 세운은 null.",
+                "properties": { "index": { "type": "integer" }, "ganzi": { "type": "string" } }
+              },
+              "relations_to_natal": {
+                "type": "array",
+                "description": "원국 4주 각각과의 합충형파해원진귀문 관계 (analyzePillarRelations 결과 그대로).",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "pillar_position": { "type": "string", "enum": ["year", "month", "day", "hour"] },
+                    "stem_relations": { "type": "array", "items": { "type": "object", "properties": { "type": { "type": "string" }, "detail": { "type": ["string", "null"] } } } },
+                    "branch_relations": { "type": "array", "items": { "type": "object", "properties": { "type": { "type": "string" }, "detail": { "type": ["string", "null"] } } } }
+                  }
+                }
+              },
+              "relations_to_major_period": {
+                "type": ["object", "null"],
+                "description": "related_major_period와의 합충형파해원진귀문 관계. related_major_period가 null이면 이 필드도 null.",
+                "properties": {
+                  "major_period_ganzi": { "type": "string" },
+                  "stem_relations": { "type": "array", "items": { "type": "object", "properties": { "type": { "type": "string" }, "detail": { "type": ["string", "null"] } } } },
+                  "branch_relations": { "type": "array", "items": { "type": "object", "properties": { "type": { "type": "string" }, "detail": { "type": ["string", "null"] } } } }
+                }
+              }
+            }
+          }
+        },
+
+        "calculation_provenance": {
+          "type": "object",
+          "description": "선택 필드. annual_periods/special_stars.gwimun처럼 유파 차이가 있을 수 있거나 별도 side-car 모듈로 계산된 항목의 계산 근거를 추적 가능하게 기록한다. 이 필드가 없으면 해당 Canonical JSON에는 annual_periods/gwimun이 아예 없다는 뜻으로 해석한다 (구버전 호환).",
+          "properties": {
+            "annual_periods": {
+              "type": "object",
+              "properties": {
+                "calculation_method": { "type": "string" },
+                "engine_functions": { "type": "array", "items": { "type": "string" } }
+              }
+            },
+            "gwimun": {
+              "type": "object",
+              "description": "귀문관살은 유파별로 판정 범위(원국 내부만/대운·세운 포함 등)와 페어 정의가 달라질 수 있는 항목이므로, 실제 어떤 기준으로 계산됐는지 반드시 기록한다.",
+              "properties": {
+                "calculation_method": { "type": "string" },
+                "pairs_used": { "type": "array", "items": { "type": "string" }, "description": "실제 사용된 지지 페어 목록 (예: '子,酉'). 계산 엔진의 실제 상수를 그대로 기록 — 하드코딩된 문서화가 아니라 코드에서 읽어온 값." },
+                "engine_functions": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "ziwei": {
+      "type": "object",
+      "description": "자미두수 (紫微斗數, Purple Star Astrology).",
+      "required": ["five_elements_bureau", "life_palace", "body_palace", "palaces", "transformations", "major_periods"],
+      "properties": {
+
+        "five_elements_bureau": {
+          "type": "object",
+          "description": "오행국 (五行局) — 대한 계산의 기준 주기.",
+          "required": ["name", "number"],
+          "properties": {
+            "name": { "type": "string", "description": "예: '木三局'" },
+            "number": { "type": "integer" }
+          }
+        },
+
+        "life_palace": {
+          "type": "object",
+          "description": "명궁 (命宮).",
+          "properties": {
+            "earthly_branch": { "type": "string" },
+            "stem_branch": { "type": "string", "description": "명궁의 완전한 간지, 예: '庚寅'" }
+          }
+        },
+
+        "body_palace": {
+          "type": "object",
+          "description": "신궁 (身宮) — 명궁과 별개로, 12궁 중 하나와 겹친다.",
+          "properties": {
+            "earthly_branch": { "type": "string" },
+            "palace_position": { "$ref": "#/$defs/ziweiPalacePosition", "description": "신궁이 겹치는 12궁 위치." }
+          }
+        },
+
+        "palaces": {
+          "type": "array",
+          "description": "12궁 전체.",
+          "minItems": 12,
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "required": ["position", "stem_branch", "is_body_palace", "stars"],
+            "properties": {
+              "position": { "$ref": "#/$defs/ziweiPalacePosition" },
+              "stem_branch": { "type": "string" },
+              "is_body_palace": { "type": "boolean" },
+              "stars": {
+                "type": "array",
+                "description": "이 궁에 배치된 성요. 空宮(빈 궁)이면 빈 배열.",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "category"],
+                  "properties": {
+                    "name": { "type": "string", "description": "예: '紫微','天機','擎羊'" },
+                    "category": { "type": "string", "enum": ["main_star", "lucky_star", "malefic_star", "auxiliary_star"], "description": "주성(14主星) / 길성(보성) / 살성 / 기타 보조성 분류." },
+                    "brightness": { "type": ["string", "null"], "description": "묘왕득리평함(廟/旺/得/利/平/陷) 밝기 등급. 없으면 null (보성/살성 등 밝기 개념이 없는 성요)." },
+                    "transformation": { "type": ["string", "null"], "description": "이 성요에 사화(化祿/化權/化科/化忌)가 걸려 있으면 해당 값, 없으면 null." }
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "transformations": {
+          "type": "array",
+          "description": "사화 (四化) 요약 — palaces 내부에도 개별 표시되지만, 빠른 조회를 위해 평탄화된 목록도 별도 제공.",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["star", "type", "palace_position"],
+            "properties": {
+              "star": { "type": "string" },
+              "type": { "type": "string", "enum": ["化祿", "化權", "化科", "化忌"] },
+              "palace_position": { "$ref": "#/$defs/ziweiPalacePosition" }
+            }
+          }
+        },
+
+        "major_periods": {
+          "type": "array",
+          "description": "대한 (大限) — 자미두수의 10년 주기 (사주 대운에 대응).",
+          "minItems": 12,
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "required": ["sequence", "age_start", "age_end", "palace_position"],
+            "properties": {
+              "sequence": { "type": "integer", "minimum": 1 },
+              "age_start": { "type": "integer" },
+              "age_end": { "type": "integer" },
+              "palace_position": { "$ref": "#/$defs/ziweiPalacePosition" },
+              "stem_branch": { "type": "string" },
+              "main_stars": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+
+    "natal": {
+      "type": "object",
+      "description": "서양 점성술 출생차트 (Western Natal Chart).",
+      "required": ["house_system", "planets", "angles", "houses", "aspects"],
+      "properties": {
+
+        "house_system": { "type": "string", "description": "예: 'Placidus', 'Koch'. time_known=false면 null일 수 있음." },
+
+        "planets": {
+          "type": "array",
+          "description": "천체 위치. 전통 10행성 + 카이런 + 남/북교점 + 포르투나 등을 포함할 수 있다.",
+          "items": {
+            "type": "object",
+            "required": ["id", "longitude", "sign", "degree_in_sign", "is_retrograde"],
+            "properties": {
+              "id": { "type": "string", "description": "예: 'sun','moon','mercury',...,'chiron','north_node','south_node','fortuna' (소문자 스네이크 케이스로 정규화)." },
+              "longitude": { "type": "number", "description": "황경 0~360도." },
+              "latitude": { "type": ["number", "null"] },
+              "speed": { "type": ["number", "null"], "description": "일일 이동 속도 (음수면 역행 방향 이동)." },
+              "sign": { "type": "string", "enum": ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"] },
+              "degree_in_sign": { "type": "number" },
+              "is_retrograde": { "type": "boolean" },
+              "house": { "type": ["integer", "null"], "description": "1~12. time_known=false면 null." }
+            }
+          }
+        },
+
+        "angles": {
+          "type": "object",
+          "description": "4대 앵글. time_known=false면 전체 null.",
+          "properties": {
+            "ascendant": { "$ref": "#/$defs/zodiacPoint" },
+            "midheaven": { "$ref": "#/$defs/zodiacPoint" },
+            "descendant": { "$ref": "#/$defs/zodiacPoint" },
+            "imum_coeli": { "$ref": "#/$defs/zodiacPoint" }
+          }
+        },
+
+        "houses": {
+          "type": "array",
+          "description": "12 하우스 커스프. time_known=false면 빈 배열.",
+          "items": {
+            "type": "object",
+            "required": ["number", "cusp_longitude", "sign", "degree_in_sign"],
+            "properties": {
+              "number": { "type": "integer", "minimum": 1, "maximum": 12 },
+              "cusp_longitude": { "type": "number" },
+              "sign": { "type": "string" },
+              "degree_in_sign": { "type": "number" }
+            }
+          }
+        },
+
+        "aspects": {
+          "type": "array",
+          "description": "행성 간 각도 관계. orb 원본값을 항상 포함해서, 서비스 레이어가 자유롭게 오브 컷오프 정책을 적용/재적용할 수 있게 한다 (엔진마다 기본 오브 정책이 다를 수 있으므로 — engine-comparison.md §3.5 참고).",
+          "items": {
+            "type": "object",
+            "required": ["planet_a", "planet_b", "type", "angle", "orb"],
+            "properties": {
+              "planet_a": { "type": "string", "description": "natal.planets[].id 참조" },
+              "planet_b": { "type": "string" },
+              "type": { "type": "string", "enum": ["conjunction", "sextile", "square", "trine", "opposition"] },
+              "angle": { "type": "number", "description": "정확한 두 천체 사이 각도." },
+              "orb": { "type": "number", "description": "이론적 정각과의 오차(도 단위). 작을수록 강한 애스펙트." }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "$defs": {
+    "ziweiPalacePosition": {
+      "type": "string",
+      "description": "자미두수 12궁 표준 위치명 (한자 원명 병기).",
+      "enum": [
+        "life",       "siblings",   "spouse",     "children",
+        "wealth",     "health",     "travel",     "friends",
+        "career",     "property",   "fortune",    "parents"
+      ],
+      "$comment": "한자 대응: life=命宮, siblings=兄弟, spouse=夫妻, children=子女, wealth=財帛, health=疾厄, travel=遷移, friends=交友, career=官祿, property=田宅, fortune=福德, parents=父母"
+    },
+    "zodiacPoint": {
+      "type": ["object", "null"],
+      "properties": {
+        "longitude": { "type": "number" },
+        "sign": { "type": "string" },
+        "degree_in_sign": { "type": "number" }
+      }
+    }
+  }
+}

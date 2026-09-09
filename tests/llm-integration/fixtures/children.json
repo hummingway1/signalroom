@@ -1,0 +1,26 @@
+[
+  {
+    "key": "self-directed",
+    "birthDate": "1985-02-14",
+    "birthTime": "06:10",
+    "gender": "female",
+    "city": "Seoul",
+    "name": "self-directed 테스트 아이"
+  },
+  {
+    "key": "receptive",
+    "birthDate": "1991-09-17",
+    "birthTime": "04:50",
+    "gender": "female",
+    "city": "Seoul",
+    "name": "receptive 테스트 아이"
+  },
+  {
+    "key": "expressive",
+    "birthDate": "1988-11-22",
+    "birthTime": "10:30",
+    "gender": "female",
+    "city": "Seoul",
+    "name": "expressive 테스트 아이"
+  }
+]

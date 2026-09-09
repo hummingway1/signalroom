@@ -1,0 +1,610 @@
+{
+  "file": "t2-gwimun-direct",
+  "question": "제 사주에 귀문관살이 있나요? 있다면 어디에 있고 어떻게 해석해야 하나요?",
+  "purpose": "귀문관살 직접 질문 — special_stars.gwimun 사용 정확성",
+  "routing": {
+    "categories": [
+      "PERSONALITY",
+      "GENERAL"
+    ],
+    "saju_fields": [
+      "day_master",
+      "pillars",
+      "special_stars"
+    ],
+    "ziwei_fields": [],
+    "ziwei_palace_focus": [],
+    "reasoning": "귀문관살의 존재 여부와 위치는 special_stars 및 원국의 어느 기둥에 해당하는지 확인할 pillars가 필요합니다. 성격·기질상 의미를 원국 맥락에서 해석하기 위해 day_master도 포함하며, 사용자가 사주를 명시했으므로 자미두수 필드는 제외합니다."
+  },
+  "extracted_data": {
+    "subject": {
+      "birth_date": "1988-11-22",
+      "birth_time": "14:30",
+      "time_known": true,
+      "gender": "female",
+      "birth_place": {
+        "name": "Seoul",
+        "resolved_name": "서울",
+        "latitude": 37.5665,
+        "longitude": 126.978
+      },
+      "timezone": "Asia/Seoul"
+    },
+    "saju": {
+      "day_master": {
+        "heavenly_stem": "辛",
+        "element": "metal",
+        "yin_yang": "yin"
+      },
+      "pillars": [
+        {
+          "position": "year",
+          "ganzi": "戊辰",
+          "heavenly_stem": "戊",
+          "earthly_branch": "辰",
+          "ten_god": {
+            "stem": "正印",
+            "branch": "正印"
+          },
+          "twelve_stage": "墓",
+          "twelve_spirit": "華蓋",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "乙",
+              "ten_god": "偏財",
+              "twelve_stage": "沐浴"
+            },
+            {
+              "heavenly_stem": "癸",
+              "ten_god": "食神",
+              "twelve_stage": "胎"
+            },
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "正印",
+              "twelve_stage": "乾祿"
+            }
+          ]
+        },
+        {
+          "position": "month",
+          "ganzi": "癸亥",
+          "heavenly_stem": "癸",
+          "earthly_branch": "亥",
+          "ten_god": {
+            "stem": "食神",
+            "branch": "傷官"
+          },
+          "twelve_stage": "沐浴",
+          "twelve_spirit": "亡身",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "正印",
+              "twelve_stage": "乾祿"
+            },
+            {
+              "heavenly_stem": "甲",
+              "ten_god": "正財",
+              "twelve_stage": "病"
+            },
+            {
+              "heavenly_stem": "壬",
+              "ten_god": "傷官",
+              "twelve_stage": "絶"
+            }
+          ]
+        },
+        {
+          "position": "day",
+          "ganzi": "辛巳",
+          "heavenly_stem": "辛",
+          "earthly_branch": "巳",
+          "ten_god": {
+            "stem": null,
+            "branch": "正官"
+          },
+          "twelve_stage": "死",
+          "twelve_spirit": "劫殺",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "正印",
+              "twelve_stage": "乾祿"
+            },
+            {
+              "heavenly_stem": "庚",
+              "ten_god": "劫財",
+              "twelve_stage": "長生"
+            },
+            {
+              "heavenly_stem": "丙",
+              "ten_god": "正官",
+              "twelve_stage": "乾祿"
+            }
+          ]
+        },
+        {
+          "position": "hour",
+          "ganzi": "乙未",
+          "heavenly_stem": "乙",
+          "earthly_branch": "未",
+          "ten_god": {
+            "stem": "偏財",
+            "branch": "偏印"
+          },
+          "twelve_stage": "衰",
+          "twelve_spirit": "天殺",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "丁",
+              "ten_god": "偏官",
+              "twelve_stage": "帝旺"
+            },
+            {
+              "heavenly_stem": "乙",
+              "ten_god": "偏財",
+              "twelve_stage": "沐浴"
+            },
+            {
+              "heavenly_stem": "己",
+              "ten_god": "偏印",
+              "twelve_stage": "帝旺"
+            }
+          ]
+        }
+      ],
+      "special_stars": {
+        "yangin": [],
+        "baekho": false,
+        "goegang": false,
+        "dohwa": [],
+        "cheoneul_gwiin": [],
+        "cheondeok_gwiin": [
+          "hour"
+        ],
+        "woldeok_gwiin": [],
+        "munchang_gwiin": [],
+        "hongyeom": false,
+        "geumyeo": [
+          "month"
+        ],
+        "gwimun": [
+          {
+            "positions": [
+              "month",
+              "year"
+            ],
+            "detail": null
+          }
+        ]
+      },
+      "calculation_provenance": {
+        "gwimun": {
+          "calculation_method": "orrery-core-branch-gwimun-v1",
+          "pairs_used": [
+            "子,酉",
+            "丑,午",
+            "寅,未",
+            "卯,申",
+            "辰,亥",
+            "巳,戌"
+          ],
+          "engine_functions": [
+            "getBranchRelation",
+            "analyzePillarRelations"
+          ]
+        }
+      }
+    },
+    "ziwei": {}
+  },
+  "extraction_stats": {
+    "full_chars": 25154,
+    "extracted_chars": 2129,
+    "reduction_ratio": 0.915,
+    "approx_full_tokens": 6289,
+    "approx_extracted_tokens": 533
+  },
+  "model": "gpt-5.6",
+  "usage": {
+    "input_tokens": 23856,
+    "output_tokens": 1857,
+    "total_tokens": 25713,
+    "cached_input_tokens": 22273,
+    "reasoning_tokens": 621
+  },
+  "estimated_cost": null,
+  "response": "[해석 안내]\n이 해석은 사용자가 제공한 만세력 정보와 전통 명리학의 상징 체계에 따른 참고 관점입니다. 검증된 예측·의학적 진단·법률·투자 조언이 아닙니다.\n\n네. **현재 제공된 계산 결과 기준으로 귀문관살이 1조합 있습니다.**\n\n[Fact]\n- 위치: **연주 戊辰과 월주 癸亥 사이**\n- 해당 지지: **辰–亥 조합**\n- 계산 결과에는 월주–년주 조합으로 기록되어 있습니다.\n\n[Claim]\n귀문관살은 보조적으로 **예민한 감지력, 깊은 몰입, 생각이 복잡해지기 쉬운 성향, 혼자 오래 숙고하는 경향**을 상징할 수 있습니다. 연주–월주에 있다는 점을 고려하면, 개인의 본질을 단정하기보다는 외부 분위기나 사회적 환경을 받아들이는 과정에서 예민함과 과도한 생각이 나타날 가능성 정도로 해석하는 편이 적절합니다. 잘 활용하면 관찰·분석·창작처럼 섬세함이 필요한 활동에 도움이 될 수 있고, 과해지면 생각의 반복이나 피로로 이어질 수 있습니다.\n\n[Disclosure]\n귀문관살 하나만으로 초자연적 능력, 정신질환, 사고나 불행을 뜻하지는 않습니다. 또한 귀문은 유파에 따라 원국 전체 조합을 보기도 하고 일지–시지 등 일부만 보기도 합니다. 이번 결과는 **원국 네 기둥의 지지를 서로 비교하는 계산 기준**에 따른 것이므로 다른 만세력에서는 다르게 표시될 수 있습니다.\n\n현실에서는 ① 주변 분위기에 쉽게 영향을 받는지, ② 한 가지 생각이나 관심사에 오래 몰입한 뒤 소진되는지, ③ 그 예민함이 분석·창작 능력으로 쓰이는지를 확인해 보시면 좋습니다.",
+  "full_analysis": {
+    "saju": {
+      "relevant_structure": "원국의 special_stars.gwimun에 월주–년주 조합 1건이 기록되어 있습니다. 월주 癸亥의 지지 亥와 년주 戊辰의 지지 辰이 계산 엔진의 귀문 조합인 辰–亥에 해당합니다. 판정 기준은 orrery-core-branch-gwimun-v1이며, 원국 네 기둥 전체의 지지 조합을 확인하는 방식입니다.",
+      "interpretation": "이 계산 기준에서는 귀문관살이 있습니다. 위치는 연주와 월주 사이이며, 일주·시주 조합으로 기록된 귀문은 없습니다. 전통적으로는 예민한 감지력, 깊은 몰입, 복잡한 내면 사고, 혼자 오래 생각하는 경향 등의 상징으로 해석할 수 있습니다. 다만 귀문관살 하나만으로 초자연적 능력, 정신질환, 불행이나 특정 사건을 뜻한다고 볼 수는 없습니다. 연주–월주에 있다는 점은 개인의 핵심 자아를 단정하기보다 외부 환경이나 사회적 관계를 받아들이는 과정에서 생각이 많아지거나 분위기에 민감하게 반응하는 가능성 정도로 제한해 해석하는 편이 적절합니다. 귀문 판정은 유파에 따라 원국 전체를 보기도 하고 일지–시지 등 일부 관계만 보기도 하므로 다른 만세력에서는 결과가 다를 수 있습니다."
+    },
+    "ziwei": {
+      "relevant_structure": "해당 정보 없음 — 이번 질문에는 자미두수 명반 데이터가 제공되지 않았습니다.",
+      "interpretation": "자미두수 관점의 교차 해석은 할 수 없습니다."
+    },
+    "cross_analysis": {
+      "common_direction": "이번 질문은 사주 자료만 제공되어 두 체계의 공통 방향을 비교할 수 없습니다.",
+      "differences": "자미두수 데이터가 없어 체계 간 차이를 판단할 수 없습니다.",
+      "overall_judgment": "현재 제공된 계산 결과 기준으로는 연주 辰과 월주 亥 사이에 귀문관살 1조합이 확인됩니다. 다만 이는 성격과 사건을 결정하는 핵심 판정이 아니라 보조적인 상징 지표로 보는 것이 적절합니다.",
+      "real_world_checks": "실제로 주변 분위기에 쉽게 영향을 받는지, 관심사에 지나치게 몰입한 뒤 소진되는지, 생각이 많아 수면이나 업무 전환이 늦어지는지, 반대로 섬세한 관찰력과 창작·분석 능력으로 활용되는지를 확인해 보세요. 일상 기능을 해칠 정도의 불안·불면이 지속된다면 명리 해석보다 의료·상담 전문가의 평가를 우선해야 합니다."
+    },
+    "response": "[해석 안내]\n이 해석은 사용자가 제공한 만세력 정보와 전통 명리학의 상징 체계에 따른 참고 관점입니다. 검증된 예측·의학적 진단·법률·투자 조언이 아닙니다.\n\n네. **현재 제공된 계산 결과 기준으로 귀문관살이 1조합 있습니다.**\n\n[Fact]\n- 위치: **연주 戊辰과 월주 癸亥 사이**\n- 해당 지지: **辰–亥 조합**\n- 계산 결과에는 월주–년주 조합으로 기록되어 있습니다.\n\n[Claim]\n귀문관살은 보조적으로 **예민한 감지력, 깊은 몰입, 생각이 복잡해지기 쉬운 성향, 혼자 오래 숙고하는 경향**을 상징할 수 있습니다. 연주–월주에 있다는 점을 고려하면, 개인의 본질을 단정하기보다는 외부 분위기나 사회적 환경을 받아들이는 과정에서 예민함과 과도한 생각이 나타날 가능성 정도로 해석하는 편이 적절합니다. 잘 활용하면 관찰·분석·창작처럼 섬세함이 필요한 활동에 도움이 될 수 있고, 과해지면 생각의 반복이나 피로로 이어질 수 있습니다.\n\n[Disclosure]\n귀문관살 하나만으로 초자연적 능력, 정신질환, 사고나 불행을 뜻하지는 않습니다. 또한 귀문은 유파에 따라 원국 전체 조합을 보기도 하고 일지–시지 등 일부만 보기도 합니다. 이번 결과는 **원국 네 기둥의 지지를 서로 비교하는 계산 기준**에 따른 것이므로 다른 만세력에서는 다르게 표시될 수 있습니다.\n\n현실에서는 ① 주변 분위기에 쉽게 영향을 받는지, ② 한 가지 생각이나 관심사에 오래 몰입한 뒤 소진되는지, ③ 그 예민함이 분석·창작 능력으로 쓰이는지를 확인해 보시면 좋습니다.",
+    "sources": {
+      "saju": [
+        "saju.special_stars.gwimun",
+        "saju.calculation_provenance.gwimun",
+        "saju.pillars"
+      ],
+      "ziwei": []
+    }
+  },
+  "base_validation": {
+    "overall_pass": true,
+    "checks": {
+      "json_schema_valid": {
+        "pass": true,
+        "details": null
+      },
+      "required_fields_non_empty": {
+        "pass": true,
+        "details": {
+          "response": true,
+          "saju": true,
+          "ziwei": true,
+          "cross_analysis": true
+        }
+      },
+      "forbidden_certainty_phrases": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "raw_match_count": 0,
+          "hedged_and_excluded": 0
+        }
+      },
+      "missing_data_hallucination": {
+        "pass": true,
+        "details": {
+          "mentionedButAbsentStars": [],
+          "suspiciousStemBranchMentions": [],
+          "note": "휴리스틱 — false positive 가능, 사람 검토 필요"
+        }
+      },
+      "routing_correctness": {
+        "pass": true,
+        "details": {
+          "expectedScope": "saju_only",
+          "sajuFilled": true,
+          "ziweiFilled": false,
+          "informational_only": false
+        }
+      },
+      "extraction_correctness": {
+        "pass": true,
+        "details": null
+      },
+      "no_annual_period_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "has_annual_periods_field": false,
+          "note": "세운 데이터가 없는 상태에서 구체적 간지를 세운과 함께 제시하면 hallucination."
+        }
+      },
+      "no_gwimun_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "has_gwimun_field": true,
+          "actually_present": true,
+          "note": "실제 special_stars.gwimun 값과 대조함."
+        }
+      },
+      "no_daewoon_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "present_ganzi": []
+        }
+      },
+      "current_daewoon_handling": {
+        "pass": true,
+        "details": {
+          "note": "대운 데이터가 추출되지 않은 질문 — 해당 없음(N/A)."
+        }
+      },
+      "data_limitation_disclosure": {
+        "pass": true,
+        "details": {
+          "note": "데이터 제한 상황이 아님 — 해당 없음(N/A)."
+        }
+      }
+    }
+  },
+  "semantic_validation": {
+    "overall_pass": true,
+    "checks": {
+      "gwimunPosition": {
+        "pass": true,
+        "details": {
+          "expected_positions": [
+            "month",
+            "year"
+          ],
+          "mentioned_positions": [
+            "year",
+            "month"
+          ],
+          "wrong_positions": [],
+          "missing_expected_positions": [],
+          "window_excerpt": "점입니다. 검증된 예측·의학적 진단·법률·투자 조언이 아닙니다.\n\n네. **현재 제공된 계산 결과 기준으로 귀문관살이 1조합 있습니다.**\n\n[Fact]\n- 위치: **연주 戊辰과 월주 癸亥 사이**\n- 해당 지지: **辰–亥 조합**\n- 계산 결과에는 월주–년주 조합으로 기록되어 있습니다.\n\n[Claim]\n귀문관살은 보조적으로 **예민한 감지력, 깊은 몰입, 생각이 복잡해지기 쉬운 성향, 혼자 오래 숙고하는 경향**을 상징할 수 있습니다. 연주–월주에 있다는 "
+        }
+      },
+      "gwimunExistence": {
+        "pass": true,
+        "details": {
+          "actually_exists": true,
+          "denies_existence": false,
+          "asserts_existence": true
+        }
+      }
+    }
+  },
+  "overall_pass": true,
+  "expected_values_used": {
+    "targetYear": 2027,
+    "dayMaster": {
+      "heavenly_stem": "辛",
+      "element": "metal",
+      "yin_yang": "yin"
+    },
+    "pillars": [
+      {
+        "position": "year",
+        "ganzi": "戊辰",
+        "heavenly_stem": "戊",
+        "earthly_branch": "辰",
+        "ten_god": {
+          "stem": "正印",
+          "branch": "正印"
+        },
+        "twelve_stage": "墓",
+        "twelve_spirit": "華蓋",
+        "hidden_stems": [
+          {
+            "heavenly_stem": "乙",
+            "ten_god": "偏財",
+            "twelve_stage": "沐浴"
+          },
+          {
+            "heavenly_stem": "癸",
+            "ten_god": "食神",
+            "twelve_stage": "胎"
+          },
+          {
+            "heavenly_stem": "戊",
+            "ten_god": "正印",
+            "twelve_stage": "乾祿"
+          }
+        ]
+      },
+      {
+        "position": "month",
+        "ganzi": "癸亥",
+        "heavenly_stem": "癸",
+        "earthly_branch": "亥",
+        "ten_god": {
+          "stem": "食神",
+          "branch": "傷官"
+        },
+        "twelve_stage": "沐浴",
+        "twelve_spirit": "亡身",
+        "hidden_stems": [
+          {
+            "heavenly_stem": "戊",
+            "ten_god": "正印",
+            "twelve_stage": "乾祿"
+          },
+          {
+            "heavenly_stem": "甲",
+            "ten_god": "正財",
+            "twelve_stage": "病"
+          },
+          {
+            "heavenly_stem": "壬",
+            "ten_god": "傷官",
+            "twelve_stage": "絶"
+          }
+        ]
+      },
+      {
+        "position": "day",
+        "ganzi": "辛巳",
+        "heavenly_stem": "辛",
+        "earthly_branch": "巳",
+        "ten_god": {
+          "stem": null,
+          "branch": "正官"
+        },
+        "twelve_stage": "死",
+        "twelve_spirit": "劫殺",
+        "hidden_stems": [
+          {
+            "heavenly_stem": "戊",
+            "ten_god": "正印",
+            "twelve_stage": "乾祿"
+          },
+          {
+            "heavenly_stem": "庚",
+            "ten_god": "劫財",
+            "twelve_stage": "長生"
+          },
+          {
+            "heavenly_stem": "丙",
+            "ten_god": "正官",
+            "twelve_stage": "乾祿"
+          }
+        ]
+      },
+      {
+        "position": "hour",
+        "ganzi": "乙未",
+        "heavenly_stem": "乙",
+        "earthly_branch": "未",
+        "ten_god": {
+          "stem": "偏財",
+          "branch": "偏印"
+        },
+        "twelve_stage": "衰",
+        "twelve_spirit": "天殺",
+        "hidden_stems": [
+          {
+            "heavenly_stem": "丁",
+            "ten_god": "偏官",
+            "twelve_stage": "帝旺"
+          },
+          {
+            "heavenly_stem": "乙",
+            "ten_god": "偏財",
+            "twelve_stage": "沐浴"
+          },
+          {
+            "heavenly_stem": "己",
+            "ten_god": "偏印",
+            "twelve_stage": "帝旺"
+          }
+        ]
+      }
+    ],
+    "targetAnnual": {
+      "year": 2027,
+      "ganzi": "丁未",
+      "heavenly_stem": "丁",
+      "earthly_branch": "未",
+      "ten_god": {
+        "stem": "偏官",
+        "branch": "偏印"
+      },
+      "twelve_stage": "衰",
+      "twelve_spirit": "天殺",
+      "is_void": false,
+      "related_major_period": {
+        "index": 4,
+        "ganzi": "己未"
+      },
+      "relations_to_natal": [
+        {
+          "pillar_position": "hour",
+          "stem_relations": [],
+          "branch_relations": []
+        },
+        {
+          "pillar_position": "day",
+          "stem_relations": [],
+          "branch_relations": []
+        },
+        {
+          "pillar_position": "month",
+          "stem_relations": [
+            {
+              "type": "沖",
+              "detail": null
+            }
+          ],
+          "branch_relations": []
+        },
+        {
+          "pillar_position": "year",
+          "stem_relations": [],
+          "branch_relations": []
+        }
+      ],
+      "relations_to_major_period": {
+        "major_period_ganzi": "己未",
+        "stem_relations": [],
+        "branch_relations": []
+      }
+    },
+    "gwimun": [
+      {
+        "positions": [
+          "month",
+          "year"
+        ],
+        "detail": null
+      }
+    ],
+    "calculationProvenance": {
+      "annual_periods": {
+        "calculation_method": "orrery-core-composed-v1",
+        "engine_functions": [
+          "getYearGanzi",
+          "getRelation",
+          "getJeonggi",
+          "getTwelveMeteor",
+          "getTwelveSpirit",
+          "getGongmang",
+          "analyzePillarRelations"
+        ]
+      },
+      "gwimun": {
+        "calculation_method": "orrery-core-branch-gwimun-v1",
+        "pairs_used": [
+          "子,酉",
+          "丑,午",
+          "寅,未",
+          "卯,申",
+          "辰,亥",
+          "巳,戌"
+        ],
+        "engine_functions": [
+          "getBranchRelation",
+          "analyzePillarRelations"
+        ]
+      }
+    },
+    "currentAge": 37,
+    "currentMajorPeriod": {
+      "sequence": 4,
+      "ganzi": "己未",
+      "heavenly_stem": "己",
+      "earthly_branch": "未",
+      "start_age": 35,
+      "start_date": "2023-11-26T12:50:41.000Z",
+      "ten_god": {
+        "stem": "偏印",
+        "branch": "偏印"
+      },
+      "twelve_stage": "衰",
+      "twelve_spirit": "天殺",
+      "is_void": false
+    },
+    "targetYearMajorPeriod": {
+      "sequence": 4,
+      "ganzi": "己未",
+      "heavenly_stem": "己",
+      "earthly_branch": "未",
+      "start_age": 35,
+      "start_date": "2023-11-26T12:50:41.000Z",
+      "ten_god": {
+        "stem": "偏印",
+        "branch": "偏印"
+      },
+      "twelve_stage": "衰",
+      "twelve_spirit": "天殺",
+      "is_void": false
+    },
+    "positionLabelKo": {
+      "year": "년",
+      "month": "월",
+      "day": "일",
+      "hour": "시"
+    }
+  },
+  "mock_mode": false,
+  "fixture": "main_quality",
+  "timestamp": "2026-08-17T05:25:10.058Z"
+}

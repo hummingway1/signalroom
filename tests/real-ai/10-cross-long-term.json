@@ -1,0 +1,926 @@
+{
+  "question": "두 체계를 종합했을 때 내가 장기적으로 가장 중요하게 관리해야 할 것은 무엇인가?",
+  "category": "cross",
+  "routing": {
+    "categories": [
+      "GENERAL",
+      "MAJOR_PERIOD",
+      "STRENGTH",
+      "WEAKNESS"
+    ],
+    "saju_fields": [
+      "day_master",
+      "pillars",
+      "hidden_stem_borrowing",
+      "relations",
+      "special_stars",
+      "void_branches",
+      "major_periods"
+    ],
+    "ziwei_fields": [
+      "five_elements_bureau",
+      "life_palace",
+      "body_palace",
+      "palaces",
+      "transformations",
+      "major_periods"
+    ],
+    "ziwei_palace_focus": [],
+    "reasoning": "두 체계를 종합해 장기적인 핵심 관리 과제를 찾는 전반적 질문이므로, 선천적 구조와 강약점뿐 아니라 대운 흐름까지 양쪽 체계에서 폭넓게 확인해야 한다. 특정 삶의 영역이 지정되지 않아 자미두수 12궁 전체를 사용한다."
+  },
+  "extracted_data": {
+    "subject": {
+      "birth_date": "2026-08-06",
+      "birth_time": "10:59",
+      "time_known": true,
+      "gender": "male",
+      "birth_place": {
+        "name": "Incheon",
+        "resolved_name": "인천",
+        "latitude": 37.4563,
+        "longitude": 126.7052
+      },
+      "timezone": "Asia/Seoul"
+    },
+    "saju": {
+      "day_master": {
+        "heavenly_stem": "壬",
+        "element": "water",
+        "yin_yang": "yang"
+      },
+      "pillars": [
+        {
+          "position": "year",
+          "ganzi": "丙午",
+          "heavenly_stem": "丙",
+          "earthly_branch": "午",
+          "ten_god": {
+            "stem": "偏財",
+            "branch": "正財"
+          },
+          "twelve_stage": "胎",
+          "twelve_spirit": "將星",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "丙",
+              "ten_god": "偏財",
+              "twelve_stage": "胎"
+            },
+            {
+              "heavenly_stem": "己",
+              "ten_god": "正官",
+              "twelve_stage": "絶"
+            },
+            {
+              "heavenly_stem": "丁",
+              "ten_god": "正財",
+              "twelve_stage": "絶"
+            }
+          ]
+        },
+        {
+          "position": "month",
+          "ganzi": "乙未",
+          "heavenly_stem": "乙",
+          "earthly_branch": "未",
+          "ten_god": {
+            "stem": "傷官",
+            "branch": "正官"
+          },
+          "twelve_stage": "養",
+          "twelve_spirit": "攀鞍",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "丁",
+              "ten_god": "正財",
+              "twelve_stage": "絶"
+            },
+            {
+              "heavenly_stem": "乙",
+              "ten_god": "傷官",
+              "twelve_stage": "病"
+            },
+            {
+              "heavenly_stem": "己",
+              "ten_god": "正官",
+              "twelve_stage": "絶"
+            }
+          ]
+        },
+        {
+          "position": "day",
+          "ganzi": "壬子",
+          "heavenly_stem": "壬",
+          "earthly_branch": "子",
+          "ten_god": {
+            "stem": null,
+            "branch": "劫財"
+          },
+          "twelve_stage": "帝旺",
+          "twelve_spirit": "災殺",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "壬",
+              "ten_god": "比肩",
+              "twelve_stage": "帝旺"
+            },
+            {
+              "heavenly_stem": "癸",
+              "ten_god": "劫財",
+              "twelve_stage": "乾祿"
+            }
+          ]
+        },
+        {
+          "position": "hour",
+          "ganzi": "乙巳",
+          "heavenly_stem": "乙",
+          "earthly_branch": "巳",
+          "ten_god": {
+            "stem": "傷官",
+            "branch": "偏財"
+          },
+          "twelve_stage": "絶",
+          "twelve_spirit": "亡身",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "偏官",
+              "twelve_stage": "胎"
+            },
+            {
+              "heavenly_stem": "庚",
+              "ten_god": "偏印",
+              "twelve_stage": "死"
+            },
+            {
+              "heavenly_stem": "丙",
+              "ten_god": "偏財",
+              "twelve_stage": "胎"
+            }
+          ]
+        }
+      ],
+      "hidden_stem_borrowing": [
+        {
+          "category": "食傷",
+          "borrowed_from_stem": "甲",
+          "twelve_stage": "沐浴"
+        },
+        {
+          "category": "財星",
+          "borrowed_from_stem": "丙",
+          "twelve_stage": "胎"
+        },
+        {
+          "category": "官星",
+          "borrowed_from_stem": "戊",
+          "twelve_stage": "胎"
+        },
+        {
+          "category": "印星",
+          "borrowed_from_stem": "庚",
+          "twelve_stage": "死"
+        }
+      ],
+      "relations": {
+        "pillar_pairs": [
+          {
+            "positions": [
+              "day",
+              "month"
+            ],
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "害",
+                "detail": null
+              },
+              {
+                "type": "怨嗔",
+                "detail": null
+              }
+            ]
+          },
+          {
+            "positions": [
+              "day",
+              "year"
+            ],
+            "stem_relations": [
+              {
+                "type": "沖",
+                "detail": null
+              }
+            ],
+            "branch_relations": [
+              {
+                "type": "沖",
+                "detail": null
+              }
+            ]
+          },
+          {
+            "positions": [
+              "month",
+              "year"
+            ],
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "合",
+                "detail": "fire"
+              }
+            ]
+          }
+        ],
+        "triple_combinations": [],
+        "directional_combinations": [
+          {
+            "type": "方合",
+            "detail": "fire"
+          }
+        ]
+      },
+      "special_stars": {
+        "yangin": [
+          "day"
+        ],
+        "baekho": false,
+        "goegang": false,
+        "dohwa": [],
+        "cheoneul_gwiin": [
+          "hour"
+        ],
+        "cheondeok_gwiin": [],
+        "woldeok_gwiin": [],
+        "munchang_gwiin": [],
+        "hongyeom": true,
+        "geumyeo": []
+      },
+      "void_branches": {
+        "branches": [
+          "寅",
+          "卯"
+        ],
+        "affected_pillars": []
+      },
+      "major_periods": [
+        {
+          "sequence": 1,
+          "ganzi": "丙申",
+          "heavenly_stem": "丙",
+          "earthly_branch": "申",
+          "start_age": 1,
+          "start_date": "2027-01-27T02:48:09.000Z",
+          "ten_god": {
+            "stem": "偏財",
+            "branch": "偏印"
+          },
+          "twelve_stage": "長生",
+          "twelve_spirit": "驛馬",
+          "is_void": false
+        },
+        {
+          "sequence": 2,
+          "ganzi": "丁酉",
+          "heavenly_stem": "丁",
+          "earthly_branch": "酉",
+          "start_age": 11,
+          "start_date": "2037-01-27T02:48:09.000Z",
+          "ten_god": {
+            "stem": "正財",
+            "branch": "正印"
+          },
+          "twelve_stage": "沐浴",
+          "twelve_spirit": "六害",
+          "is_void": false
+        },
+        {
+          "sequence": 3,
+          "ganzi": "戊戌",
+          "heavenly_stem": "戊",
+          "earthly_branch": "戌",
+          "start_age": 21,
+          "start_date": "2047-01-27T02:48:09.000Z",
+          "ten_god": {
+            "stem": "偏官",
+            "branch": "偏官"
+          },
+          "twelve_stage": "冠帶",
+          "twelve_spirit": "華蓋",
+          "is_void": false
+        },
+        {
+          "sequence": 4,
+          "ganzi": "己亥",
+          "heavenly_stem": "己",
+          "earthly_branch": "亥",
+          "start_age": 31,
+          "start_date": "2057-01-27T02:48:09.000Z",
+          "ten_god": {
+            "stem": "正官",
+            "branch": "比肩"
+          },
+          "twelve_stage": "乾祿",
+          "twelve_spirit": "劫殺",
+          "is_void": false
+        },
+        {
+          "sequence": 5,
+          "ganzi": "庚子",
+          "heavenly_stem": "庚",
+          "earthly_branch": "子",
+          "start_age": 41,
+          "start_date": "2067-01-27T02:48:09.000Z",
+          "ten_god": {
+            "stem": "偏印",
+            "branch": "劫財"
+          },
+          "twelve_stage": "帝旺",
+          "twelve_spirit": "災殺",
+          "is_void": false
+        },
+        {
+          "sequence": 6,
+          "ganzi": "辛丑",
+          "heavenly_stem": "辛",
+          "earthly_branch": "丑",
+          "start_age": 51,
+          "start_date": "2077-01-27T02:48:09.000Z",
+          "ten_god": {
+            "stem": "正印",
+            "branch": "正官"
+          },
+          "twelve_stage": "衰",
+          "twelve_spirit": "天殺",
+          "is_void": false
+        },
+        {
+          "sequence": 7,
+          "ganzi": "壬寅",
+          "heavenly_stem": "壬",
+          "earthly_branch": "寅",
+          "start_age": 61,
+          "start_date": "2087-01-27T02:48:09.000Z",
+          "ten_god": {
+            "stem": "比肩",
+            "branch": "食神"
+          },
+          "twelve_stage": "病",
+          "twelve_spirit": "地殺",
+          "is_void": true
+        },
+        {
+          "sequence": 8,
+          "ganzi": "癸卯",
+          "heavenly_stem": "癸",
+          "earthly_branch": "卯",
+          "start_age": 71,
+          "start_date": "2097-01-27T02:48:09.000Z",
+          "ten_god": {
+            "stem": "劫財",
+            "branch": "傷官"
+          },
+          "twelve_stage": "死",
+          "twelve_spirit": "年殺",
+          "is_void": true
+        },
+        {
+          "sequence": 9,
+          "ganzi": "甲辰",
+          "heavenly_stem": "甲",
+          "earthly_branch": "辰",
+          "start_age": 81,
+          "start_date": "2107-01-27T02:48:09.000Z",
+          "ten_god": {
+            "stem": "食神",
+            "branch": "偏官"
+          },
+          "twelve_stage": "墓",
+          "twelve_spirit": "月殺",
+          "is_void": false
+        },
+        {
+          "sequence": 10,
+          "ganzi": "乙巳",
+          "heavenly_stem": "乙",
+          "earthly_branch": "巳",
+          "start_age": 91,
+          "start_date": "2117-01-27T02:48:09.000Z",
+          "ten_god": {
+            "stem": "傷官",
+            "branch": "偏財"
+          },
+          "twelve_stage": "絶",
+          "twelve_spirit": "亡身",
+          "is_void": false
+        }
+      ]
+    },
+    "ziwei": {
+      "five_elements_bureau": {
+        "name": "木三局",
+        "number": 3
+      },
+      "life_palace": {
+        "earthly_branch": "寅",
+        "stem_branch": "庚寅"
+      },
+      "body_palace": {
+        "earthly_branch": "子",
+        "palace_position": "spouse"
+      },
+      "palaces": [
+        {
+          "position": "life",
+          "stem_branch": "庚寅",
+          "is_body_palace": false,
+          "stars": []
+        },
+        {
+          "position": "siblings",
+          "stem_branch": "辛丑",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "廉貞",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": "化忌"
+            },
+            {
+              "name": "七殺",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "spouse",
+          "stem_branch": "庚子",
+          "is_body_palace": true,
+          "stars": [
+            {
+              "name": "天梁",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "children",
+          "stem_branch": "己亥",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天相",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            },
+            {
+              "name": "天魁",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "wealth",
+          "stem_branch": "戊戌",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "巨門",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "health",
+          "stem_branch": "丁酉",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "紫微",
+              "category": "main_star",
+              "brightness": "利",
+              "transformation": null
+            },
+            {
+              "name": "貪狼",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            },
+            {
+              "name": "左輔",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "文曲",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "天鉞",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "travel",
+          "stem_branch": "丙申",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天機",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": "化權"
+            },
+            {
+              "name": "太陰",
+              "category": "main_star",
+              "brightness": "得",
+              "transformation": null
+            },
+            {
+              "name": "鈴星",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "天馬",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "friends",
+          "stem_branch": "乙未",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天府",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "career",
+          "stem_branch": "甲午",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "太陽",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": null
+            },
+            {
+              "name": "地空",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "擎羊",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "火星",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "property",
+          "stem_branch": "癸巳",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "武曲",
+              "category": "main_star",
+              "brightness": "利",
+              "transformation": null
+            },
+            {
+              "name": "破軍",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            },
+            {
+              "name": "右弼",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "文昌",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": "化科"
+            },
+            {
+              "name": "祿存",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "fortune",
+          "stem_branch": "壬辰",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天同",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": "化祿"
+            },
+            {
+              "name": "地劫",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "陀羅",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "parents",
+          "stem_branch": "辛卯",
+          "is_body_palace": false,
+          "stars": []
+        }
+      ],
+      "transformations": [
+        {
+          "star": "廉貞",
+          "type": "化忌",
+          "palace_position": "siblings"
+        },
+        {
+          "star": "天機",
+          "type": "化權",
+          "palace_position": "travel"
+        },
+        {
+          "star": "文昌",
+          "type": "化科",
+          "palace_position": "property"
+        },
+        {
+          "star": "天同",
+          "type": "化祿",
+          "palace_position": "fortune"
+        }
+      ],
+      "major_periods": [
+        {
+          "sequence": 1,
+          "age_start": 3,
+          "age_end": 12,
+          "palace_position": "life",
+          "stem_branch": "庚寅",
+          "main_stars": []
+        },
+        {
+          "sequence": 2,
+          "age_start": 13,
+          "age_end": 22,
+          "palace_position": "parents",
+          "stem_branch": "辛卯",
+          "main_stars": []
+        },
+        {
+          "sequence": 3,
+          "age_start": 23,
+          "age_end": 32,
+          "palace_position": "fortune",
+          "stem_branch": "壬辰",
+          "main_stars": [
+            "天同"
+          ]
+        },
+        {
+          "sequence": 4,
+          "age_start": 33,
+          "age_end": 42,
+          "palace_position": "property",
+          "stem_branch": "癸巳",
+          "main_stars": [
+            "武曲",
+            "破軍"
+          ]
+        },
+        {
+          "sequence": 5,
+          "age_start": 43,
+          "age_end": 52,
+          "palace_position": "career",
+          "stem_branch": "甲午",
+          "main_stars": [
+            "太陽"
+          ]
+        },
+        {
+          "sequence": 6,
+          "age_start": 53,
+          "age_end": 62,
+          "palace_position": "friends",
+          "stem_branch": "乙未",
+          "main_stars": [
+            "天府"
+          ]
+        },
+        {
+          "sequence": 7,
+          "age_start": 63,
+          "age_end": 72,
+          "palace_position": "travel",
+          "stem_branch": "丙申",
+          "main_stars": [
+            "天機",
+            "太陰"
+          ]
+        },
+        {
+          "sequence": 8,
+          "age_start": 73,
+          "age_end": 82,
+          "palace_position": "health",
+          "stem_branch": "丁酉",
+          "main_stars": [
+            "紫微",
+            "貪狼"
+          ]
+        },
+        {
+          "sequence": 9,
+          "age_start": 83,
+          "age_end": 92,
+          "palace_position": "wealth",
+          "stem_branch": "戊戌",
+          "main_stars": [
+            "巨門"
+          ]
+        },
+        {
+          "sequence": 10,
+          "age_start": 93,
+          "age_end": 102,
+          "palace_position": "children",
+          "stem_branch": "己亥",
+          "main_stars": [
+            "天相"
+          ]
+        },
+        {
+          "sequence": 11,
+          "age_start": 103,
+          "age_end": 112,
+          "palace_position": "spouse",
+          "stem_branch": "庚子",
+          "main_stars": [
+            "天梁"
+          ]
+        },
+        {
+          "sequence": 12,
+          "age_start": 113,
+          "age_end": 122,
+          "palace_position": "siblings",
+          "stem_branch": "辛丑",
+          "main_stars": [
+            "廉貞",
+            "七殺"
+          ]
+        }
+      ]
+    }
+  },
+  "extraction_stats": {
+    "full_chars": 15926,
+    "extracted_chars": 9637,
+    "reduction_ratio": 0.395,
+    "approx_full_tokens": 3982,
+    "approx_extracted_tokens": 2410
+  },
+  "model": "gpt-5.6",
+  "usage": {
+    "input_tokens": 26873,
+    "output_tokens": 2542,
+    "total_tokens": 29415,
+    "cached_input_tokens": 21335,
+    "reasoning_tokens": 647
+  },
+  "estimated_cost": null,
+  "response": "[해석 안내]\n이 해석은 제공된 사주·자미두수 계산 결과와 전통적 상징 체계에 따른 참고 관점이며, 검증된 예측이나 의학·법률·투자 조언은 아닙니다.\n\n두 체계를 종합하면, 장기적으로 가장 중요하게 관리할 것은 **‘속도와 에너지를 지속 가능하게 조절하는 능력’**이에요.\n\n[사주 관점]\n壬水 일간이 일지에서 강한 추진력을 얻고, 표현을 뜻하는 상관과 현실 책임을 뜻하는 재성·관성이 함께 나타납니다. 반면 일주와 연주의 충, 일지와 월지의 해가 있어 자기 방식과 외부 요구가 맞부딪힐 때 반응이 급해지거나 관계 마찰이 커질 가능성을 점검해야 합니다. 핵심은 추진력을 줄이는 것이 아니라, 행동 전에 검토 단계를 두는 것입니다.\n\n[자미두수 관점]\n[삼방사정 근거] 본궁은 공궁인 명궁, 대궁은 天機化權·太陰이 있는 천이궁, 삼합궁은 巨門이 있는 재백궁과 太陽 및 살성이 함께 있는 관록궁입니다. 변화 대응과 주도성은 강점이 될 수 있지만, 성급한 확장이나 과부하는 비용을 만들 수 있습니다. 신궁이 부처궁의 天梁에 있어 신뢰할 만한 사람과 기준을 합의하고 협력하는 습관도 중요하게 나타납니다.\n\n따라서 평생 관리 원칙은 네 가지로 압축할 수 있어요.\n\n1. **큰 결정에는 시간차 두기**: 감정이나 압박이 큰 상태에서는 바로 확정하지 않기\n2. **회복을 일정에 먼저 넣기**: 수면·휴식·혼자 정리하는 시간을 성과보다 후순위로 미루지 않기\n3. **돈과 계약은 기록으로 관리하기**: 기억이나 분위기보다 예산·조건·책임 범위를 문서로 확인하기\n4. **관계에서는 결론보다 기준을 먼저 맞추기**: 혼자 판단을 끝낸 뒤 통보하는 패턴을 피하기\n\n한마디로, **기회를 잡는 능력보다 그 기회를 오래 감당할 체계를 만드는 것이 핵심 과제**로 보입니다.\n\n다만 현재 나이가 만 0세이고 사주 첫 대운은 1세, 자미두수 첫 대한은 3세부터이므로 현재 운의 작동을 특정하기는 어렵습니다. 지금 실제 대상이 영아라면 성향을 미리 단정하기보다 수면·자극 반응·회복 속도·환경 변화에 대한 적응을 장기간 관찰하는 편이 적절합니다.",
+  "full_analysis": {
+    "saju": {
+      "relevant_structure": "일간은 양수(壬水)이고 일지 子에서 제왕으로 나타난다. 월간·시간에는 상관(乙)이 반복되고, 원국에는 재성·관성이 함께 분포한다. 일주와 연주 사이에는 천간·지지 충, 일지와 월지 사이에는 해가 있으며, 월지·연지는 화 합 및 화 방합 구조를 이룬다. 대운은 재성·인성, 관성, 비겁·인성, 식상 순으로 장기적인 강조점이 바뀐다.",
+      "interpretation": "장기적으로 가장 중요한 과제는 강한 자기 추진력과 표현 욕구를 현실의 책임·규칙·자원 관리 안에 안정적으로 담는 것이다. 생각이나 감정이 올라왔을 때 곧바로 밀어붙이기보다 검토 절차를 두고, 돈·성과·책임이 커질수록 생활 리듬과 관계의 마찰을 함께 관리하는 편이 유리하다. 원국의 충·해는 특정 사건의 예고가 아니라, 자기 방식과 외부 요구가 부딪힐 때 갈등이 커질 수 있음을 보여주는 보조 구조로 해석해야 한다."
+    },
+    "ziwei": {
+      "relevant_structure": "명궁은 공궁이며, 명궁의 삼방사정은 본궁 명궁, 대궁 천이궁의 天機化權·太陰, 삼합궁 재백궁의 巨門, 관록궁의 太陽과 地空·擎羊·火星으로 구성된다. 신궁은 부처궁에 있고 天梁이 배치된다. 복덕궁에는 天同化祿과 地劫·陀羅가 있다. 중장기 대한은 23~32세 복덕궁, 33~42세 전택궁의 武曲·破軍, 43~52세 관록궁의 太陽, 53~62세 교우궁의 天府, 63~72세 천이궁의 天機·太陰으로 이동한다.",
+      "interpretation": "변화에 대응하고 주도권을 잡는 능력이 중요한 자원이지만, 속도가 지나치면 과로·성급한 판단·갈등으로 비용이 커질 수 있는 구조다. 따라서 장기 핵심 관리 항목은 ‘계속 움직이되 회복과 검토를 생략하지 않는 것’이다. 신궁이 부처궁에 있어 실제 행동이 관계와 협력의 영향을 받기 쉬우므로, 혼자 판단을 완결하기보다 신뢰할 만한 사람과 기준을 합의하는 습관이 도움이 된다. 복덕궁의 구조는 편안함과 회복 욕구가 중요한 한편, 부담이 쌓이면 미루기나 보상 행동으로 기울 가능성을 점검할 필요가 있음을 시사한다."
+    },
+    "cross_analysis": {
+      "common_direction": "두 체계 모두 추진력·변화 대응력·표현 능력을 억누르기보다, 이를 감당할 수 있는 자기조절 체계를 만드는 방향을 가리킨다. 핵심은 속도 조절, 규칙적인 회복, 중요한 결정의 재검토, 돈과 관계의 명확한 기준이다.",
+      "differences": "사주는 자기주장·표현과 책임·규칙 사이의 긴장, 그리고 충돌 상황에서의 반응을 더 강조한다. 자미두수는 외부 활동과 직업적 주도성, 환경 변화, 협력 관계 및 회복 방식의 관리를 더 강조한다.",
+      "overall_judgment": "종합하면 장기적으로 가장 중요하게 관리할 것은 ‘에너지와 속도의 지속 가능성’이다. 능력이나 기회를 더 늘리는 것보다, 흥분·압박 상태에서 즉시 결정하지 않는 절차와 꾸준히 회복할 수 있는 생활 기반을 먼저 만드는 편이 안정적인 성장으로 이어질 가능성이 있다.",
+      "real_world_checks": "중요한 결정을 하루 이상 숙고하는지, 과부하 때 말이 날카로워지거나 독단적으로 변하는지, 수면·휴식이 무너지면 소비·미루기·과잉 활동이 늘어나는지, 돈과 계약을 기록으로 확인하는지, 관계 갈등에서 상대의 기준을 확인하기 전에 결론을 내리는지 점검해볼 수 있다. 현재 만 0세로 제공되어 자미두수 첫 대한(3세 시작)과 사주 첫 대운(1세 시작) 이전이므로 현재 운세를 특정할 수 없고, 지금 단계에서는 보호자가 생활 리듬과 안정적인 환경을 관찰하는 수준이 적절하다."
+    },
+    "response": "[해석 안내]\n이 해석은 제공된 사주·자미두수 계산 결과와 전통적 상징 체계에 따른 참고 관점이며, 검증된 예측이나 의학·법률·투자 조언은 아닙니다.\n\n두 체계를 종합하면, 장기적으로 가장 중요하게 관리할 것은 **‘속도와 에너지를 지속 가능하게 조절하는 능력’**이에요.\n\n[사주 관점]\n壬水 일간이 일지에서 강한 추진력을 얻고, 표현을 뜻하는 상관과 현실 책임을 뜻하는 재성·관성이 함께 나타납니다. 반면 일주와 연주의 충, 일지와 월지의 해가 있어 자기 방식과 외부 요구가 맞부딪힐 때 반응이 급해지거나 관계 마찰이 커질 가능성을 점검해야 합니다. 핵심은 추진력을 줄이는 것이 아니라, 행동 전에 검토 단계를 두는 것입니다.\n\n[자미두수 관점]\n[삼방사정 근거] 본궁은 공궁인 명궁, 대궁은 天機化權·太陰이 있는 천이궁, 삼합궁은 巨門이 있는 재백궁과 太陽 및 살성이 함께 있는 관록궁입니다. 변화 대응과 주도성은 강점이 될 수 있지만, 성급한 확장이나 과부하는 비용을 만들 수 있습니다. 신궁이 부처궁의 天梁에 있어 신뢰할 만한 사람과 기준을 합의하고 협력하는 습관도 중요하게 나타납니다.\n\n따라서 평생 관리 원칙은 네 가지로 압축할 수 있어요.\n\n1. **큰 결정에는 시간차 두기**: 감정이나 압박이 큰 상태에서는 바로 확정하지 않기\n2. **회복을 일정에 먼저 넣기**: 수면·휴식·혼자 정리하는 시간을 성과보다 후순위로 미루지 않기\n3. **돈과 계약은 기록으로 관리하기**: 기억이나 분위기보다 예산·조건·책임 범위를 문서로 확인하기\n4. **관계에서는 결론보다 기준을 먼저 맞추기**: 혼자 판단을 끝낸 뒤 통보하는 패턴을 피하기\n\n한마디로, **기회를 잡는 능력보다 그 기회를 오래 감당할 체계를 만드는 것이 핵심 과제**로 보입니다.\n\n다만 현재 나이가 만 0세이고 사주 첫 대운은 1세, 자미두수 첫 대한은 3세부터이므로 현재 운의 작동을 특정하기는 어렵습니다. 지금 실제 대상이 영아라면 성향을 미리 단정하기보다 수면·자극 반응·회복 속도·환경 변화에 대한 적응을 장기간 관찰하는 편이 적절합니다.",
+    "sources": {
+      "saju": [
+        "saju.day_master",
+        "saju.pillars",
+        "saju.relations",
+        "saju.major_periods"
+      ],
+      "ziwei": [
+        "ziwei.life_palace",
+        "ziwei.body_palace",
+        "ziwei.palaces",
+        "ziwei.transformations",
+        "ziwei.major_periods"
+      ]
+    }
+  },
+  "validation": {
+    "overall_pass": true,
+    "checks": {
+      "json_schema_valid": {
+        "pass": true,
+        "details": null
+      },
+      "required_fields_non_empty": {
+        "pass": true,
+        "details": {
+          "response": true,
+          "saju": true,
+          "ziwei": true,
+          "cross_analysis": true
+        }
+      },
+      "forbidden_certainty_phrases": {
+        "pass": true,
+        "details": []
+      },
+      "missing_data_hallucination": {
+        "pass": true,
+        "details": {
+          "mentionedButAbsentStars": [],
+          "suspiciousStemBranchMentions": [],
+          "note": "휴리스틱 — false positive 가능, 사람 검토 필요"
+        }
+      },
+      "routing_correctness": {
+        "pass": true,
+        "details": {
+          "expectedScope": "both",
+          "sajuFilled": true,
+          "ziweiFilled": true,
+          "informational_only": false
+        }
+      },
+      "extraction_correctness": {
+        "pass": true,
+        "details": null
+      }
+    }
+  },
+  "timestamp": "2026-08-16T16:58:59.006Z",
+  "mock_mode": false
+}

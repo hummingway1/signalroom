@@ -1,0 +1,504 @@
+{
+  "question": "사주와 자미두수를 같이 보면 내 직업 성향은 어떻게 보이나?",
+  "category": "cross",
+  "routing": {
+    "categories": [
+      "CAREER",
+      "PERSONALITY"
+    ],
+    "saju_fields": [
+      "day_master",
+      "pillars",
+      "relations",
+      "special_stars"
+    ],
+    "ziwei_fields": [
+      "five_elements_bureau",
+      "life_palace",
+      "body_palace",
+      "palaces",
+      "transformations"
+    ],
+    "ziwei_palace_focus": [
+      "life",
+      "career"
+    ],
+    "reasoning": "직업 적성·업무 성향과 개인의 기질을 교차 검토하는 질문이므로 사주의 일간·명식·관계 구조와 자미두수의 명궁·신궁·관록궁 및 사화 정보가 필요하다. 두 체계를 함께 보도록 명시했으므로 양쪽 필드를 모두 선택한다."
+  },
+  "extracted_data": {
+    "subject": {
+      "birth_date": "2026-08-06",
+      "birth_time": "10:59",
+      "time_known": true,
+      "gender": "male",
+      "birth_place": {
+        "name": "Incheon",
+        "resolved_name": "인천",
+        "latitude": 37.4563,
+        "longitude": 126.7052
+      },
+      "timezone": "Asia/Seoul"
+    },
+    "saju": {
+      "day_master": {
+        "heavenly_stem": "壬",
+        "element": "water",
+        "yin_yang": "yang"
+      },
+      "pillars": [
+        {
+          "position": "year",
+          "ganzi": "丙午",
+          "heavenly_stem": "丙",
+          "earthly_branch": "午",
+          "ten_god": {
+            "stem": "偏財",
+            "branch": "正財"
+          },
+          "twelve_stage": "胎",
+          "twelve_spirit": "將星",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "丙",
+              "ten_god": "偏財",
+              "twelve_stage": "胎"
+            },
+            {
+              "heavenly_stem": "己",
+              "ten_god": "正官",
+              "twelve_stage": "絶"
+            },
+            {
+              "heavenly_stem": "丁",
+              "ten_god": "正財",
+              "twelve_stage": "絶"
+            }
+          ]
+        },
+        {
+          "position": "month",
+          "ganzi": "乙未",
+          "heavenly_stem": "乙",
+          "earthly_branch": "未",
+          "ten_god": {
+            "stem": "傷官",
+            "branch": "正官"
+          },
+          "twelve_stage": "養",
+          "twelve_spirit": "攀鞍",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "丁",
+              "ten_god": "正財",
+              "twelve_stage": "絶"
+            },
+            {
+              "heavenly_stem": "乙",
+              "ten_god": "傷官",
+              "twelve_stage": "病"
+            },
+            {
+              "heavenly_stem": "己",
+              "ten_god": "正官",
+              "twelve_stage": "絶"
+            }
+          ]
+        },
+        {
+          "position": "day",
+          "ganzi": "壬子",
+          "heavenly_stem": "壬",
+          "earthly_branch": "子",
+          "ten_god": {
+            "stem": null,
+            "branch": "劫財"
+          },
+          "twelve_stage": "帝旺",
+          "twelve_spirit": "災殺",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "壬",
+              "ten_god": "比肩",
+              "twelve_stage": "帝旺"
+            },
+            {
+              "heavenly_stem": "癸",
+              "ten_god": "劫財",
+              "twelve_stage": "乾祿"
+            }
+          ]
+        },
+        {
+          "position": "hour",
+          "ganzi": "乙巳",
+          "heavenly_stem": "乙",
+          "earthly_branch": "巳",
+          "ten_god": {
+            "stem": "傷官",
+            "branch": "偏財"
+          },
+          "twelve_stage": "絶",
+          "twelve_spirit": "亡身",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "偏官",
+              "twelve_stage": "胎"
+            },
+            {
+              "heavenly_stem": "庚",
+              "ten_god": "偏印",
+              "twelve_stage": "死"
+            },
+            {
+              "heavenly_stem": "丙",
+              "ten_god": "偏財",
+              "twelve_stage": "胎"
+            }
+          ]
+        }
+      ],
+      "relations": {
+        "pillar_pairs": [
+          {
+            "positions": [
+              "day",
+              "month"
+            ],
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "害",
+                "detail": null
+              },
+              {
+                "type": "怨嗔",
+                "detail": null
+              }
+            ]
+          },
+          {
+            "positions": [
+              "day",
+              "year"
+            ],
+            "stem_relations": [
+              {
+                "type": "沖",
+                "detail": null
+              }
+            ],
+            "branch_relations": [
+              {
+                "type": "沖",
+                "detail": null
+              }
+            ]
+          },
+          {
+            "positions": [
+              "month",
+              "year"
+            ],
+            "stem_relations": [],
+            "branch_relations": [
+              {
+                "type": "合",
+                "detail": "fire"
+              }
+            ]
+          }
+        ],
+        "triple_combinations": [],
+        "directional_combinations": [
+          {
+            "type": "方合",
+            "detail": "fire"
+          }
+        ]
+      },
+      "special_stars": {
+        "yangin": [
+          "day"
+        ],
+        "baekho": false,
+        "goegang": false,
+        "dohwa": [],
+        "cheoneul_gwiin": [
+          "hour"
+        ],
+        "cheondeok_gwiin": [],
+        "woldeok_gwiin": [],
+        "munchang_gwiin": [],
+        "hongyeom": true,
+        "geumyeo": []
+      }
+    },
+    "ziwei": {
+      "five_elements_bureau": {
+        "name": "木三局",
+        "number": 3
+      },
+      "life_palace": {
+        "earthly_branch": "寅",
+        "stem_branch": "庚寅"
+      },
+      "body_palace": {
+        "earthly_branch": "子",
+        "palace_position": "spouse"
+      },
+      "palaces": [
+        {
+          "position": "life",
+          "stem_branch": "庚寅",
+          "is_body_palace": false,
+          "stars": []
+        },
+        {
+          "position": "spouse",
+          "stem_branch": "庚子",
+          "is_body_palace": true,
+          "stars": [
+            {
+              "name": "天梁",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "wealth",
+          "stem_branch": "戊戌",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "巨門",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "travel",
+          "stem_branch": "丙申",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天機",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": "化權"
+            },
+            {
+              "name": "太陰",
+              "category": "main_star",
+              "brightness": "得",
+              "transformation": null
+            },
+            {
+              "name": "鈴星",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "天馬",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "career",
+          "stem_branch": "甲午",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "太陽",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": null
+            },
+            {
+              "name": "地空",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "擎羊",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "火星",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        }
+      ],
+      "transformations": [
+        {
+          "star": "廉貞",
+          "type": "化忌",
+          "palace_position": "siblings"
+        },
+        {
+          "star": "天機",
+          "type": "化權",
+          "palace_position": "travel"
+        },
+        {
+          "star": "文昌",
+          "type": "化科",
+          "palace_position": "property"
+        },
+        {
+          "star": "天同",
+          "type": "化祿",
+          "palace_position": "fortune"
+        }
+      ]
+    }
+  },
+  "extraction_stats": {
+    "full_chars": 15926,
+    "extracted_chars": 3830,
+    "reduction_ratio": 0.76,
+    "approx_full_tokens": 3982,
+    "approx_extracted_tokens": 958
+  },
+  "model": "gpt-5.6",
+  "usage": {
+    "input_tokens": 23766,
+    "output_tokens": 2655,
+    "total_tokens": 26421,
+    "cached_input_tokens": 21335,
+    "reasoning_tokens": 610
+  },
+  "estimated_cost": null,
+  "response": "[해석 안내]\n이 해석은 제공된 사주·자미두수 계산 데이터와 전통 상징 체계에 따른 참고 관점이며, 검증된 진로 예측은 아닙니다.\n\n한 줄로 말하면, **분석해서 방향을 만들고, 말·기획으로 사람을 움직이며, 결과까지 책임지는 역할**에 비교적 잘 맞을 가능성이 보여요.\n\n[사주 관점]\n壬수 일간에 표현·개선 성향을 뜻하는 상관이 두드러지고, 성과와 책임을 상징하는 재성·관성도 함께 있습니다. 따라서 정해진 절차만 반복하기보다 문제를 찾아 설명하고 개선안을 내는 업무에서 역량이 살아날 수 있어요. 기획, 분석, 교육, 자문, 콘텐츠, 협상, 영업기획처럼 생각과 표현을 결과로 연결하는 분야를 폭넓게 검토할 만합니다.\n\n다만 비효율적인 규칙이나 권위에 직설적으로 반응할 가능성도 있습니다. 자율성은 필요하지만 목표·책임·평가기준까지 불분명한 환경은 오히려 혼란을 키울 수 있어요.\n\n[자미두수 관점]\n관록궁의 태양이 왕한 구조는 공개적인 역할, 책임감, 리더십 성향을 시사합니다. 신궁의 천량은 교육·자문·조정·보호처럼 다른 사람에게 기준이나 도움을 제공하는 역할과 연결됩니다. 재백궁의 거문도 말, 질문, 분석, 논증을 직업 자원으로 활용할 가능성을 보여줘요.\n\n반면 관록궁의 살성들은 추진력과 경쟁심이 성급함, 과도한 승부욕, 갑작스러운 방향 전환으로 흐르지 않도록 관리할 필요가 있음을 나타냅니다. 중요한 판단을 혼자 즉시 확정하기보다 검토 절차와 협업 상대를 두는 편이 유리합니다.\n\n[종합]\n잘 맞을 가능성이 있는 것은 특정 직업 하나보다 다음과 같은 **역할 유형**입니다.\n\n- 복잡한 정보를 정리해 방향을 제시하는 기획·분석 역할\n- 설명과 설득이 필요한 교육·자문·컨설팅·영업기획\n- 사람과 일을 조정하며 책임지는 프로젝트 리딩\n- 외부 활동과 변화가 있고 개선 여지가 큰 업무\n\n반대로 의미 없는 반복만 많거나, 지나치게 경직되어 의견을 낼 수 없는 환경에서는 답답함이 커질 수 있습니다. 그렇다고 무조건 독립·사업형이라고 단정할 수는 없어요. **조직 안에서도 전문성과 자율권을 갖고 영향력을 발휘하는 방식**이 충분히 잘 맞을 수 있습니다.\n\n현재 나이 정보가 만 0세이므로 실제 진로를 정할 단계는 아닙니다. 성장하면서 질문과 설명을 즐기는지, 반복 과제보다 문제 해결에 몰입하는지, 팀에서 방향 제시나 조정을 맡는지 등을 장기간 관찰해 보세요. 실제 진로는 흥미·능력·교육 경험과 함께 판단하는 것이 중요합니다.",
+  "full_analysis": {
+    "saju": {
+      "relevant_structure": "양수(陽水) 일간 壬, 월간·시간의 傷官, 년주·시지의 財星, 월지의 正官, 일지 帝旺·劫財, 화(火) 방합 및 원국의 충·해 관계를 근거로 보았다. 계산 데이터에 격국·용신 확정값은 없어 이를 별도로 단정하지 않았다.",
+      "interpretation": "자기 판단과 표현 욕구가 강하고, 아이디어를 실제 결과나 가치로 연결하려는 성향이 나타난다. 정해진 방식을 그대로 반복하기보다 문제를 발견해 개선하거나 설명·기획·협상하는 역할에 비교적 잘 맞을 수 있다. 재성과 관성도 함께 있어 표현만 하는 것보다 성과·책임·현실성을 요구받을 때 직업 역량이 구체화될 가능성이 있다. 다만 상관과 관성이 함께 보이고 충·해가 있어, 비효율적인 규칙이나 권위에 직설적으로 반응하거나 독립성과 조직 규범 사이에서 마찰을 겪을 수 있다. 자율권은 주되 목표와 책임 범위가 분명한 환경이 유리하다."
+    },
+    "ziwei": {
+      "relevant_structure": "관록궁 甲午의 太陽(旺)·地空·擎羊·火星, 관록궁 삼방사정인 부처궁의 天梁(廟, 신궁), 명궁 공궁, 재백궁의 巨門(陷)을 중심으로 보았다. 또한 천이궁 天機(旺) 化權·太陰(得)·天馬를 보조적으로 참고했다.",
+      "interpretation": "직업에서는 사람들 앞에서 책임지고 방향을 제시하거나, 정보를 설명하고 판단을 돕는 역할이 비교적 잘 맞을 수 있다. 태양이 왕한 관록궁은 공개성·책임·리더십 성향을, 신궁의 천량은 조정·보호·교육·자문 성향을 시사한다. 재백궁의 거문은 말·분석·질문·논증을 자원으로 활용할 가능성을 보여주지만, 표현이 논쟁적으로 흐르면 평판이나 협업 비용이 커질 수 있다. 관록궁의 살성들은 직업적 추진력을 높이는 한편 성급한 결론, 무리한 경쟁, 급격한 방향 전환을 경계하게 한다. 외부 활동과 변화가 있는 환경에서 기획력과 판단력이 살아날 수 있지만, 일정·검토·협업 절차가 필요하다."
+    },
+    "cross_analysis": {
+      "common_direction": "두 체계 모두 수동적으로 지시만 따르는 일보다 판단하고 설명하며 문제를 개선하는 역할, 그리고 결과에 대한 책임이 있는 업무에서 강점이 나타날 가능성을 가리킨다. 기획·분석·교육·자문·조정·콘텐츠·영업기획·프로젝트 리딩처럼 사고력과 표현력, 대인 영향력을 함께 쓰는 직무군을 폭넓게 검토할 수 있다.",
+      "differences": "사주는 독립적 사고, 표현력, 성과와 규칙 사이의 긴장을 더 강조한다. 자미두수는 공개적 역할, 책임감, 조정·보호 성향과 함께 직업 과정의 경쟁·변동성을 더 강조한다. 따라서 완전히 혼자 일하는 형태보다는 전문성을 바탕으로 자율적으로 판단하되, 사람과 조직에 영향을 주는 역할이 두 관점을 절충한다.",
+      "overall_judgment": "직업 성향은 ‘분석해서 방향을 만들고, 말이나 기획으로 사람을 움직이며, 결과까지 책임지는 유형’에 가깝게 해석할 수 있다. 특정 직업 하나로 정해진다는 뜻은 아니다. 지나치게 경직된 조직이나 의미 없이 반복되는 업무에서는 답답함이 커질 수 있고, 반대로 권한만 크고 검토 체계가 없는 환경에서는 성급함과 마찰이 약점이 될 수 있다. 목표·권한·평가기준이 명확하고 피드백을 받을 수 있는 환경이 비교적 유리하다.",
+      "real_world_checks": "현재 나이 맥락이 만 0세이므로 실제 직업 적성을 판단하기에는 매우 이르다. 성장 과정에서 ① 질문하고 원리를 파악하려는지, ② 말·글·설명·발표를 즐기는지, ③ 팀에서 방향 제시와 조정을 맡는지, ④ 반복 과제보다 개선 과제에서 집중력이 높아지는지, ⑤ 지적받을 때 논쟁부터 하는지 수정안을 만드는지를 장기간 관찰해 보는 것이 좋다. 교육과 진로 선택은 흥미, 실제 수행 능력, 성격 검사, 경험과 환경을 함께 확인해야 한다."
+    },
+    "response": "[해석 안내]\n이 해석은 제공된 사주·자미두수 계산 데이터와 전통 상징 체계에 따른 참고 관점이며, 검증된 진로 예측은 아닙니다.\n\n한 줄로 말하면, **분석해서 방향을 만들고, 말·기획으로 사람을 움직이며, 결과까지 책임지는 역할**에 비교적 잘 맞을 가능성이 보여요.\n\n[사주 관점]\n壬수 일간에 표현·개선 성향을 뜻하는 상관이 두드러지고, 성과와 책임을 상징하는 재성·관성도 함께 있습니다. 따라서 정해진 절차만 반복하기보다 문제를 찾아 설명하고 개선안을 내는 업무에서 역량이 살아날 수 있어요. 기획, 분석, 교육, 자문, 콘텐츠, 협상, 영업기획처럼 생각과 표현을 결과로 연결하는 분야를 폭넓게 검토할 만합니다.\n\n다만 비효율적인 규칙이나 권위에 직설적으로 반응할 가능성도 있습니다. 자율성은 필요하지만 목표·책임·평가기준까지 불분명한 환경은 오히려 혼란을 키울 수 있어요.\n\n[자미두수 관점]\n관록궁의 태양이 왕한 구조는 공개적인 역할, 책임감, 리더십 성향을 시사합니다. 신궁의 천량은 교육·자문·조정·보호처럼 다른 사람에게 기준이나 도움을 제공하는 역할과 연결됩니다. 재백궁의 거문도 말, 질문, 분석, 논증을 직업 자원으로 활용할 가능성을 보여줘요.\n\n반면 관록궁의 살성들은 추진력과 경쟁심이 성급함, 과도한 승부욕, 갑작스러운 방향 전환으로 흐르지 않도록 관리할 필요가 있음을 나타냅니다. 중요한 판단을 혼자 즉시 확정하기보다 검토 절차와 협업 상대를 두는 편이 유리합니다.\n\n[종합]\n잘 맞을 가능성이 있는 것은 특정 직업 하나보다 다음과 같은 **역할 유형**입니다.\n\n- 복잡한 정보를 정리해 방향을 제시하는 기획·분석 역할\n- 설명과 설득이 필요한 교육·자문·컨설팅·영업기획\n- 사람과 일을 조정하며 책임지는 프로젝트 리딩\n- 외부 활동과 변화가 있고 개선 여지가 큰 업무\n\n반대로 의미 없는 반복만 많거나, 지나치게 경직되어 의견을 낼 수 없는 환경에서는 답답함이 커질 수 있습니다. 그렇다고 무조건 독립·사업형이라고 단정할 수는 없어요. **조직 안에서도 전문성과 자율권을 갖고 영향력을 발휘하는 방식**이 충분히 잘 맞을 수 있습니다.\n\n현재 나이 정보가 만 0세이므로 실제 진로를 정할 단계는 아닙니다. 성장하면서 질문과 설명을 즐기는지, 반복 과제보다 문제 해결에 몰입하는지, 팀에서 방향 제시나 조정을 맡는지 등을 장기간 관찰해 보세요. 실제 진로는 흥미·능력·교육 경험과 함께 판단하는 것이 중요합니다.",
+    "sources": {
+      "saju": [
+        "saju.day_master",
+        "saju.pillars",
+        "saju.relations.pillar_pairs",
+        "saju.relations.directional_combinations"
+      ],
+      "ziwei": [
+        "ziwei.life_palace",
+        "ziwei.body_palace",
+        "ziwei.palaces[position=life]",
+        "ziwei.palaces[position=spouse]",
+        "ziwei.palaces[position=wealth]",
+        "ziwei.palaces[position=travel]",
+        "ziwei.palaces[position=career]",
+        "ziwei.transformations"
+      ]
+    }
+  },
+  "validation": {
+    "overall_pass": true,
+    "checks": {
+      "json_schema_valid": {
+        "pass": true,
+        "details": null
+      },
+      "required_fields_non_empty": {
+        "pass": true,
+        "details": {
+          "response": true,
+          "saju": true,
+          "ziwei": true,
+          "cross_analysis": true
+        }
+      },
+      "forbidden_certainty_phrases": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "raw_match_count": 1,
+          "hedged_and_excluded": 1
+        }
+      },
+      "missing_data_hallucination": {
+        "pass": true,
+        "details": {
+          "mentionedButAbsentStars": [],
+          "suspiciousStemBranchMentions": [],
+          "note": "휴리스틱 — false positive 가능, 사람 검토 필요"
+        }
+      },
+      "routing_correctness": {
+        "pass": true,
+        "details": {
+          "expectedScope": "both",
+          "sajuFilled": true,
+          "ziweiFilled": true,
+          "informational_only": false
+        }
+      },
+      "extraction_correctness": {
+        "pass": true,
+        "details": null
+      },
+      "no_annual_period_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "note": "세운 데이터가 없는 상태에서 구체적 간지를 세운과 함께 제시하면 hallucination."
+        }
+      },
+      "no_gwimun_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "note": "귀문관살 데이터가 없는 상태에서 존재를 단정하면 hallucination. 부재를 설명하는 문맥은 제외."
+        }
+      },
+      "no_daewoon_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "present_ganzi": []
+        }
+      },
+      "current_daewoon_handling": {
+        "pass": true,
+        "details": {
+          "note": "대운 데이터가 추출되지 않은 질문 — 해당 없음(N/A)."
+        }
+      },
+      "data_limitation_disclosure": {
+        "pass": true,
+        "details": {
+          "note": "데이터 제한 상황이 아님 — 해당 없음(N/A)."
+        }
+      }
+    }
+  },
+  "timestamp": "2026-08-16T16:56:26.447Z",
+  "mock_mode": false
+}

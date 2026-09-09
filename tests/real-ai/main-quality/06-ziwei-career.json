@@ -1,0 +1,415 @@
+{
+  "question": "자미두수 기준으로 직업과 사업에서 어떤 환경이 맞는지 설명해줘.",
+  "category": "ziwei_only",
+  "routing": {
+    "categories": [
+      "CAREER",
+      "BUSINESS"
+    ],
+    "saju_fields": [],
+    "ziwei_fields": [
+      "five_elements_bureau",
+      "life_palace",
+      "body_palace",
+      "palaces",
+      "transformations"
+    ],
+    "ziwei_palace_focus": [
+      "career",
+      "wealth",
+      "travel",
+      "friends"
+    ],
+    "reasoning": "자미두수만 명시한 질문이므로 자미두수 필드만 선택한다. 직업·사업 적성과 맞는 업무 환경을 판단하려면 기본 성향과 활동 중심을 나타내는 명궁·신궁, 오행국, 사화와 함께 관록궁·재백궁·천이궁·교우궁이 필요하다."
+  },
+  "extracted_data": {
+    "subject": {
+      "birth_date": "1988-11-22",
+      "birth_time": "14:30",
+      "time_known": true,
+      "gender": "female",
+      "birth_place": {
+        "name": "Seoul",
+        "resolved_name": "서울",
+        "latitude": 37.5665,
+        "longitude": 126.978
+      },
+      "timezone": "Asia/Seoul"
+    },
+    "saju": {},
+    "ziwei": {
+      "five_elements_bureau": {
+        "name": "土五局",
+        "number": 5
+      },
+      "life_palace": {
+        "earthly_branch": "辰",
+        "stem_branch": "丙辰"
+      },
+      "body_palace": {
+        "earthly_branch": "午",
+        "palace_position": "fortune"
+      },
+      "palaces": [
+        {
+          "position": "life",
+          "stem_branch": "丙辰",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "巨門",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            },
+            {
+              "name": "地空",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "陀羅",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "siblings",
+          "stem_branch": "乙卯",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "紫微",
+              "category": "main_star",
+              "brightness": "利",
+              "transformation": null
+            },
+            {
+              "name": "貪狼",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": "化祿"
+            },
+            {
+              "name": "文昌",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "spouse",
+          "stem_branch": "甲寅",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天機",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": "化忌"
+            },
+            {
+              "name": "太陰",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": "化權"
+            },
+            {
+              "name": "天馬",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "children",
+          "stem_branch": "乙丑",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天府",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": null
+            },
+            {
+              "name": "左輔",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "右弼",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": "化科"
+            },
+            {
+              "name": "天魁",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "wealth",
+          "stem_branch": "甲子",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "太陽",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "travel",
+          "stem_branch": "壬戌",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天同",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "friends",
+          "stem_branch": "辛酉",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "火星",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "career",
+          "stem_branch": "庚申",
+          "is_body_palace": false,
+          "stars": []
+        },
+        {
+          "position": "fortune",
+          "stem_branch": "戊午",
+          "is_body_palace": true,
+          "stars": [
+            {
+              "name": "天梁",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            },
+            {
+              "name": "地劫",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "擎羊",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "parents",
+          "stem_branch": "丁巳",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天相",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            },
+            {
+              "name": "祿存",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "鈴星",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        }
+      ],
+      "transformations": [
+        {
+          "star": "貪狼",
+          "type": "化祿",
+          "palace_position": "siblings"
+        },
+        {
+          "star": "天機",
+          "type": "化忌",
+          "palace_position": "spouse"
+        },
+        {
+          "star": "太陰",
+          "type": "化權",
+          "palace_position": "spouse"
+        },
+        {
+          "star": "右弼",
+          "type": "化科",
+          "palace_position": "children"
+        }
+      ]
+    }
+  },
+  "extraction_stats": {
+    "full_chars": 25154,
+    "extracted_chars": 3102,
+    "reduction_ratio": 0.877,
+    "approx_full_tokens": 6289,
+    "approx_extracted_tokens": 776
+  },
+  "model": "gpt-5.6",
+  "usage": {
+    "input_tokens": 24135,
+    "output_tokens": 2737,
+    "total_tokens": 26872,
+    "cached_input_tokens": 22273,
+    "reasoning_tokens": 654
+  },
+  "estimated_cost": null,
+  "response": "[해석 안내]\n이 해석은 제공된 자미두수 명반과 전통 해석 체계에 따른 참고 관점입니다. 검증된 예측이나 투자·창업 조언은 아닙니다.\n\n한 줄로 말하면, **단순 반복이나 강한 영업 경쟁보다 전문성을 바탕으로 문제를 분석하고, 설명하고, 기준을 세우는 환경**이 더 잘 맞는 편입니다. 사업은 무리한 확장형보다 **전문가형 1인 사업 또는 역할이 분명한 소규모 팀**이 상대적으로 어울립니다.\n\n[삼방사정 근거]\n- 관록궁: 주성이 없는 공궁\n- 대궁 부처궁: 천기 화기, 태음 화권, 천마\n- 삼합궁 명궁: 거문\n- 삼합궁 재백궁: 태양\n- 사업 환경은 교우궁의 화성과 그 연결 궁인 형제궁의 자미·탐랑 화록·문창, 자녀궁의 천부·좌우보필·우필 화과, 부모궁의 천상·녹존도 함께 확인했습니다.\n\n### 직업에서 맞는 환경\n관록궁은 공궁이라 대궁의 천기와 태음을 참고합니다. 이는 **기획, 정보 분석, 운영, 조정, 연구, 문서화, 자원 관리**처럼 머리와 판단을 쓰는 역할과 연결됩니다. 명궁의 거문은 질문하고 따져 보고 설명하는 힘을 보태므로, 다음과 같은 환경이 후보가 됩니다.\n\n- 문제를 진단하고 해결안을 제시하는 업무\n- 기획·운영·리서치·교육·상담·컨설팅\n- 글, 말, 자료를 통해 복잡한 내용을 정리하는 역할\n- 고객이나 조직의 요구를 구조화하는 서비스·콘텐츠 업무\n- 권한과 책임 범위가 분명하고, 일정 수준의 자율성이 있는 조직\n\n특히 신궁이 복덕궁의 천량과 겹쳐 있어, 실제 일에서는 **기준을 세우고 검토하거나 사람을 돕고 보호하는 역할**에 힘이 실리기 쉽습니다. 전문직의 보조·심사·품질관리·교육·멘토링처럼 신뢰와 책임을 축적하는 방식도 잘 맞을 가능성이 있습니다.\n\n반대로 업무 목표와 권한이 계속 바뀌거나, 논리보다 정치적 눈치를 우선하는 조직에서는 피로가 커질 수 있습니다. 천기 화기는 생각과 계획이 복잡해지기 쉬운 상징이므로, 완벽한 답을 찾느라 결정이 늦어지는 점도 관리해야 합니다.\n\n### 사업에서 맞는 환경\n사업 자체가 안 맞는다기보다 **사업 구조를 어떻게 짜느냐가 중요**합니다.\n\n잘 맞을 가능성이 있는 방식은 다음과 같습니다.\n\n- 자신의 지식·경험을 서비스로 만드는 전문가형 사업\n- 컨설팅, 교육, 콘텐츠, 기획, 리서치, 운영 대행\n- 고객 문제를 분석하고 맞춤 해결안을 제공하는 모델\n- 고정비가 낮고 작은 실험을 반복할 수 있는 구조\n- 대표가 전문성과 기준을 잡고, 실무 일부를 협업하는 소규모 팀\n\n형제궁의 탐랑 화록과 문창은 사람·정보·표현을 통해 기회를 만드는 흐름을 보여주지만, 교우궁의 화성은 협업이 급하게 시작되거나 갈등도 빠르게 커질 수 있음을 시사합니다. 따라서 동업은 친분보다 **지분, 정산, 최종 결정권, 업무 범위, 이탈 조건을 문서로 정한 관계**가 낫습니다.\n\n### 주의할 환경\n- 역할과 보상 기준이 모호한 동업\n- 분위기에 휩쓸려 고정비부터 크게 늘리는 사업\n- 고객 요구가 계속 바뀌는데 계약 범위가 없는 프로젝트\n- 회의와 아이디어는 많지만 실행 책임자가 없는 팀\n- 말로만 합의하고 기록을 남기지 않는 조직\n\n### 현실에서 확인할 것\n최근 6개월을 돌아봤을 때 ① 문제 분석과 설명을 맡으면 성과가 좋아졌는지, ② 반복 업무보다 프로젝트형 업무에서 집중이 살아나는지, ③ 권한이 모호한 협업에서 유독 소진됐는지를 확인해 보세요. 사업을 검토한다면 점술보다 **실제 유료 고객 반응, 반복 구매 가능성, 월 고정비, 계약 변경 횟수와 현금흐름**을 먼저 검증하는 것이 중요합니다.\n\n정리하면, 직업에서는 **분석·기획·설명·조정·검토 역할**, 사업에서는 **전문성을 상품화한 저고정비 구조와 명확한 협업 규칙**이 비교적 잘 맞는 방향입니다. 특정 직종이나 창업 성공을 확정하는 의미는 아닙니다.",
+  "full_analysis": {
+    "saju": {
+      "relevant_structure": "해당 정보 없음 — 이번 질문에는 사주 데이터가 제공되지 않았습니다.",
+      "interpretation": "사주 관점은 분석하지 않았습니다."
+    },
+    "ziwei": {
+      "relevant_structure": "관록궁은 주성이 없는 공궁이며, 삼방사정은 본궁 관록궁·대궁 부처궁·삼합궁 명궁과 재백궁입니다. 부처궁의 천기 화기·태음 화권, 명궁의 거문, 재백궁의 태양을 함께 보았습니다. 사업 환경은 교우궁과 그 삼방사정인 형제궁·자녀궁·부모궁, 그리고 천이궁·복덕궁의 구조를 보조 근거로 삼았습니다. 생년사화는 탐랑 화록, 천기 화기, 태음 화권, 우필 화과입니다.",
+      "interpretation": "정해진 절차를 반복하는 환경보다는 문제를 분석하고 설명하며 조정하는 역할이 비교적 잘 맞습니다. 천량이 있는 복덕궁에 신궁이 놓여 있어 실제 행동은 기준·책임·조언·보호 역할에 무게가 실리기 쉽습니다. 관록궁 공궁이 천기·태음을 마주하므로 기획, 분석, 운영, 연구, 상담, 교육, 콘텐츠, 서비스 설계처럼 정보와 사람을 연결하는 일이 후보가 됩니다. 사업은 큰 조직을 빠르게 확장하기보다 전문성을 상품화한 1인 사업 또는 역할과 계약이 명확한 소규모 팀이 더 안정적일 가능성이 있습니다. 다만 천기 화기와 교우궁 화성은 계획 변경, 과도한 검토, 동업자와의 빠른 충돌 가능성을 상징하므로 의사결정 기한·업무 범위·정산 기준을 문서화하는 것이 중요합니다."
+    },
+    "cross_analysis": {
+      "common_direction": "이번 질문은 자미두수만을 대상으로 하고 사주 데이터가 없어, 두 체계의 공통 방향은 판단할 수 없습니다.",
+      "differences": "사주 관점이 제공되지 않아 체계 간 차이를 비교할 수 없습니다.",
+      "overall_judgment": "자미두수 관점에서는 ‘분석하고 설명하며 기준을 세우는 전문 역할’과 ‘자율성이 있으면서 책임 범위가 명확한 환경’이 비교적 잘 맞는 방향으로 나타납니다. 사업도 관계의 양보다 전문성·신뢰·운영 체계를 중심으로 설계하는 편이 적합할 가능성이 있습니다. 이는 특정 직업이나 창업 성공을 보장하는 판단은 아닙니다.",
+      "real_world_checks": "최근 업무에서 문제 분석·문서화·설명·조정 업무를 맡을 때 성과와 만족도가 높았는지, 반복 업무보다 프로젝트형 업무에서 집중력이 살아나는지, 회의가 많고 권한이 모호한 조직에서 소진되는지 확인해 보세요. 사업을 검토한다면 고객 획득 비용, 반복 구매율, 월 고정비, 업무 범위 변경 횟수, 파트너와의 정산·의사결정 규칙을 실제 수치로 점검해야 합니다."
+    },
+    "response": "[해석 안내]\n이 해석은 제공된 자미두수 명반과 전통 해석 체계에 따른 참고 관점입니다. 검증된 예측이나 투자·창업 조언은 아닙니다.\n\n한 줄로 말하면, **단순 반복이나 강한 영업 경쟁보다 전문성을 바탕으로 문제를 분석하고, 설명하고, 기준을 세우는 환경**이 더 잘 맞는 편입니다. 사업은 무리한 확장형보다 **전문가형 1인 사업 또는 역할이 분명한 소규모 팀**이 상대적으로 어울립니다.\n\n[삼방사정 근거]\n- 관록궁: 주성이 없는 공궁\n- 대궁 부처궁: 천기 화기, 태음 화권, 천마\n- 삼합궁 명궁: 거문\n- 삼합궁 재백궁: 태양\n- 사업 환경은 교우궁의 화성과 그 연결 궁인 형제궁의 자미·탐랑 화록·문창, 자녀궁의 천부·좌우보필·우필 화과, 부모궁의 천상·녹존도 함께 확인했습니다.\n\n### 직업에서 맞는 환경\n관록궁은 공궁이라 대궁의 천기와 태음을 참고합니다. 이는 **기획, 정보 분석, 운영, 조정, 연구, 문서화, 자원 관리**처럼 머리와 판단을 쓰는 역할과 연결됩니다. 명궁의 거문은 질문하고 따져 보고 설명하는 힘을 보태므로, 다음과 같은 환경이 후보가 됩니다.\n\n- 문제를 진단하고 해결안을 제시하는 업무\n- 기획·운영·리서치·교육·상담·컨설팅\n- 글, 말, 자료를 통해 복잡한 내용을 정리하는 역할\n- 고객이나 조직의 요구를 구조화하는 서비스·콘텐츠 업무\n- 권한과 책임 범위가 분명하고, 일정 수준의 자율성이 있는 조직\n\n특히 신궁이 복덕궁의 천량과 겹쳐 있어, 실제 일에서는 **기준을 세우고 검토하거나 사람을 돕고 보호하는 역할**에 힘이 실리기 쉽습니다. 전문직의 보조·심사·품질관리·교육·멘토링처럼 신뢰와 책임을 축적하는 방식도 잘 맞을 가능성이 있습니다.\n\n반대로 업무 목표와 권한이 계속 바뀌거나, 논리보다 정치적 눈치를 우선하는 조직에서는 피로가 커질 수 있습니다. 천기 화기는 생각과 계획이 복잡해지기 쉬운 상징이므로, 완벽한 답을 찾느라 결정이 늦어지는 점도 관리해야 합니다.\n\n### 사업에서 맞는 환경\n사업 자체가 안 맞는다기보다 **사업 구조를 어떻게 짜느냐가 중요**합니다.\n\n잘 맞을 가능성이 있는 방식은 다음과 같습니다.\n\n- 자신의 지식·경험을 서비스로 만드는 전문가형 사업\n- 컨설팅, 교육, 콘텐츠, 기획, 리서치, 운영 대행\n- 고객 문제를 분석하고 맞춤 해결안을 제공하는 모델\n- 고정비가 낮고 작은 실험을 반복할 수 있는 구조\n- 대표가 전문성과 기준을 잡고, 실무 일부를 협업하는 소규모 팀\n\n형제궁의 탐랑 화록과 문창은 사람·정보·표현을 통해 기회를 만드는 흐름을 보여주지만, 교우궁의 화성은 협업이 급하게 시작되거나 갈등도 빠르게 커질 수 있음을 시사합니다. 따라서 동업은 친분보다 **지분, 정산, 최종 결정권, 업무 범위, 이탈 조건을 문서로 정한 관계**가 낫습니다.\n\n### 주의할 환경\n- 역할과 보상 기준이 모호한 동업\n- 분위기에 휩쓸려 고정비부터 크게 늘리는 사업\n- 고객 요구가 계속 바뀌는데 계약 범위가 없는 프로젝트\n- 회의와 아이디어는 많지만 실행 책임자가 없는 팀\n- 말로만 합의하고 기록을 남기지 않는 조직\n\n### 현실에서 확인할 것\n최근 6개월을 돌아봤을 때 ① 문제 분석과 설명을 맡으면 성과가 좋아졌는지, ② 반복 업무보다 프로젝트형 업무에서 집중이 살아나는지, ③ 권한이 모호한 협업에서 유독 소진됐는지를 확인해 보세요. 사업을 검토한다면 점술보다 **실제 유료 고객 반응, 반복 구매 가능성, 월 고정비, 계약 변경 횟수와 현금흐름**을 먼저 검증하는 것이 중요합니다.\n\n정리하면, 직업에서는 **분석·기획·설명·조정·검토 역할**, 사업에서는 **전문성을 상품화한 저고정비 구조와 명확한 협업 규칙**이 비교적 잘 맞는 방향입니다. 특정 직종이나 창업 성공을 확정하는 의미는 아닙니다.",
+    "sources": {
+      "saju": [],
+      "ziwei": [
+        "ziwei.palaces[position=career]",
+        "ziwei.palaces[position=spouse]",
+        "ziwei.palaces[position=life]",
+        "ziwei.palaces[position=wealth]",
+        "ziwei.palaces[position=travel]",
+        "ziwei.palaces[position=friends]",
+        "ziwei.palaces[position=siblings]",
+        "ziwei.palaces[position=children]",
+        "ziwei.palaces[position=parents]",
+        "ziwei.palaces[position=fortune]",
+        "ziwei.body_palace",
+        "ziwei.transformations"
+      ]
+    }
+  },
+  "validation": {
+    "overall_pass": true,
+    "checks": {
+      "json_schema_valid": {
+        "pass": true,
+        "details": null
+      },
+      "required_fields_non_empty": {
+        "pass": true,
+        "details": {
+          "response": true,
+          "saju": true,
+          "ziwei": true,
+          "cross_analysis": true
+        }
+      },
+      "forbidden_certainty_phrases": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "raw_match_count": 0,
+          "hedged_and_excluded": 0
+        }
+      },
+      "missing_data_hallucination": {
+        "pass": true,
+        "details": {
+          "mentionedButAbsentStars": [],
+          "suspiciousStemBranchMentions": [],
+          "note": "휴리스틱 — false positive 가능, 사람 검토 필요"
+        }
+      },
+      "routing_correctness": {
+        "pass": true,
+        "details": {
+          "expectedScope": "ziwei_only",
+          "sajuFilled": false,
+          "ziweiFilled": true,
+          "informational_only": false
+        }
+      },
+      "extraction_correctness": {
+        "pass": true,
+        "details": null
+      },
+      "no_annual_period_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "has_annual_periods_field": false,
+          "note": "세운 데이터가 없는 상태에서 구체적 간지를 세운과 함께 제시하면 hallucination."
+        }
+      },
+      "no_gwimun_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "note": "귀문관살 데이터가 없는 상태에서 존재를 단정하면 hallucination. 부재를 설명하는 문맥은 제외."
+        }
+      },
+      "no_daewoon_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "present_ganzi": []
+        }
+      },
+      "current_daewoon_handling": {
+        "pass": true,
+        "details": {
+          "note": "대운 데이터가 추출되지 않은 질문 — 해당 없음(N/A)."
+        }
+      },
+      "data_limitation_disclosure": {
+        "pass": true,
+        "details": {
+          "note": "데이터 제한 상황이 아님 — 해당 없음(N/A)."
+        }
+      }
+    }
+  },
+  "timestamp": "2026-08-17T04:44:11.659Z",
+  "mock_mode": false,
+  "fixture": "main_quality"
+}

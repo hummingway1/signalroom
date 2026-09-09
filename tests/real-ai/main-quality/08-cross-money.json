@@ -1,0 +1,570 @@
+{
+  "question": "사주와 자미두수가 내 재물운에 대해 공통적으로 말하는 것과 서로 다르게 말하는 것은 무엇인가?",
+  "category": "cross",
+  "routing": {
+    "categories": [
+      "MONEY"
+    ],
+    "saju_fields": [
+      "day_master",
+      "pillars",
+      "hidden_stem_borrowing",
+      "relations"
+    ],
+    "ziwei_fields": [
+      "five_elements_bureau",
+      "life_palace",
+      "body_palace",
+      "palaces",
+      "transformations"
+    ],
+    "ziwei_palace_focus": [
+      "wealth",
+      "property",
+      "fortune"
+    ],
+    "reasoning": "사주와 자미두수의 재물운 해석을 직접 비교하는 질문이므로 두 체계의 재물 형성·축적·소비 성향에 필요한 핵심 데이터를 모두 선택했다. 특정 시기나 연도를 묻지 않아 대운·세운 필드는 제외했다."
+  },
+  "extracted_data": {
+    "subject": {
+      "birth_date": "1988-11-22",
+      "birth_time": "14:30",
+      "time_known": true,
+      "gender": "female",
+      "birth_place": {
+        "name": "Seoul",
+        "resolved_name": "서울",
+        "latitude": 37.5665,
+        "longitude": 126.978
+      },
+      "timezone": "Asia/Seoul"
+    },
+    "saju": {
+      "day_master": {
+        "heavenly_stem": "辛",
+        "element": "metal",
+        "yin_yang": "yin"
+      },
+      "pillars": [
+        {
+          "position": "year",
+          "ganzi": "戊辰",
+          "heavenly_stem": "戊",
+          "earthly_branch": "辰",
+          "ten_god": {
+            "stem": "正印",
+            "branch": "正印"
+          },
+          "twelve_stage": "墓",
+          "twelve_spirit": "華蓋",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "乙",
+              "ten_god": "偏財",
+              "twelve_stage": "沐浴"
+            },
+            {
+              "heavenly_stem": "癸",
+              "ten_god": "食神",
+              "twelve_stage": "胎"
+            },
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "正印",
+              "twelve_stage": "乾祿"
+            }
+          ]
+        },
+        {
+          "position": "month",
+          "ganzi": "癸亥",
+          "heavenly_stem": "癸",
+          "earthly_branch": "亥",
+          "ten_god": {
+            "stem": "食神",
+            "branch": "傷官"
+          },
+          "twelve_stage": "沐浴",
+          "twelve_spirit": "亡身",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "正印",
+              "twelve_stage": "乾祿"
+            },
+            {
+              "heavenly_stem": "甲",
+              "ten_god": "正財",
+              "twelve_stage": "病"
+            },
+            {
+              "heavenly_stem": "壬",
+              "ten_god": "傷官",
+              "twelve_stage": "絶"
+            }
+          ]
+        },
+        {
+          "position": "day",
+          "ganzi": "辛巳",
+          "heavenly_stem": "辛",
+          "earthly_branch": "巳",
+          "ten_god": {
+            "stem": null,
+            "branch": "正官"
+          },
+          "twelve_stage": "死",
+          "twelve_spirit": "劫殺",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "戊",
+              "ten_god": "正印",
+              "twelve_stage": "乾祿"
+            },
+            {
+              "heavenly_stem": "庚",
+              "ten_god": "劫財",
+              "twelve_stage": "長生"
+            },
+            {
+              "heavenly_stem": "丙",
+              "ten_god": "正官",
+              "twelve_stage": "乾祿"
+            }
+          ]
+        },
+        {
+          "position": "hour",
+          "ganzi": "乙未",
+          "heavenly_stem": "乙",
+          "earthly_branch": "未",
+          "ten_god": {
+            "stem": "偏財",
+            "branch": "偏印"
+          },
+          "twelve_stage": "衰",
+          "twelve_spirit": "天殺",
+          "hidden_stems": [
+            {
+              "heavenly_stem": "丁",
+              "ten_god": "偏官",
+              "twelve_stage": "帝旺"
+            },
+            {
+              "heavenly_stem": "乙",
+              "ten_god": "偏財",
+              "twelve_stage": "沐浴"
+            },
+            {
+              "heavenly_stem": "己",
+              "ten_god": "偏印",
+              "twelve_stage": "帝旺"
+            }
+          ]
+        }
+      ],
+      "hidden_stem_borrowing": [
+        {
+          "category": "食傷",
+          "borrowed_from_stem": "壬",
+          "twelve_stage": "絶"
+        },
+        {
+          "category": "財星",
+          "borrowed_from_stem": "甲",
+          "twelve_stage": "病"
+        }
+      ],
+      "relations": {
+        "pillar_pairs": [],
+        "triple_combinations": [],
+        "directional_combinations": []
+      }
+    },
+    "ziwei": {
+      "five_elements_bureau": {
+        "name": "土五局",
+        "number": 5
+      },
+      "life_palace": {
+        "earthly_branch": "辰",
+        "stem_branch": "丙辰"
+      },
+      "body_palace": {
+        "earthly_branch": "午",
+        "palace_position": "fortune"
+      },
+      "palaces": [
+        {
+          "position": "life",
+          "stem_branch": "丙辰",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "巨門",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            },
+            {
+              "name": "地空",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "陀羅",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "siblings",
+          "stem_branch": "乙卯",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "紫微",
+              "category": "main_star",
+              "brightness": "利",
+              "transformation": null
+            },
+            {
+              "name": "貪狼",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": "化祿"
+            },
+            {
+              "name": "文昌",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "spouse",
+          "stem_branch": "甲寅",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天機",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": "化忌"
+            },
+            {
+              "name": "太陰",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": "化權"
+            },
+            {
+              "name": "天馬",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "children",
+          "stem_branch": "乙丑",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天府",
+              "category": "main_star",
+              "brightness": "旺",
+              "transformation": null
+            },
+            {
+              "name": "左輔",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "右弼",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": "化科"
+            },
+            {
+              "name": "天魁",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "wealth",
+          "stem_branch": "甲子",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "太陽",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "health",
+          "stem_branch": "癸亥",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "武曲",
+              "category": "main_star",
+              "brightness": "得",
+              "transformation": null
+            },
+            {
+              "name": "破軍",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            },
+            {
+              "name": "文曲",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "travel",
+          "stem_branch": "壬戌",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "天同",
+              "category": "main_star",
+              "brightness": "陷",
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "career",
+          "stem_branch": "庚申",
+          "is_body_palace": false,
+          "stars": []
+        },
+        {
+          "position": "property",
+          "stem_branch": "己未",
+          "is_body_palace": false,
+          "stars": [
+            {
+              "name": "廉貞",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            },
+            {
+              "name": "七殺",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            },
+            {
+              "name": "天鉞",
+              "category": "lucky_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        },
+        {
+          "position": "fortune",
+          "stem_branch": "戊午",
+          "is_body_palace": true,
+          "stars": [
+            {
+              "name": "天梁",
+              "category": "main_star",
+              "brightness": "廟",
+              "transformation": null
+            },
+            {
+              "name": "地劫",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            },
+            {
+              "name": "擎羊",
+              "category": "malefic_star",
+              "brightness": null,
+              "transformation": null
+            }
+          ]
+        }
+      ],
+      "transformations": [
+        {
+          "star": "貪狼",
+          "type": "化祿",
+          "palace_position": "siblings"
+        },
+        {
+          "star": "天機",
+          "type": "化忌",
+          "palace_position": "spouse"
+        },
+        {
+          "star": "太陰",
+          "type": "化權",
+          "palace_position": "spouse"
+        },
+        {
+          "star": "右弼",
+          "type": "化科",
+          "palace_position": "children"
+        }
+      ]
+    }
+  },
+  "extraction_stats": {
+    "full_chars": 25154,
+    "extracted_chars": 4924,
+    "reduction_ratio": 0.804,
+    "approx_full_tokens": 6289,
+    "approx_extracted_tokens": 1231
+  },
+  "model": "gpt-5.6",
+  "usage": {
+    "input_tokens": 25191,
+    "output_tokens": 3678,
+    "total_tokens": 28869,
+    "cached_input_tokens": 22273,
+    "reasoning_tokens": 1186
+  },
+  "estimated_cost": null,
+  "response": "[해석 안내]\n이 해석은 제공된 만세력과 자미두수 명반의 전통적 상징 체계에 따른 참고 관점이며, 검증된 예측이나 투자 조언이 아닙니다.\n\n한 줄로 말하면, **두 체계 모두 ‘전문성·표현·성과를 돈으로 바꾸는 능력’은 강조하지만, 번 돈을 안정적으로 남기는 체계가 더 중요하다고 봅니다.**\n\n### 사주 관점\n[Fact] 월주에 식신·상관이 있고, 시간에는 편재가 드러나 있습니다. 정재는 지장간에 있으며 정인도 반복해서 확인됩니다.\n\n[Claim] 지식, 기술, 표현, 결과물을 수익으로 전환하는 방식이 잘 맞을 가능성이 있습니다. 프로젝트 수입이나 성과형 보상, 부수입처럼 기회를 포착하는 방식도 재물 경로가 될 수 있습니다. 다만 안정적 축적은 자동으로 만들어지기보다 예산·저축·반복 가능한 수익 구조를 통해 의식적으로 구축하는 편이 유리합니다. 학습, 자격, 전문성 축적은 수입의 변동성을 줄이는 기반이 될 수 있습니다.\n\n### 자미두수 관점\n[Fact] 재백궁에는 太陽이 있으나 밝기는 함으로 표시되어 있습니다. 재백궁의 삼방사정에는 명궁의 巨門, 신궁이 겹친 복덕궁의 天梁, 공궁인 관록궁이 연결됩니다. 전택궁에는 묘 상태의 廉貞·七殺이 있고, 형제궁의 貪狼에는 化祿이 있습니다.\n\n[Claim] 돈은 대외 활동, 설명과 소통, 책임 수행, 성과를 드러내는 과정에서 만들어질 가능성이 있습니다. 다만 노력에 비해 보상을 낮게 받거나 역할 범위가 불분명해질 수 있으므로 가격 책정과 계약 조건이 중요합니다. 동료·인맥·협업이 기회를 가져올 여지는 있지만, 수익 배분 기준을 명확히 해야 합니다. 생활 기반이나 자산 구조를 적극적으로 정비하려는 성향도 나타나지만, 이것이 특정 자산의 성공을 보장하는 의미는 아닙니다.\n\n### 공통적으로 나타나는 방향\n- 전문성·기술·표현을 실제 수입으로 연결하는 방식\n- 프로젝트, 협업, 인맥 등 유동적인 기회를 활용하는 방식\n- 많이 버는 것만큼 가격·계약·현금흐름 관리가 중요한 구조\n- 변동 수입을 안정적인 저축과 자산으로 전환하는 것이 핵심 과제\n\n### 차이가 나는 부분\n- **사주**는 ‘무엇을 돈으로 바꾸는가’를 강조합니다. 지식·생산물·표현을 수익화하고, 이를 반복 가능한 구조로 만드는 문제가 중심입니다.\n- **자미두수**는 ‘돈이 어떤 생활 영역을 통해 움직이는가’를 더 강조합니다. 대외적 가시성, 동료·협업, 보상 배분, 생활 기반과 자산 구조의 정비가 상대적으로 부각됩니다.\n\n### 현실에서 확인할 조건\n최근 12개월을 기준으로 다음을 점검해보세요.\n1. 전문성·성과·프로젝트 수입이 전체 수입에서 차지하는 비중\n2. 일을 많이 하고도 가격이나 보상을 낮게 정한 사례\n3. 협업할 때 역할·비용·수익 배분을 문서로 정하는지\n4. 변동 수입이 생기면 저축보다 지출이 먼저 늘어나는지\n5. 생활 기반이나 자산을 충동적으로 크게 바꾸려는 경향이 있는지\n\n이번 데이터에는 대운·세운과 현재 대한이 포함되지 않았으므로, 재물운의 특정 시기나 투자 타이밍은 판단할 수 없습니다.",
+  "full_analysis": {
+    "saju": {
+      "relevant_structure": "辛金 일간, 월주의 식신·상관, 시간 천간의 편재, 지장간의 정재·편재, 원국의 정인 구조를 재물 형성 방식의 근거로 삼았다. 제공된 관계 데이터에는 별도의 합·충 구조가 없다.",
+      "interpretation": "[Fact] 월주에 식신·상관이 있고, 시간에는 편재가 겉으로 드러나며 정재와 추가 편재는 지장간에 들어 있다. 정인도 여러 위치에서 확인된다.\n\n[Claim] 사주에서는 지식·기술·표현·생산물을 실제 수입으로 전환하는 방식이 비교적 중요하게 나타난다. 시간의 편재는 프로젝트, 성과형 보상, 부수입처럼 기회를 포착하는 수입 방식과 연결될 수 있다. 반면 정재가 지장간에 있어 안정적 축적은 저절로 굳어지기보다 예산, 저축, 반복 가능한 업무 체계로 만들어가는 편이 유리하다. 정인은 학습·전문성·자격과 같은 기반이 수입의 변동성을 줄이는 보완 요소로 읽힌다.\n\n[Disclosure] 일간 강약, 격국 및 용신 자료가 이번 추출 범위에 없으므로 재물의 크기나 전반적인 길흉을 단정할 수 없다. 대운·세운도 포함되지 않아 특정 시기의 재물 흐름은 판단하지 않는다."
+    },
+    "ziwei": {
+      "relevant_structure": "재백궁의 太陽(함), 재백궁 삼방사정인 복덕궁·명궁·관록궁, 신궁이 겹친 복덕궁의 天梁(묘)과 보조 살성, 명궁의 巨門(함), 공궁인 관록궁, 전택궁의 廉貞·七殺(모두 묘), 생년사화인 형제궁 貪狼化祿과 부처궁 天機化忌·太陰化權을 근거로 삼았다.",
+      "interpretation": "[삼방사정 근거]\n본궁: 재백궁—太陽(함)\n대궁: 복덕궁—天梁(묘), 地劫, 擎羊, 신궁이 겹침\n삼합궁 1: 명궁—巨門(함), 地空, 陀羅\n삼합궁 2: 관록궁—공궁\n함께 확인한 구조: 관록궁의 대궁인 부처궁의 天機·太陰, 전택궁의 廉貞·七殺, 형제궁의 貪狼化祿\n\n[Fact] 재백궁에는 太陽이 있으나 밝기는 함으로 표시되어 있다. 명궁에는 巨門이 있고, 관록궁은 공궁이다. 전택궁에는 묘 상태의 廉貞과 七殺이 있으며, 형제궁의 貪狼에는 化祿이 배치되어 있다.\n\n[Claim] 자미두수에서는 돈을 만드는 과정에 대외 활동, 설명·소통, 책임 수행, 성과의 가시화가 중요할 가능성이 있다. 다만 노력이나 기여가 곧바로 적정한 보상으로 이어지지 않을 수 있어 가격 책정과 역할 범위를 분명히 하는 것이 중요하다. 형제궁의 化祿은 동료·인맥·협업이 기회나 자원으로 연결될 여지를 보여주지만, 관계 자체만 믿기보다 계약과 배분 기준을 명확히 해야 한다. 전택궁의 廉貞·七殺은 생활 기반이나 자산 구조를 적극적으로 정비하는 성향을 시사하지만, 이것이 부동산 성공이나 큰 재산을 보장한다는 뜻은 아니다.\n\n[Disclosure] 현재 대운과 연도별 자료가 없으므로 지금이 확장기인지 보수적 관리기인지는 판단할 수 없다. 공궁 해석과 별의 상징은 유파에 따라 차이가 있을 수 있다."
+    },
+    "cross_analysis": {
+      "common_direction": "두 체계 모두 재물이 수동적으로 들어오기보다 지식·기술·표현·대외 활동을 실제 성과로 바꾸는 과정에서 형성될 가능성을 가리킨다. 또한 프로젝트·협업·인맥 같은 유동적 기회가 수입원이 될 수 있지만, 수입을 안정적인 자산으로 남기려면 예산, 가격 기준, 계약, 현금흐름 관리가 필요하다는 방향이 공통적이다.",
+      "differences": "사주는 식상과 재성의 연결을 통해 ‘무엇을 수입으로 바꾸는가’에 초점을 둔다. 전문성·생산물·표현을 수익화하고, 변동 수입을 반복 가능한 체계로 전환하는 문제가 핵심이다. 자미두수는 ‘돈이 어느 생활 영역을 통해 움직이는가’를 더 강조한다. 대외적 기여와 가시성, 동료·협업 경로, 생활 기반이나 자산 구조의 적극적인 정비가 부각되며, 관계 속 보상 배분과 가격 책정 문제를 더 선명하게 보여준다.",
+      "overall_judgment": "종합하면 한 번의 행운이나 수동적 축적보다 전문성을 보이는 활동, 성과형 업무, 프로젝트와 협업을 통해 재물 기회가 생길 가능성이 있다. 다만 버는 능력과 남기는 능력은 별개의 과제로 보인다. 수입원을 다양화하더라도 고정비·저축·계약 기준을 먼저 마련할수록 재물 흐름을 안정시키는 데 도움이 될 수 있다. 이는 재산 규모나 투자 성과에 대한 예측은 아니다.",
+      "real_world_checks": "최근 12개월 수입 중 전문성·성과·프로젝트·부수입이 차지한 비중, 일을 많이 하고도 가격이나 보상을 낮게 책정한 사례, 협업 수익의 역할·비용·배분 기준이 문서화되어 있는지, 변동 수입이 생겼을 때 저축보다 지출이 먼저 늘어나는지, 생활 기반이나 자산을 자주 크게 바꾸려는 경향이 있는지를 확인해보는 것이 좋다."
+    },
+    "response": "[해석 안내]\n이 해석은 제공된 만세력과 자미두수 명반의 전통적 상징 체계에 따른 참고 관점이며, 검증된 예측이나 투자 조언이 아닙니다.\n\n한 줄로 말하면, **두 체계 모두 ‘전문성·표현·성과를 돈으로 바꾸는 능력’은 강조하지만, 번 돈을 안정적으로 남기는 체계가 더 중요하다고 봅니다.**\n\n### 사주 관점\n[Fact] 월주에 식신·상관이 있고, 시간에는 편재가 드러나 있습니다. 정재는 지장간에 있으며 정인도 반복해서 확인됩니다.\n\n[Claim] 지식, 기술, 표현, 결과물을 수익으로 전환하는 방식이 잘 맞을 가능성이 있습니다. 프로젝트 수입이나 성과형 보상, 부수입처럼 기회를 포착하는 방식도 재물 경로가 될 수 있습니다. 다만 안정적 축적은 자동으로 만들어지기보다 예산·저축·반복 가능한 수익 구조를 통해 의식적으로 구축하는 편이 유리합니다. 학습, 자격, 전문성 축적은 수입의 변동성을 줄이는 기반이 될 수 있습니다.\n\n### 자미두수 관점\n[Fact] 재백궁에는 太陽이 있으나 밝기는 함으로 표시되어 있습니다. 재백궁의 삼방사정에는 명궁의 巨門, 신궁이 겹친 복덕궁의 天梁, 공궁인 관록궁이 연결됩니다. 전택궁에는 묘 상태의 廉貞·七殺이 있고, 형제궁의 貪狼에는 化祿이 있습니다.\n\n[Claim] 돈은 대외 활동, 설명과 소통, 책임 수행, 성과를 드러내는 과정에서 만들어질 가능성이 있습니다. 다만 노력에 비해 보상을 낮게 받거나 역할 범위가 불분명해질 수 있으므로 가격 책정과 계약 조건이 중요합니다. 동료·인맥·협업이 기회를 가져올 여지는 있지만, 수익 배분 기준을 명확히 해야 합니다. 생활 기반이나 자산 구조를 적극적으로 정비하려는 성향도 나타나지만, 이것이 특정 자산의 성공을 보장하는 의미는 아닙니다.\n\n### 공통적으로 나타나는 방향\n- 전문성·기술·표현을 실제 수입으로 연결하는 방식\n- 프로젝트, 협업, 인맥 등 유동적인 기회를 활용하는 방식\n- 많이 버는 것만큼 가격·계약·현금흐름 관리가 중요한 구조\n- 변동 수입을 안정적인 저축과 자산으로 전환하는 것이 핵심 과제\n\n### 차이가 나는 부분\n- **사주**는 ‘무엇을 돈으로 바꾸는가’를 강조합니다. 지식·생산물·표현을 수익화하고, 이를 반복 가능한 구조로 만드는 문제가 중심입니다.\n- **자미두수**는 ‘돈이 어떤 생활 영역을 통해 움직이는가’를 더 강조합니다. 대외적 가시성, 동료·협업, 보상 배분, 생활 기반과 자산 구조의 정비가 상대적으로 부각됩니다.\n\n### 현실에서 확인할 조건\n최근 12개월을 기준으로 다음을 점검해보세요.\n1. 전문성·성과·프로젝트 수입이 전체 수입에서 차지하는 비중\n2. 일을 많이 하고도 가격이나 보상을 낮게 정한 사례\n3. 협업할 때 역할·비용·수익 배분을 문서로 정하는지\n4. 변동 수입이 생기면 저축보다 지출이 먼저 늘어나는지\n5. 생활 기반이나 자산을 충동적으로 크게 바꾸려는 경향이 있는지\n\n이번 데이터에는 대운·세운과 현재 대한이 포함되지 않았으므로, 재물운의 특정 시기나 투자 타이밍은 판단할 수 없습니다.",
+    "sources": {
+      "saju": [
+        "saju.day_master",
+        "saju.pillars.ten_god",
+        "saju.pillars.hidden_stems",
+        "saju.hidden_stem_borrowing",
+        "saju.relations"
+      ],
+      "ziwei": [
+        "재백궁",
+        "재백궁 삼방사정",
+        "전택궁",
+        "복덕궁·신궁",
+        "생년사화"
+      ]
+    }
+  },
+  "validation": {
+    "overall_pass": true,
+    "checks": {
+      "json_schema_valid": {
+        "pass": true,
+        "details": null
+      },
+      "required_fields_non_empty": {
+        "pass": true,
+        "details": {
+          "response": true,
+          "saju": true,
+          "ziwei": true,
+          "cross_analysis": true
+        }
+      },
+      "forbidden_certainty_phrases": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "raw_match_count": 0,
+          "hedged_and_excluded": 0
+        }
+      },
+      "missing_data_hallucination": {
+        "pass": true,
+        "details": {
+          "mentionedButAbsentStars": [],
+          "suspiciousStemBranchMentions": [],
+          "note": "휴리스틱 — false positive 가능, 사람 검토 필요"
+        }
+      },
+      "routing_correctness": {
+        "pass": true,
+        "details": {
+          "expectedScope": "both",
+          "sajuFilled": true,
+          "ziweiFilled": true,
+          "informational_only": false
+        }
+      },
+      "extraction_correctness": {
+        "pass": true,
+        "details": null
+      },
+      "no_annual_period_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "has_annual_periods_field": false,
+          "note": "세운 데이터가 없는 상태에서 구체적 간지를 세운과 함께 제시하면 hallucination."
+        }
+      },
+      "no_gwimun_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "note": "귀문관살 데이터가 없는 상태에서 존재를 단정하면 hallucination. 부재를 설명하는 문맥은 제외."
+        }
+      },
+      "no_daewoon_fabrication": {
+        "pass": true,
+        "details": {
+          "flagged": [],
+          "present_ganzi": []
+        }
+      },
+      "current_daewoon_handling": {
+        "pass": true,
+        "details": {
+          "note": "대운 데이터가 추출되지 않은 질문 — 해당 없음(N/A)."
+        }
+      },
+      "data_limitation_disclosure": {
+        "pass": true,
+        "details": {
+          "note": "데이터 제한 상황이 아님 — 해당 없음(N/A)."
+        }
+      }
+    }
+  },
+  "timestamp": "2026-08-17T04:46:09.826Z",
+  "mock_mode": false,
+  "fixture": "main_quality"
+}

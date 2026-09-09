@@ -1,0 +1,45 @@
+{
+  "name": "saju-ziwei-ai-app-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "생년월일시 → 사주/자미두수 계산 → Canonical Chart JSON → 질문 기반 대화형 AI 해석. 서양점성술 미사용. 웹 UI 미구현(스캐폴드만).",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test --test-concurrency=1 tests/*.test.mjs",
+    "test:llm": "node tests/llm-integration/run.mjs",
+    "diagnose:luna": "node tests/llm-integration/diagnose-luna.mjs",
+    "dev": "node apps/api/src/server.mjs",
+    "build:canonical": "node scripts/build-canonical.mjs",
+    "mock:pipeline": "node scripts/run-mock-pipeline.mjs",
+    "validate:canonical": "node scripts/validate-canonical.mjs",
+    "analyze:real": "node scripts/analyze-real.mjs",
+    "analyze:real:dryrun": "node scripts/analyze-real-dryrun.mjs",
+    "rescore:real": "node scripts/rescore-real-ai-results.mjs",
+    "analyze:targeted": "node scripts/targeted-quality-real.mjs",
+    "analyze:targeted:dryrun": "node scripts/targeted-quality-dryrun.mjs",
+    "analyze:timing": "node scripts/timing-quality-real.mjs",
+    "test:live-db": "node scripts/integration-test-live-db.mjs",
+    "analyze:timing:dryrun": "node scripts/timing-quality-dryrun.mjs",
+    "rescore:targeted": "node scripts/rescore-targeted-quality.mjs",
+    "rescore:timing": "node scripts/rescore-timing-quality.mjs",
+    "analyze:user-test": "node scripts/adhoc-user-test.mjs",
+    "analyze:service-quality": "node scripts/service-quality-real.mjs",
+    "analyze:service-quality:dryrun": "node scripts/service-quality-dryrun.mjs",
+    "rescore:service-quality": "node scripts/rescore-service-quality.mjs"
+  },
+  "dependencies": {
+    "@orrery/core": "^0.4.2",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.4.1",
+    "pg": "^8.23.0",
+    "uuid": "^9.0.1"
+  }
+}

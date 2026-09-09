@@ -1,0 +1,118 @@
+@import 'tailwindcss';
+
+/* ── App-wide resets ─────────────────────────────────────────────────────── */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+    'Malgun Gothic', 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #1a3344;
+}
+
+/* ── Keyframes (ported from the Figma Make GLOBAL_CSS) ───────────────────── */
+@keyframes msgIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+@keyframes dotBounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes barGrow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.msg-in {
+  animation: msgIn 0.28s ease both;
+}
+.card-in {
+  animation: cardIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.fade-up {
+  animation: fadeUp 0.45s ease both;
+}
+.bar-grow {
+  transform-origin: left;
+  animation: barGrow 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.t-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #39a89b;
+  display: inline-block;
+  animation: dotBounce 1.2s ease-in-out infinite;
+}
+.t-dot:nth-child(2) {
+  animation-delay: 0.18s;
+}
+.t-dot:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+/* ── Mobile phone shell — 390px, centered on desktop ─────────────────────── */
+.phone-shell {
+  max-width: 390px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msg-in,
+  .card-in,
+  .fade-up,
+  .bar-grow,
+  .t-dot {
+    animation: none !important;
+  }
+}
