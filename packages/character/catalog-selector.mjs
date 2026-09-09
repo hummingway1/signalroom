@@ -54,3 +54,28 @@ export function selectOpeningChoices({ catalog, limit = DEFAULT_LIMIT }) {
   }
   return result;
 }
+
+// §Toss 심사 준비 중 실측 테스트로 발견한 버그 수정 — "사주볼래" 같은 명시적 서비스 진입
+// 발화가 classifyMessage에서 casual이 아닌 saju_question으로 정확히 분류된 뒤, 실제 분석
+// 질문("내 재물운은?")과 동일하게 Router/authorization을 거쳐서 SAJU_DETAIL 미보유
+// 사용자에게 차단당하고 있었다. 새로운 상태(START_ANALYSIS 등)를 추가하는 대신, 이미 있는
+// 오프닝 선택지 메커니즘(getOpeningChoices)으로 되돌리는 순수 텍스트 패턴 감지만 추가한다
+// — classifyMessage 자체(casual/saju_question 이분법)는 건드리지 않는다. 패턴은 지시받은
+// 예시 문구 위주로 의도적으로 좁게 잡아서, 실제 분석 질문("내 사주에서 재물운은 어때?")을
+// 서비스 진입으로 오분류하지 않도록 한다.
+const SERVICE_ENTRY_PATTERNS = [
+  /^사주\s*볼래[!.?~ㅋㅎ]*$/, /^사주\s*봐\s*줘[!.?~ㅋㅎ]*$/, /^사주\s*봐줘[!.?~ㅋㅎ]*$/,
+  /^내\s*사주\s*보고\s*싶어[!.?~ㅋㅎ]*$/, /^사주\s*분석\s*시작[!.?~ㅋㅎ]*$/, /^사주\s*시작[할래]*[!.?~ㅋㅎ]*$/,
+  /^사주\s*보고\s*싶어[!.?~ㅋㅎ]*$/, /^사주\s*볼게[!.?~ㅋㅎ]*$/,
+  /^자미두수로?\s*볼래[!.?~ㅋㅎ]*$/, /^자미두수\s*봐\s*줘[!.?~ㅋㅎ]*$/, /^자미두수\s*봐줘[!.?~ㅋㅎ]*$/,
+  /^내\s*자미두수\s*보고\s*싶어[!.?~ㅋㅎ]*$/, /^자미두수\s*분석\s*시작[!.?~ㅋㅎ]*$/,
+  /^자미두수\s*보고\s*싶어[!.?~ㅋㅎ]*$/, /^자미두수\s*볼게[!.?~ㅋㅎ]*$/,
+];
+
+/** 자유입력 텍스트가 "구체적인 질문 없이 서비스 자체를 시작해달라"는 명시적 의도인지 판별한다.
+ * true를 반환해도 이건 새로운 대화 상태가 아니라, 기존 오프닝 선택지를 다시 보여주는 것으로
+ * 처리된다(Router/authorization 자체를 아예 안 태우므로 quota 소비도 없음). */
+export function isServiceEntryIntent(text) {
+  const trimmed = (text ?? '').trim();
+  return SERVICE_ENTRY_PATTERNS.some((pattern) => pattern.test(trimmed));
+}

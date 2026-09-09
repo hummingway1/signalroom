@@ -13,7 +13,7 @@ import { addMessage, listMessages } from '../repositories/message-repository.mjs
 import { recordAnalysis } from '../repositories/analysis-repository.mjs';
 import { getCharacter } from '../../../../packages/character/characters.mjs';
 import { getCatalogEntry, QUESTION_CATALOG, CHILD_QUESTION_CATALOG, getChildCatalogEntry } from '../../../../packages/character/question-catalog.mjs';
-import { selectNextChoices, selectFallbackTopicSwitch, selectOpeningChoices } from '../../../../packages/character/catalog-selector.mjs';
+import { selectNextChoices, selectFallbackTopicSwitch, selectOpeningChoices, isServiceEntryIntent } from '../../../../packages/character/catalog-selector.mjs';
 import { classifyMessage } from '../../../../packages/character/casual-chat-classifier.mjs';
 import { authorizeAnalysisQuestion } from './entitlement-authorization-service.mjs';
 import { consumeQuestionEntitlement } from '../repositories/payment-repository.mjs';
@@ -22,6 +22,7 @@ import { sanitizeUserFacingText } from '../../../../packages/shared/sanitize-out
 import { buildCasualSystemPrompt, CASUAL_RESPONSE_SCHEMA, truncateForCasual, isMedicalOrSafetyTopic, buildCasualUserMessage, getPersonalizationDepth } from '../../../../packages/character/casual-chat-prompt.mjs';
 import { getAnalysisScopeById } from '../repositories/analysis-scope-repository.mjs';
 import { buildDateSelectionChatPrompt, DATE_SELECTION_CHAT_RESPONSE_SCHEMA } from '../../../../packages/character/birth-selection-prompt.mjs';
+import { buildNamingChatPrompt, NAMING_CHAT_RESPONSE_SCHEMA } from '../../../../packages/character/naming-prompt.mjs';
 
 // 캐주얼 AI 호출 예산 — 폭탄 메시지 남용 방지 (분당/시간당 상한, 초과 시 무료 고정 반응으로 대체).
 // 정상적인 대화 속도로는 절대 도달하지 않는 값 — 실제 사람이 1분에 8번, 1시간에 40번씩 계속 캐주얼
@@ -31,10 +32,21 @@ const CASUAL_AI_MAX_PER_HOUR = 40;
 
 const MAX_SUMMARY_CHARS = 1200;
 
-export async function startConversation({ chartId = null, userId = null, characterId = 'daegu', childProfileId = null, fortuneYear = null, dateSelectionScopeId = null }) {
+export async function startConversation({ chartId = null, userId = null, characterId = 'daegu', childProfileId = null, fortuneYear = null, dateSelectionScopeId = null, namingScopeId = null }) {
   if (dateSelectionScopeId) {
     // §출생일 택일 — chart_id 개념이 없다(여러 후보 chart가 있을 뿐, 단일 대표 chart 없음).
     return createConversation({ userId, characterId, dateSelectionScopeId });
+  }
+  if (namingScopeId) {
+    // §작명소 — 기존 chart_id(작명 대상의 사주)를 그대로 쓴다(§3 원칙), naming_scope_id로
+    // 채팅 도메인만 추가 태깅.
+    const namingChart = await getChart(chartId);
+    if (!namingChart) {
+      const err = new Error(`Chart not found: ${chartId}`);
+      err.code = 'CHART_NOT_FOUND';
+      throw err;
+    }
+    return createConversation({ userId, chartId, characterId, namingScopeId });
   }
   const chart = await getChart(chartId);
   if (!chart) {
@@ -175,10 +187,14 @@ export async function pickCatalogChoice({ conversationId, catalogId, aiProvider,
     reasoning: `catalog:${entry.id}`,
   };
 
-  // §Phase3 — 카탈로그 선택도 실질적으로 "사주 상세분석 데이터에 대한 질문"이므로
-  // handleFreeTextMessage의 자유입력 경로와 동일한 authorization을 거친다(누락되어 있던 지점 —
-  // 실측 테스트로 발견 후 수정).
-  const authorizeBeforeAnalysis = async (routerResult) => {
+  // §실측 버그 수정 — entry.free가 true인 카탈로그 항목은 프론트에 "무료"로 표시되는데도
+  // 지금까지 무조건 authorizeAnalysisQuestion을 거쳐서 SAJU_DETAIL 등이 없으면 차단되고
+  // 있었다(free 필드가 toClientChoice에서 프론트 표시용으로만 쓰이고 권한 로직엔 전혀
+  // 반영되지 않던 것 — Toss 심사 준비 중 실제 브라우저 테스트로 발견). free 항목은
+  // authorizeBeforeAnalysis를 null로 넘겨서(runQuestionPipeline의 기존 하위호환 스위치,
+  // §Phase3 주석 참고) authorization 자체를 스킵한다 — 유료 항목(entry.free===false)은
+  // 기존과 동일하게 그대로 authorization을 거친다.
+  const authorizeBeforeAnalysis = entry.free ? null : async (routerResult) => {
     if (!userId) {
       return { authorized: false, message: '로그인 후 상세분석을 구매하시면 이 내용에 대해 채팅으로 질문할 수 있어요.' };
     }
@@ -355,6 +371,55 @@ async function handleDateSelectionChatMessage({ conversationId, conversation, te
   return { intent: 'saju_question', response, character, usage: aiResult.usage ?? null, sources: scope.result_data, cross_analysis: null, highlightCard: null };
 }
 
+/** §작명소 채팅 — NAMING analysis_scope에 태깅된 conversation 전용 경로. DATE_SELECTION과
+ * 정확히 동일한 원칙(classifyMessage 무관 라우팅, 저장된 result_data를 그대로 컨텍스트로,
+ * AI 호출 성공 후에만 quota 차감). */
+async function handleNamingChatMessage({ conversationId, conversation, text, aiProvider, userId }) {
+  const character = getCharacter(conversation?.character_id);
+  await addMessage({ conversationId, role: 'user', content: text });
+
+  if (!userId) {
+    const response = '로그인 후 작명 결과를 구매하시면 이 내용에 대해 채팅으로 질문할 수 있어요.';
+    await addMessage({ conversationId, role: 'assistant', content: response });
+    return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: null };
+  }
+
+  const authResult = await authorizeAnalysisQuestion({
+    userId,
+    routerResult: {},
+    conversationContext: { namingScopeId: conversation.naming_scope_id },
+  });
+
+  if (!authResult.authorized) {
+    await addMessage({ conversationId, role: 'assistant', content: authResult.message });
+    return { intent: 'saju_question', response: authResult.message, character, usage: null, sources: null, cross_analysis: null, highlightCard: null };
+  }
+
+  const scope = await getAnalysisScopeById(conversation.naming_scope_id);
+  if (!scope?.result_data) {
+    const response = '아직 분석 결과가 준비되지 않았어요. 결과를 먼저 확인한 뒤 다시 질문해주세요.';
+    await addMessage({ conversationId, role: 'assistant', content: response });
+    return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: null };
+  }
+
+  const aiResult = await aiProvider.complete({
+    system: buildNamingChatPrompt(),
+    user: `이미 생성된 작명 결과:\n${JSON.stringify(scope.result_data)}\n\n사용자 질문: ${text}`,
+    jsonSchema: NAMING_CHAT_RESPONSE_SCHEMA,
+    schemaName: 'naming_chat',
+  });
+  const response = sanitizeUserFacingText(aiResult.data.response);
+
+  try {
+    await consumeQuestionEntitlement(authResult.entitlementId, userId);
+  } catch (err) {
+    console.error('[작명소 entitlement 차감 실패]', err.message);
+  }
+
+  await addMessage({ conversationId, role: 'assistant', content: response, metadata: { analysis_scope_id: conversation.naming_scope_id } });
+  return { intent: 'saju_question', response, character, usage: aiResult.usage ?? null, sources: scope.result_data, cross_analysis: null, highlightCard: null };
+}
+
 export async function handleFreeTextMessage({ conversationId, text, aiProvider, model = 'unknown', casualAiProvider = null, casualModel = 'unknown', childCoachAiProvider = null, userId = null }) {
   // §출생일 택일 채팅 — 이 conversation이 DATE_SELECTION analysis_scope에 태깅되어 있으면,
   // classifyMessage(casual/saju_question 분류) 결과와 무관하게 항상 이 전용 경로를 탄다.
@@ -365,6 +430,9 @@ export async function handleFreeTextMessage({ conversationId, text, aiProvider, 
   const earlyConversation = await getConversation(conversationId);
   if (earlyConversation?.date_selection_scope_id) {
     return handleDateSelectionChatMessage({ conversationId, conversation: earlyConversation, text, aiProvider, userId });
+  }
+  if (earlyConversation?.naming_scope_id) {
+    return handleNamingChatMessage({ conversationId, conversation: earlyConversation, text, aiProvider, userId });
   }
 
   const intent = classifyMessage(text);
@@ -469,7 +537,17 @@ export async function handleFreeTextMessage({ conversationId, text, aiProvider, 
   const conversation = await getConversation(conversationId);
   const character = getCharacter(conversation?.character_id);
 
-  // §출생일 택일 채팅 — 이 conversation이 특정 DATE_SELECTION analysis_scope에 태깅되어
+  // §실측 버그 수정 — "사주볼래" 같은 명시적 서비스 진입 발화는 구체적 분석 질문이 아니므로,
+  // Router/authorization을 태우지 않고(SAJU_DETAIL 미보유로 차단되던 문제) 기존 오프닝
+  // 선택지를 다시 보여준다. AI 호출/quota 소비 없음(§isServiceEntryIntent 주석 참고).
+  if (isServiceEntryIntent(text)) {
+    await addMessage({ conversationId, role: 'user', content: text });
+    const opening = getOpeningChoices({ characterId: conversation.character_id ?? 'daegu' });
+    const response = '좋아, 그럼 뭐부터 볼까?';
+    await addMessage({ conversationId, role: 'assistant', content: response });
+    return { intent, response, character: opening.character, usage: null, sources: null, cross_analysis: null, highlightCard: null, choices: opening.choices };
+  }
+
   // §Phase3 — 클라이언트가 보낸 entitlementId는 여기 어디에도 등장하지 않는다. 서버가 로그인
   // 사용자(userId)만으로 유효한 entitlement를 직접 찾는다(entitlement-authorization-service.mjs).
   // userId가 없으면(비로그인) 개인 분석 권한을 가질 수 없으므로 Router 결과와 무관하게 즉시 거부한다.

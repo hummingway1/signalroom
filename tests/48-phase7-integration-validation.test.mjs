@@ -185,14 +185,14 @@ test('6-2. 차감에 쓰이는 entitlementId는 항상 서버가 authorization �
 // 7. quota 차감 시점
 // ============================================================
 
-test('7-1. consumeQuestionEntitlement 호출은 항상 분석/AI 결과 확인 이후에 위치한다(3개 경로 모두)', async () => {
+test('7-1. consumeQuestionEntitlement 호출은 항상 분석/AI 결과 확인 이후에 위치한다(4개 경로 모두)', async () => {
   const source = await readFile('./apps/api/src/services/conversation-service.mjs', 'utf-8');
   const occurrences = [...source.matchAll(/consumeQuestionEntitlement\(/g)];
-  assert.equal(occurrences.length, 3, 'handleFreeTextMessage(saju)/pickCatalogChoice/handleFreeTextMessage(DATE_SELECTION) 3곳이어야 함');
+  assert.equal(occurrences.length, 4, 'handleFreeTextMessage(saju)/pickCatalogChoice/handleFreeTextMessage(DATE_SELECTION)/handleFreeTextMessage(NAMING) 4곳이어야 함');
   for (const m of occurrences) {
     const before = source.slice(Math.max(0, m.index - 300), m.index);
-    // pipelineResult(사주/신년운세 경로) 또는 aiResult(DATE_SELECTION 채팅 응답 확인 후 차감)
-    // 중 하나가 앞에 있어야 함 — 두 경로 모두 "AI 응답을 실제로 받은 뒤"에만 차감한다.
+    // pipelineResult(사주/신년운세 경로) 또는 aiResult(DATE_SELECTION/NAMING 채팅 응답 확인 후 차감)
+    // 중 하나가 앞에 있어야 함 — 모든 경로가 "AI 응답을 실제로 받은 뒤"에만 차감한다.
     const afterResult = before.includes('pipelineResult') || before.includes('aiResult');
     assert.ok(afterResult, 'consume은 항상 AI 응답 확인 이후에 호출되어야 함');
   }

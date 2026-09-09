@@ -2,6 +2,82 @@
 
 프로젝트 지시사항에 따라, 기존 구조/파일과 충돌하거나 임의 판단이 필요했던 지점을 여기에 기록한다.
 
+## [Unreleased] — 실제 서비스에서 발견된 심각한 버그: 사주 채팅 진입 자체가 막혀 있던 문제
+
+### 배경
+Toss 심사 대비 실제 브라우저 테스트 중, 사주 상품을 선택해서 채팅을 시작해도 사용자가 정상적으로
+분석 진입조차 할 수 없는 문제가 발견됨. "사주볼래"를 입력하면 "이 질문은 사주/자미두수 상세분석에
+포함된 내용이에요"라며 차단됨.
+
+### [ROOT CAUSE]
+
+**1. free:true 카탈로그 항목이 프론트에 "무료"로 표시되면서도 실제로는 무조건 차단됨**
+- 파일: `apps/api/src/services/conversation-service.mjs`
+- 함수: `pickCatalogChoice`
+- 원인: 각 카탈로그 항목(`packages/character/question-catalog.mjs`)엔 `free: true/false` 필드가
+  있고, 오프닝 선택지들은 실제로 대부분 `free: true`다. 이 필드는 `toClientChoice`에서 프론트로
+  그대로 전달되어 화면에 "무료"로 표시되지만, **`pickCatalogChoice`는 이 필드를 전혀 확인하지
+  않고 무조건 `authorizeAnalysisQuestion`을 거쳤다** — 즉 신규 사용자(SAJU_DETAIL 미보유)가
+  "무료"라고 표시된 오프닝 선택지를 눌러도 "로그인 후 구매하시면..."으로 차단됨.
+
+**2. "사주볼래" 같은 명시적 서비스 진입 발화가 실제 분석 질문과 동일하게 처리됨**
+- 파일: `apps/api/src/services/conversation-service.mjs`
+- 함수: `handleFreeTextMessage`(saju_question 자유입력 경로)
+- 원인: `classifyMessage`가 "사주볼래"를 casual이 아닌 `saju_question`으로 정확히 분류한 뒤,
+  실제 분석 질문("내 재물운은?")과 완전히 동일한 경로(Router AI → `authorizeAnalysisQuestion`)를
+  탄다. Router는 "이 질문에 어떤 데이터가 필요한지"만 판단하도록 설계되어 있어 "이건 구체적
+  질문이 아니라 서비스 시작 요청"이라는 제3의 분기가 없었다. `START_ANALYSIS`/`ANALYSIS_ENTRY`
+  같은 기존 상태를 코드 전체에서 검색했으나 **존재하지 않음을 확인**(새로 만들 근거 없음).
+
+**3. 상품별 상태가 섞이는 문제**: 없음. `conversation.chart_id`/`character_id` 자체는 정확히
+분리되어 있었다 — 문제는 "구분 로직 부재"였지 "상태 오염"이 아니었다.
+
+### [FIX]
+1. `pickCatalogChoice` — `entry.free === true`면 `authorizeBeforeAnalysis`를
+   `null`로 넘겨 authorization을 완전히 스킵(`runQuestionPipeline`에 이미 있던 하위호환
+   스위치를 그대로 재사용, 새 로직 없음). `free: false`(유료 심화 질문)는 기존과 동일하게
+   authorization을 거친다.
+2. `packages/character/catalog-selector.mjs`에 `isServiceEntryIntent(text)` 추가 — 지시받은
+   예시 문구(사주볼래/사주 봐줘/내 사주 보고 싶어/사주 분석 시작, 자미두수 동일 패턴) **위주로
+   의도적으로 좁게** 매칭하는 순수 텍스트 함수(새 대화 상태/카테고리 아님). `handleFreeTextMessage`
+   의 saju_question 경로에서 Router/authorization보다 먼저 이걸 체크 — 감지되면 AI 호출/quota
+   소비 없이 기존 `getOpeningChoices()`를 다시 반환한다. **실제 분석 질문("내 사주에서
+   재물운은?")과 casual("뭐해?")은 오분류되지 않음을 실제 실행으로 확인**.
+
+### [REGRESSION RISK] — 실제 확인 결과
+`classifyMessage` 자체(casual/saju_question 이분법)는 전혀 수정하지 않음. `catalog-selector.mjs`
+의 기존 `selectOpeningChoices`/`selectNextChoices`도 그대로 — 새 함수만 추가. 유일한 동작 변화는
+(a) free 카탈로그 항목의 authorization 스킵 (b) 서비스 진입 발화의 조기 반환 — 둘 다 명시적으로
+좁게 범위를 잡아서 기존 정상 흐름(유료 항목 차단, casual 처리, 실제 분석 질문 authorization)에
+영향 없음을 회귀 테스트로 확인.
+
+### [TEST PLAN] — 실제 실행 결과
+1. `isServiceEntryIntent`가 지시받은 서비스 진입 문구엔 true, 실제 분석 질문/casual/구매 발화엔
+   false를 반환하는지 — **실제 실행 확인**.
+2. `selectOpeningChoices`가 뽑는 항목이 전부 `free:true`인지 — **실제 실행 확인**.
+3. 실제 conversation을 만들어 "사주볼래"를 자유입력으로 보내서, AI 호출 0회로 오프닝 선택지가
+   다시 반환되는지 — **실제 실행 확인**(이전엔 차단 메시지였음).
+4. 비로그인 상태로 실제 오프닝 카탈로그 항목(`free:true`)을 선택해서, 차단 없이 정상 응답이
+   나오는지 — **실제 실행 확인**(이전엔 "로그인 후..." 차단이었음).
+
+### 신규 파일
+- `tests/63-catalog-service-entry-triage.test.mjs`(8개).
+
+### 수정 파일
+- `apps/api/src/services/conversation-service.mjs`
+- `packages/character/catalog-selector.mjs`
+- `tests/17-character-conversation.test.mjs`(기존 테스트 1개를 실제 계약 변경에 맞게 정직하게
+  업데이트 — "카탈로그도 비로그인이면 차단된다"는 예전 기대값을 "free 항목은 비로그인도 통과,
+  일반 분석 질문은 여전히 차단"으로 수정. 검증 약화가 아니라 실제 버그 수정을 반영한 정정).
+
+### 테스트 결과
+신규 8/8, 수정된 기존 테스트 재확인(20/20), **전체 backend 704/704 통과**. 프론트 빌드
+무영향(75 모듈).
+
+### 절대 하지 않은 것 확인
+결제/Toss 연동 무변경. 새로운 대규모 상태 머신 없음(순수 텍스트 감지 함수 하나만 추가).
+`classifyMessage` 무변경.
+
 ## [Unreleased] — 이메일/비밀번호 로그인 추가 (Toss 심사용 실제 로그인 방식)
 
 ### 조사 결과 — DB 스키마가 이미 email/password를 지원하도록 준비되어 있었음

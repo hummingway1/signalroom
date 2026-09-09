@@ -75,7 +75,7 @@ test('B1: 소스 레벨 — conversations.mjs에는 client entitlementId를 추�
   assert.ok(!source.includes('import { consumeQuestionEntitlement }'));
 });
 
-test('B2: consumeQuestionEntitlement는 라우트 레벨 어디서도 직접 호출되지 않고, conversation-service.mjs의 authorization 성공 경로에서만 정확히 3번(자유입력/카탈로그선택/출생일택일채팅) 호출된다', async () => {
+test('B2: consumeQuestionEntitlement는 라우트 레벨 어디서도 직접 호출되지 않고, conversation-service.mjs의 authorization 성공 경로에서만 정확히 4번(자유입력/카탈로그선택/출생일택일채팅/작명채팅) 호출된다', async () => {
   const routeFiles = [
     './apps/api/src/routes/conversations.mjs',
     './apps/api/src/routes/charts.mjs',
@@ -85,6 +85,7 @@ test('B2: consumeQuestionEntitlement는 라우트 레벨 어디서도 직접 호
     './apps/api/src/routes/compatibility.mjs',
     './apps/api/src/routes/child-profiles.mjs',
     './apps/api/src/routes/birth-selection.mjs',
+    './apps/api/src/routes/naming.mjs',
   ];
   for (const file of routeFiles) {
     let source;
@@ -97,5 +98,5 @@ test('B2: consumeQuestionEntitlement는 라우트 레벨 어디서도 직접 호
   }
   const serviceSource = await readFile('./apps/api/src/services/conversation-service.mjs', 'utf-8');
   const occurrences = (serviceSource.match(/consumeQuestionEntitlement\(/g) ?? []).length;
-  assert.equal(occurrences, 3, 'handleFreeTextMessage(saju)/pickCatalogChoice/handleFreeTextMessage(DATE_SELECTION) 3곳에서만, 정확히 authorization 성공 이후에 호출되어야 함');
+  assert.equal(occurrences, 4, 'handleFreeTextMessage(saju)/pickCatalogChoice/handleFreeTextMessage(DATE_SELECTION)/handleFreeTextMessage(NAMING) 4곳에서만, 정확히 authorization 성공 이후에 호출되어야 함');
 });

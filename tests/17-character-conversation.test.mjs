@@ -206,17 +206,17 @@ test('POST /api/conversations/:id/messages — 일상 대화면 intent=casual, A
   assert.equal(body.sources, null);
 });
 
-test('§Phase3 정책변경: 카탈로그 선택도 비로그인이면 동일하게 차단된다(둘 다 authorization 이전에 막히므로 토큰 비교 자체가 무의미해짐 — 기존 "카탈로그가 더 저렴하다" 비교는 로그인 사용자 대상으로만 유효, 실제 DB 필요)', async () => {
+test('§실측 버그 수정 확인: free:true 카탈로그 항목은 비로그인이어도 차단되지 않는다(이전엔 무료라고 표시된 항목도 무조건 차단되던 실제 버그였음)', async () => {
   const { conversationId } = await createChartAndConversation();
   const opening = await getJson(`/api/conversations/${conversationId}/opening-choices`);
   const chosenId = opening.body.choices[0].id;
   const { body } = await postJson(`/api/conversations/${conversationId}/catalog-choice`, { catalogId: chosenId });
-  assert.ok(body.response.includes('로그인'), '카탈로그 선택도 비로그인이면 차단 안내를 받아야 함');
+  assert.ok(!body.response.includes('로그인'), '오프닝 카탈로그 항목은 free:true이므로 비로그인이어도 정상 응답이 나와야 함(§실측 버그 수정)');
+  // 자유입력(free 카탈로그도 아니고 서비스 진입 의도도 아닌 일반 분석 질문)은 여전히
+  // 기존과 동일하게 authorization을 거쳐 비로그인이면 차단된다 — 이번 수정은 free 카탈로그
+  // 항목과 서비스 진입 발화에만 영향을 준다.
   const freeText = await postJson(`/api/conversations/${conversationId}/messages`, { question: '내 세운이 궁금해' });
-  assert.equal(freeText.body.sources, null, '자유입력도 비로그인이면 마찬가지로 차단됨');
-  // "카탈로그 경로가 Router 호출을 생략해서 더 저렴하다"는 기존 비용 절감 특성 자체는 그대로
-  // 유지된다(코드 무변경, predefinedRouting 경로는 손대지 않음) — 다만 이 비교를 실제로 재현하려면
-  // 로그인 + entitlement 보유가 필요해서 이 테스트 하네스로는 검증 불가(위와 동일한 이유).
+  assert.equal(freeText.body.sources, null, '일반 분석 질문은 여전히 비로그인이면 차단됨(기존 동작 유지)');
 });
 
 // ============================================================
