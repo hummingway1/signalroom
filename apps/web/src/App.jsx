@@ -438,8 +438,8 @@ export default function App() {
           <YearlyFortuneScreen
             userId={userId}
             chartId={chartId}
-            onBack={() => setScreen('home')}
-            onHome={() => setScreen('home')}
+            onBack={() => setScreen(homeOrigin)}
+            onHome={() => setScreen(homeOrigin)}
             onNeedBirthData={() => { setPendingService('yearlyFortuneAfterBirth'); setScreen('birth'); }}
             onOpenChat={handleOpenYearlyFortuneChat}
           />
@@ -451,7 +451,7 @@ export default function App() {
             chat={chat}
             onOpenDetail={handleOpenDetail}
             onOpenMenu={() => setShowMenu(true)}
-            onHome={() => setScreen('home')}
+            onHome={() => setScreen(homeOrigin)}
             onNeedLogin={() => { setPendingAfterSignup('chat'); setScreen('signup'); }}
             onNeedPurchase={() => setScreen('products')}
           />

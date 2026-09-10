@@ -601,18 +601,54 @@ body {
   cursor: pointer;
 }
 
+.purchase-cta-banner {
+  display: flex;
+  justify-content: center;
+  padding: 10px 16px;
+  flex-shrink: 0;
+}
+
+.purchase-cta-banner button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: var(--primary, #39A89B);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 /* ============== 첫 진입(welcome) 화면 (Figma WelcomeScreen 그대로) ============== */
 
 .welcome-screen {
   display: flex;
   flex-direction: column;
   height: 100%;
-  align-items: center;
-  justify-content: center;
-  padding: 0 32px;
   position: relative;
   overflow: hidden;
   background: radial-gradient(ellipse at 50% 28%, #F5EFE2 0%, #FAF7F2 68%);
+}
+
+.welcome-screen__global-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 0;
+  padding-top: max(12px, env(safe-area-inset-top));
+  flex-shrink: 0;
+}
+
+.welcome-screen__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32px;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .welcome-screen__eyebrow {

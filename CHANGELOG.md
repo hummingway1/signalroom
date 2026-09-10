@@ -2,6 +2,71 @@
 
 프로젝트 지시사항에 따라, 기존 구조/파일과 충돌하거나 임의 판단이 필요했던 지점을 여기에 기록한다.
 
+## [Unreleased] — Home navigation 버그 + WelcomeScreen 헤더 레이아웃 구조적 수정
+
+### [1. Home route의 기존 문제 원인]
+`App.jsx`에서 `ChatScreen`과 `yearlyFortune` 화면의 `onHome`이 `homeOrigin`(SIGNAL ROOM
+에서 들어왔는지 기억하는 state)을 무시하고 `setScreen('home')`으로 **하드코딩**되어 있었다.
+사주/자미두수 채팅 중 Home을 누르면 무조건 예전 teal 아이시그널 홈으로 이동하던 버그.
+
+### [2. Header 위치가 밀리던 기존 DOM/CSS 구조]
+`.welcome-screen`이 `display:flex; flex-direction:column; justify-content:center`인
+**단일** flex 컨테이너였고, topbar(Home/뒤로가기)가 avatar/messages/CTA와 함께 하나의
+콘텐츠 블록으로 취급되어 전체가 수직 중앙 정렬되고 있었다 — 메시지가 늘어나거나 CTA
+버튼이 나타나면 콘텐츠 블록 전체 높이가 커지면서 topbar가 화면 아래(대구 캐릭터 위)로
+밀려났다. `.chat-screen`/`.subscreen`은 이미 `justify-content` 기본값(flex-start)이라
+문제가 없었음을 확인 — `WelcomeScreen`에만 있던 문제.
+
+### [3. 최종 Home navigation 구조]
+`ChatScreen`/`yearlyFortune`의 `onHome`을 다른 정상 화면들과 동일하게 `homeOrigin`
+기반으로 통일. 어느 화면에서 Home을 누르든 원래 들어온 곳(SIGNAL ROOM 또는 teal 홈)으로
+정확히 돌아간다.
+
+### [4. 최종 GlobalHeader 구조]
+```
+WelcomeScreen
+├── GlobalHeader (.welcome-screen__global-header, flex-shrink:0, 형제 레벨)
+│   ├── 뒤로가기
+│   ├── 서비스 타이틀(catalog.title)
+│   └── 홈 버튼
+└── ContentArea (.welcome-screen__content, flex:1, 그 안에서만 justify-content:center)
+    ├── NPC avatar
+    ├── Messages
+    └── CTA 버튼
+```
+`.chat-screen`/`.chat-header`가 이미 쓰던 것과 동일한 안정적 패턴(header가 콘텐츠의
+자식이 아니라 형제)으로 통일 — 새 레이아웃 프레임워크 없이 기존에 이미 검증된 구조를
+그대로 재사용.
+
+### 실제 브라우저로 검증
+- WelcomeScreen 진입 직후(메시지 없음)와 전체 메시지+CTA가 나타난 뒤, **헤더가 정확히
+  동일한 픽셀 위치**에 있음을 스크린샷 두 장으로 비교 확인.
+- 사주 채팅 화면에서 Home(⌂) 버튼 클릭 → **정확히 SIGNAL ROOM으로 복귀**(이전엔 teal
+  홈으로 갔을 상황).
+- 자미두수 WelcomeScreen도 동일하게 헤더 고정 확인.
+
+### 변경 파일
+- `apps/web/src/App.jsx` — ChatScreen/yearlyFortune의 onHome 수정.
+- `apps/web/src/components/WelcomeScreen.jsx` — GlobalHeader/ContentArea 구조로 재작성.
+- `apps/web/src/styles/app.css` — `.welcome-screen`에서 `justify-content:center` 제거,
+  `.welcome-screen__global-header`/`.welcome-screen__content` 신규 추가(safe-area-inset
+  적용).
+
+### 작업 중 발견/복구한 실수
+수정 과정에서 `ChatScreen`의 `onNeedLogin` prop을 한 번 실수로 삭제했다가, 빌드/리뷰
+과정에서 즉시 발견해서 복구했다(실제 배포되지 않았음, 이 CHANGELOG 항목에만 기록).
+
+### 테스트 결과
+백엔드 무변경 항목 — **전체 backend 719/719 통과**(재확인). 프론트 빌드 성공(78 모듈,
+CSS만 변경되어 모듈 수 동일).
+
+### 남은 문제
+- `fun`/`ranking` 화면도 `onHome`이 `'home'`으로 고정되어 있으나, 이번 지시서가 명시한
+  화면 목록(BirthDataForm/AnalysisChoice/Welcome/Chat/결제/분석결과)에 포함되지 않아
+  이번 라운드에서 손대지 않음 — 필요시 별도 확인 요청.
+- `ServiceIntroScreen`/`AnalysisChoiceScreen`/`BirthDataForm`은 이미 `.subscreen`(정상
+  구조)을 쓰고 있어 이번 수정 대상이 아니었음 — 별도 문제 없음을 확인.
+
 ## [Unreleased] — SIGNAL ROOM 서비스 identity 재정렬(SERVICE_CATALOG + ANALYSIS_ROUTER)
 
 ### 배경
