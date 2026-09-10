@@ -72,7 +72,7 @@ export function YearlyFortuneScreen({ userId, chartId, onBack, onHome, onNeedBir
       await tossPayments.requestPayment('카드', {
         amount: order.amount,
         orderId: order.id,
-        orderName: order.order_name,
+        orderName: order.orderName,
         successUrl: `${window.location.origin}/?payment=success`,
         failUrl: `${window.location.origin}/?payment=fail`,
       });

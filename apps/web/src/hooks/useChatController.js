@@ -32,6 +32,7 @@ export function useChatController() {
   const [isTyping, setIsTyping] = useState(false);
   const [isBooting, setIsBooting] = useState(false);
   const [error, setError] = useState(null);
+  const [purchaseRequired, setPurchaseRequired] = useState(null); // §실제 상품 플로우 연결 — { productCode, loginRequired } | null
 
   const conversationIdRef = useRef(null);
   const chartIdRef = useRef(null);
@@ -83,6 +84,7 @@ export function useChatController() {
         });
       });
       if (Array.isArray(result.nextChoices)) setChoices(result.nextChoices.slice(0, MAX_QUICK_REPLIES));
+      setPurchaseRequired(result.purchaseRequired ?? null);
     },
     [pushMessage]
   );
@@ -92,6 +94,7 @@ export function useChatController() {
     async (birthData) => {
       setIsBooting(true);
       setError(null);
+      setPurchaseRequired(null);
       try {
         const chart = await api.createChart(birthData);
         chartIdRef.current = chart.id;
@@ -105,6 +108,29 @@ export function useChatController() {
         lastCharacterIdRef.current = opening.character?.id ?? null;
         setChoices(opening.choices.slice(0, MAX_QUICK_REPLIES));
 
+        pushMessage({ role: 'character', character: opening.character, text: getTimeBasedGreeting(opening.character.id), card: null });
+      } catch (err) {
+        setError(toFriendlyErrorMessage(err));
+      } finally {
+        setIsBooting(false);
+      }
+    },
+    [pushMessage]
+  );
+
+  /** 이미 만들어진 conversation(예: 신년운세 CHAT 진입)을 이어받아 기존 채팅 UI를 그대로 쓴다.
+   * start()와 달리 chart/conversation을 새로 만들지 않는다 — chart 생성 단계만 생략. */
+  const resumeConversation = useCallback(
+    async (conversationId, chartId) => {
+      setIsBooting(true);
+      setError(null);
+      try {
+        chartIdRef.current = chartId;
+        conversationIdRef.current = conversationId;
+        const opening = await api.getOpeningChoices(conversationId);
+        setCharacter(opening.character);
+        lastCharacterIdRef.current = opening.character?.id ?? null;
+        setChoices(opening.choices.slice(0, MAX_QUICK_REPLIES));
         pushMessage({ role: 'character', character: opening.character, text: getTimeBasedGreeting(opening.character.id), card: null });
       } catch (err) {
         setError(toFriendlyErrorMessage(err));
@@ -148,6 +174,7 @@ export function useChatController() {
   );
 
   const retryLast = useCallback(() => setError(null), []);
+  const dismissPurchaseRequired = useCallback(() => setPurchaseRequired(null), []);
 
-  return { messages, character, choices, isTyping, isBooting, error, start, pickChoice, sendFreeText, retryLast };
+  return { messages, character, choices, isTyping, isBooting, error, purchaseRequired, start, resumeConversation, pickChoice, sendFreeText, retryLast, dismissPurchaseRequired };
 }

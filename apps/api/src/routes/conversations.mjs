@@ -45,6 +45,13 @@ export function conversationsRouter({ aiProviderFactory, model, casualAiProvider
         highlight_card: result.highlightCard ?? null,
         usage: result.usage,
         suggestedQuestions: result.suggestedQuestions ?? [], // §버그수정 — handleFreeTextMessage가 만들어도 라우트가 응답에서 누락시키고 있었음
+        // §실제 상품 플로우 연결 버그 수정 — authorization이 거부되면 result.authorization.missingAnalysisType
+        // 은 이미 존재했지만(analysis_type 문자열 === product.code 문자열, 확인됨) 라우트가 이걸 응답에서
+        // 완전히 버리고 있어서 프론트가 "구매 CTA"를 만들 데이터 자체가 없었다. 이제 그대로 노출한다 —
+        // 새 백엔드 로직이 아니라 이미 있던 authorization 판정 결과를 그대로 드러내는 것뿐이다.
+        purchaseRequired: (result.authorization && !result.authorization.authorized)
+          ? { productCode: result.authorization.missingAnalysisType ?? null, loginRequired: result.authorization.loginRequired === true }
+          : null,
       });
     } catch (err) {
       return handlePipelineError(res, err);
@@ -83,6 +90,9 @@ export function conversationsRouter({ aiProviderFactory, model, casualAiProvider
         nextChoices: result.nextChoices,
         highlight_card: result.highlightCard ?? null,
         usage: result.usage,
+        purchaseRequired: (result.authorization && !result.authorization.authorized)
+          ? { productCode: result.authorization.missingAnalysisType ?? null, loginRequired: result.authorization.loginRequired === true }
+          : null,
       });
     } catch (err) {
       if (err.code === 'CATALOG_ENTRY_NOT_FOUND') {

@@ -2,6 +2,176 @@
 
 프로젝트 지시사항에 따라, 기존 구조/파일과 충돌하거나 임의 판단이 필요했던 지점을 여기에 기록한다.
 
+## [Unreleased] — 실제로 발견한 심각한 버그: 지금까지 어떤 상품도 결제가 될 수 없었음
+
+### 배경
+신년운세 실제 구매 시도 중 Toss가 "잘못된 요청입니다. - 상품 명은 필수 입니다."로 거부하는
+것을 실제 브라우저 Network/Console 탭으로 확인.
+
+### 원인
+백엔드 `POST /api/orders`는 `createOrder()`의 반환값을 그대로 `{order}`로 응답하는데, 이
+객체는 **항상 camelCase**(`orderName`)다(`return { id, userId, productId, orderName,
+amount, ... }`). 그런데 **결제 관련 5개 화면 전부**가 `order.order_name`(snake_case)을
+참조하고 있었다:
+- `ProductsScreen.jsx`
+- `YearlyFortuneScreen.jsx`
+- `MembershipScreen.jsx`
+- `BirthSelectionScreen.jsx`
+- `NamingScreen.jsx`
+
+`order.order_name`은 항상 `undefined`이므로, Toss `requestPayment()`에
+`orderName: undefined`가 전달되어 **모든 상품의 모든 결제 시도가 예외 없이 차단되고
+있었다.** 이건 이번에 처음 실제로 결제를 시도해봐서 드러난 문제로, 지금까지 어떤 화면에서도
+결제가 성공한 적이 없었을 것이다.
+
+### 수정
+5개 화면 전부 `orderName: order.order_name` → `orderName: order.orderName`으로 수정
+(백엔드가 이미 일관되게 camelCase를 반환하므로, 프론트를 백엔드 계약에 맞춤 — 백엔드는
+그대로 유지). `order.id`/`order.amount` 등 다른 필드는 원래부터 camelCase와 무관하게
+동일해서 문제 없었음을 확인.
+
+### 신규 파일
+`tests/64-order-field-name-bug.test.mjs`(6개) — 5개 화면 전부 올바른 필드를 참조하는지,
+백엔드가 실제로 camelCase로 응답하는지 검증.
+
+### 테스트 결과
+신규 6/6 통과. **전체 backend 710/710 통과**(재실행 확인, 이전 2회 실패는 기존에 알려진
+타이밍 의존 flaky 테스트였음). 프론트 빌드 성공(75 모듈).
+
+## [Unreleased] — 실제 브라우저 검증 완료 + 새로 발견한 서버 크래시 버그 수정
+
+### 실제로 발견하고 고친 새 버그: GET /api/products가 DB 에러 시 서버 전체를 다운시킴
+`ServiceIntroScreen.jsx`가 실제 가격을 보여주도록 이 API를 호출하게 만든 뒤 실제 브라우저로
+검증하는 과정에서 발견 — `routes/products.mjs`에 try/catch가 없어서, DB 에러가 이 요청 하나가
+아니라 **Node 프로세스 전체를 크래시**시키고 있었다(실제로 이 환경에서 서버가 죽는 걸 실측
+확인). 다른 모든 라우트와 동일하게 try/catch로 감싸서 500 응답만 주도록 수정.
+
+### 실제 브라우저로 전체 시나리오 검증 (Playwright, 로컬 API+프론트 함께 기동)
+
+**Test A(비로그인) — 통과**: SIGNAL ROOM → 사주 → ServiceIntroScreen → "무료로 시작하기" →
+생년월일 입력 → 채팅 진입 → "사주봐줘"(오프닝 재제시 정상) → "사주"(차단) → **"로그인하기"
+버튼이 화면에 실제로 렌더링됨** → 클릭 → 이메일 로그인 화면으로 정확히 이동. 전체 스크린샷으로
+확인.
+
+**Test C(자미두수) — 통과**: 동일 패턴으로 "자미두수로 볼래" → "자미두수" → "로그인하기" 버튼
+정상 렌더링.
+
+**Test D(무료 catalog) — 통과**: 오프닝 선택지("어? 내가 그래?") 비로그인 상태로 클릭 →
+entitlement 차단 없이 실제 MOCK 분석 응답 + 다음 선택지까지 정상 진행.
+
+**Test E(casual) — 통과**: "안녕" → 기존 캐주얼 응답, 구매 CTA 없음(정상, casual은
+authorization 대상 아님).
+
+**Test B(로그인+미구매)**: 이 환경엔 실제 Postgres가 없어 로그인 세션을 만들 수 없어 브라우저
+레벨 검증 불가 — 코드 추적으로 `missingAnalysisType`이 동일한 방식(§ROOT CAUSE 4에서 이미
+HTTP로 확인한 것과 동일 코드 경로)으로 채워짐을 확인. 사용자의 실제 배포 환경(Supabase 연결됨)
+에서 로그인 후 재확인 필요.
+
+### 변경 파일
+- `apps/api/src/routes/products.mjs` — try/catch 추가(신규 발견 버그 수정).
+- `apps/api/src/repositories/product-repository.mjs`, `apps/web/src/components/ServiceIntroScreen.jsx`
+  — 지난 라운드에서 이미 수정, 이번에 실제 동작까지 확인.
+
+### 전달 파일(기존 완성 파일, 이번에도 함께 포함)
+- `apps/api/src/routes/conversations.mjs`
+- `apps/web/src/hooks/useChatController.js`
+- `apps/web/src/components/ChatScreen.jsx`
+
+### 테스트 결과
+전체 backend 704/704 통과(무영향). 프론트 빌드 성공.
+
+## [Unreleased] — 근본 원인 확정: 파일 전달 누락 + 실제 가격 하드코딩 버그
+
+### [CURRENT FLOW] (조사 결과)
+```
+SIGNAL ROOM → 사주 클릭 → ServiceIntroScreen("무료" 하드코딩 표시, 실제 가격 아님)
+→ WelcomeScreen → BirthDataForm → chart 생성
+→ startFirstQuestion(chart.id, "안녕") → conversation 생성(오프닝 재제시 로직 정상 작동)
+→ 사용자 "사주봐줘" → sendMessage → 오프닝 선택지 재제시(정상)
+→ 사용자 "사주" → sendMessage → authorization 거부, "로그인 후 구매하시면..." 텍스트만 노출
+→ (구매 CTA 버튼이 화면에 전혀 안 보임) ← 사용자가 결제까지 갈 방법이 없던 지점
+```
+
+### [ROOT CAUSE 1] 상품 선택 후 product/catalog 상태
+`conversation.chart_id`로 정확히 유지됨 — 상태 자체는 정상. 문제는 상태 오염이 아니라 그 상태를
+UI가 활용해서 구매 유도를 하는 마지막 연결고리가 빠져있었다는 것(ROOT CAUSE 4 참고).
+
+### [ROOT CAUSE 2] 첫 greeting/nextChoices 생성 위치
+`getOpeningChoices()`(conversation-service.mjs) — 성인 통합 QUESTION_CATALOG에서 context별
+대표 항목을 뽑는 구조(기존 설계, 지난 라운드에 이미 확인). 여기 자체는 문제 없음.
+
+### [ROOT CAUSE 3] "사주봐줘" → "사주"가 다시 분석 질문으로 처리되는 이유
+지난 수정(`isServiceEntryIntent`)은 "사주볼래/사주 봐줘/..." 같은 **완전한 문구 패턴**만 잡는다.
+사용자가 오프닝 재질문("좋아, 그럼 뭐부터 볼까?")에 **단답 "사주"** 로 답하면 이 패턴에 안 걸려서
+`classifyMessage`가 `saju_question`으로 분류 → Router → SAJU_DETAIL 권한 요구 → 차단. 이건
+지시서가 지적한 대로 "특정 문구를 계속 추가하는 방식으로는 근본 해결이 안 되는" 정확한 사례.
+**다만 이번 조사에서 실제로 확인된 더 중요한 사실**: 이 차단 자체는 문제가 아니다 — 백엔드가
+이미 `purchaseRequired: {productCode, loginRequired}` 구조화 데이터를 정확히 응답에 포함하고
+있었다(HTTP 레벨로 직접 재현해서 확인: `{"loginRequired":true}` 정확히 반환됨). **진짜 문제는
+이 데이터를 받아서 "로그인하기" 버튼을 그려야 할 프론트 파일이 실제로 배포되지 않았다는 것.**
+
+### [ROOT CAUSE 4] — 가장 중요한 발견: 서비스 소개/구매 CTA가 존재하지만 노출되지 않는 이유
+**백엔드(`routes/conversations.mjs`)와 프론트(`useChatController.js`, `ChatScreen.jsx`)에 이미
+완전한 구매 유도 플로우가 구현되어 있었다**:
+- `entitlement-authorization-service.mjs`가 거부 시 `loginRequired`/`missingAnalysisType` 반환
+- `routes/conversations.mjs`가 이걸 `purchaseRequired: {productCode, loginRequired}`로 변환
+- `useChatController.js`가 `purchaseRequired` state로 관리
+- `ChatScreen.jsx`가 이 state로 "로그인하기"/"상세분석 보러가기" **버튼을 실제로 렌더링**
+- `App.jsx`가 클릭 시 로그인 화면 또는 `ProductsScreen`(실제 구매 화면)으로 연결
+
+**이 완전한 파이프라인이 실제 브라우저에서 전혀 작동하지 않았던 이유는 코드 결함이 아니라,
+`routes/conversations.mjs`/`useChatController.js`/`ChatScreen.jsx` 이 3개 핵심 파일을 지금까지
+단 한 번도 사용자에게 전달하지 않았기 때문**이다(이전 라운드들에서 `conversation-service.mjs`
+등 관련 파일은 여러 번 전달했으나, 이 3개는 누락됨 — `naming-prompt.mjs` 누락 사고와 동일한
+패턴의 반복 실수). 이번에 처음으로 실제 HTTP 요청을 재현해서 이 사실을 확정했다.
+
+### [ROOT CAUSE 5] — 실제로 남아있던 진짜 버그: 가격 하드코딩
+`ServiceIntroScreen.jsx`의 saju/relationship 항목 가격이 실제 product 테이블과 무관하게
+**`price: '무료'`로 하드코딩**되어 있었다(SAJU_BASIC 990원/SAJU_DETAIL 4900원이 실제 정책인데도).
+`listActiveProducts()`도 `question_quota`/`validity_hours` 컬럼을 select하지 않아서, 설령
+API로 가격을 가져와도 채팅권 정보(몇 회/몇 시간)를 표시할 수 없는 상태였다.
+
+### [FIX]
+1. `ServiceIntroScreen.jsx` — 하드코딩된 "무료" 문구 제거, `GET /api/products`를 실제로
+   호출해서 SAJU_DETAIL 등의 정확한 가격/채팅권을 표시. 로딩 실패 시에도 안전하게 fallback
+   문구("가격 정보를 불러오는 중이에요")로 크래시 없이 처리.
+2. `product-repository.mjs`의 `listActiveProducts` — `question_quota`/`validity_hours`/`tier`
+   컬럼 추가(기존 필드 제거 없는 순수 확장).
+3. **핵심**: 이미 완성되어 있던 `routes/conversations.mjs`(purchaseRequired 변환 로직),
+   `useChatController.js`(purchaseRequired state), `ChatScreen.jsx`(구매 CTA 버튼 렌더링)를
+   이번에 처음으로 실제 패키징해서 전달 — 새로 작성한 코드가 아니라 존재했지만 전달되지
+   않았던 파일을 실제로 전달하는 것.
+
+### [REGRESSION RISK]
+`classifyMessage`/`catalog-selector.mjs`/`isServiceEntryIntent` 전혀 수정하지 않음 — 이번
+라운드는 (a) 이미 있던 3개 핵심 파일의 실제 전달 (b) 실제 발견된 가격 하드코딩 버그 수정
+(c) products 쿼리 컬럼 확장, 이 세 가지로 한정. 기존 catalog/classifier 동작 전부 그대로.
+
+### [TEST PLAN] — 실제 실행 결과
+- 지시서의 정확한 재현 시나리오("사주봐줘" → "사주")를 `handleFreeTextMessage`로 직접
+  실행해서 `authorization.loginRequired: true`가 정확히 생성됨을 확인.
+- 동일 시나리오를 **실제 HTTP 요청**(`POST /api/charts/:id/questions` → `POST /api/conversations/:id/messages`
+  ×2)으로 재현해서, 최종 응답에 `"purchaseRequired":{"productCode":null,"loginRequired":true}`가
+  정확히 포함됨을 실측 확인 — 이건 이미 실제로 작동하는 백엔드였다는 확정적 증거.
+
+### 추가로 발견한(이번 범위 밖) 잠재적 이슈
+`startFirstQuestion`(`POST /api/charts/:id/questions`)이 "안녕"이라는 고정 문구로 매번
+authorization 없이 `askQuestion`(Router+분석 LLM 2회 호출)을 직접 호출하고 있음을 확인 —
+매 신규 대화 시작마다 불필요한 AI 비용이 발생할 수 있는 별도 이슈. 이번 지시 범위(구매 CTA
+플로우) 밖이라 손대지 않았고, 다음 라운드에서 다룰 필요가 있음을 기록해둔다.
+
+### 변경 파일
+- `apps/web/src/components/ServiceIntroScreen.jsx`
+- `apps/api/src/repositories/product-repository.mjs`
+
+### 전달 파일(기존에 이미 완성되어 있었으나 최초로 전달)
+- `apps/api/src/routes/conversations.mjs`
+- `apps/web/src/hooks/useChatController.js`
+- `apps/web/src/components/ChatScreen.jsx`
+
+### 테스트 결과
+전체 backend 704/704 통과(무영향). 프론트 빌드 성공(75 모듈).
+
 ## [Unreleased] — 실제 서비스에서 발견된 심각한 버그: 사주 채팅 진입 자체가 막혀 있던 문제
 
 ### 배경

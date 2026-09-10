@@ -1,16 +1,19 @@
 // apps/web/src/components/ServiceIntroScreen.jsx
 //
-// 아이시그널 3개 서비스 구조에 맞춘 소개 화면. 가격은 §7("기본 990원, 최초 1회 무료, 전체 분석은
-// Terra")을 그대로 표시 — 실제 결제 로직은 여전히 미구현이므로 텍스트로만 안내하고 결제를
-// 강제하지 않는다(§16, 기존 정책 그대로). 개인정보 안내는 §9 원칙(저장되지만 목적 제한, 절대적
-// 표현 금지, 개인정보처리방침은 링크 자리만 확보) 그대로.
+// §실제 상품 플로우 연결 — 이전엔 saju/relationship의 가격이 실제 product 테이블과 전혀
+// 무관하게 "무료"로 하드코딩되어 있었다(SAJU_BASIC 990원/SAJU_DETAIL 4900원이 실제 정책인데도).
+// 실제 서비스에서 가격을 사장님이 마음대로 바꿀 수 있어야 하므로, 여기서도 하드코딩하지 않고
+// GET /api/products를 그대로 조회해서 표시한다(§가격은 DB/코드에서만 관리한다는 기존 원칙).
+import { useEffect, useState } from 'react';
+import * as api from '../api/client.js';
+
 const SERVICE_INTRO = {
   child: {
     emoji: '🤓',
     title: '아이시그널',
     detail: '아이가 왜 이렇게 행동하는지, 내가 어떻게 이야기해야 할지 막막할 때가 있죠. 아이의 성향을 바탕으로 지금 부모님이 겪고 있는 상황을 함께 살펴보고, 대화하면서 현실적인 방법을 찾아갑니다.',
     whatYouGet: '아이의 사주를 바탕으로 성향과 기질을 살펴보고, 아이를 이해하는 데 도움이 될 만한 관점과 대화 방법을 함께 찾아드려요.',
-    price: '기본 분석 990원, 첫 이용은 무료. 더 자세한 전체 분석은 별도 유료.',
+    basicCode: 'CHILD_BASIC', detailCode: 'CHILD_DETAIL',
     privacyNote: true,
   },
   saju: {
@@ -18,19 +21,32 @@ const SERVICE_INTRO = {
     title: '나의 시그널',
     detail: '태어난 년월일시를 바탕으로 나의 타고난 성향과 삶의 흐름을 사주와 자미두수로 살펴봅니다.',
     whatYouGet: '성향, 기질, 현재와 앞으로의 흐름에 대한 이야기를 나눌 수 있어요.',
-    price: '무료',
+    basicCode: 'SAJU_BASIC', detailCode: 'SAJU_DETAIL',
   },
   relationship: {
     emoji: '💘',
     title: '관계 시그널',
     detail: '나와 상대방의 정보를 함께 넣어 두 사람의 관계 구조와 성향 흐름을 살펴봅니다.',
     whatYouGet: '서로 다른 점과 잘 맞는 점에 대한 이야기를 나눌 수 있어요.',
-    price: '무료',
+    basicCode: 'RELATIONSHIP_BASIC', detailCode: 'RELATIONSHIP_DETAIL',
   },
 };
 
 export function ServiceIntroScreen({ serviceKey, onNext, onBack }) {
   const info = SERVICE_INTRO[serviceKey];
+  const [prices, setPrices] = useState(null); // { basic, detail } | null(로딩 중/실패)
+
+  useEffect(() => {
+    if (!info) return;
+    api.listProducts()
+      .then(({ products }) => {
+        const basic = products?.find((p) => p.code === info.basicCode);
+        const detail = products?.find((p) => p.code === info.detailCode);
+        setPrices({ basic, detail });
+      })
+      .catch(() => setPrices(null));
+  }, [serviceKey]);
+
   if (!info) return null;
 
   return (
@@ -50,7 +66,13 @@ export function ServiceIntroScreen({ serviceKey, onNext, onBack }) {
           </div>
           <div className="service-intro__section">
             <p className="service-intro__label">가격</p>
-            <p className="service-intro__text">{info.price}</p>
+            {prices?.basic && prices?.detail ? (
+              <p className="service-intro__text">
+                무료 체험 가능 · 상세 분석 {prices.detail.price.toLocaleString()}원(채팅 {prices.detail.question_quota}회, {prices.detail.validity_hours}시간)
+              </p>
+            ) : (
+              <p className="service-intro__text">가격 정보를 불러오는 중이에요.</p>
+            )}
           </div>
           {info.privacyNote && (
             <div className="service-intro__privacy">
@@ -75,7 +97,7 @@ export function ServiceIntroScreen({ serviceKey, onNext, onBack }) {
           </>
         ) : (
           <button onClick={() => onNext()} className="subscreen__btn-full" style={{ background: 'var(--primary)', color: 'var(--primary-foreground)' }}>
-            다음
+            무료로 시작하기
           </button>
         )}
       </div>
