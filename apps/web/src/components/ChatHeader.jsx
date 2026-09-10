@@ -2,7 +2,7 @@
 import { CharacterAvatar } from './CharacterAvatar.jsx';
 import { getCharacterAsset } from '../characterAssets.js';
 
-export function ChatHeader({ character, onBack, onOpenMenu, onHome }) {
+export function ChatHeader({ character, serviceTitle, onBack, onOpenMenu, onHome }) {
   if (!character) return <div className="chat-header chat-header--empty" />;
   const asset = getCharacterAsset(character.id);
   return (
@@ -14,8 +14,8 @@ export function ChatHeader({ character, onBack, onOpenMenu, onHome }) {
       )}
       <CharacterAvatar characterId={character.id} size={42} />
       <div className="chat-header__info">
-        <div className="chat-header__name">{character.displayName}</div>
-        <div className="chat-header__status">{asset.statusText}</div>
+        <div className="chat-header__name">{serviceTitle ?? character.displayName}</div>
+        <div className="chat-header__status">{serviceTitle ? character.displayName : asset.statusText}</div>
       </div>
       {onHome && (
         <button className="chat-header__home" onClick={onHome} aria-label="홈으로">

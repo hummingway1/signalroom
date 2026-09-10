@@ -19,7 +19,7 @@ import { extractNatalGwimun, GWIMUN_CALCULATION_METHOD, GWIMUN_PAIRS_USED } from
 const PILLAR_POSITION_BY_ORRERY_INDEX = ['hour', 'day', 'month', 'year'];
 const CANONICAL_PILLAR_ORDER = ['year', 'month', 'day', 'hour'];
 
-const STEM_ELEMENT = {
+export const STEM_ELEMENT = {
   '甲': 'wood', '乙': 'wood', '丙': 'fire', '丁': 'fire', '戊': 'earth',
   '己': 'earth', '庚': 'metal', '辛': 'metal', '壬': 'water', '癸': 'water',
 };
@@ -185,7 +185,7 @@ export function buildCanonicalChart(raw, { adapterVersion = '1.1.0', engineVersi
     subject: {
       birth_date: raw.meta.input.birthDate,
       birth_time: raw.meta.input.birthTime,
-      time_known: true,
+      time_known: raw.meta.input.timeKnown !== false,
       gender: raw.meta.input.gender,
       birth_place: {
         name: raw.meta.input.city,

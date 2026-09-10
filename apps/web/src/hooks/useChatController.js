@@ -37,6 +37,7 @@ export function useChatController() {
   const conversationIdRef = useRef(null);
   const chartIdRef = useRef(null);
   const lastCharacterIdRef = useRef(null); // Figma MsgRow kind="marker" — 캐릭터 전환 감지용
+  const [serviceId, setServiceId] = useState(null); // §SERVICE_CATALOG 도입 — 이전엔 이 값 자체가 존재하지 않아서 ChatHeader가 서비스명을 표시할 방법이 없었다.
 
   const pushMessage = useCallback((msg) => {
     setMessages((prev) => [...prev, { id: nextId(), timestamp: Date.now(), ...msg }]);
@@ -91,10 +92,11 @@ export function useChatController() {
 
   /** 생년월일시 입력 → 차트 생성 → 대화 시작 → 첫 선택지 로드. */
   const start = useCallback(
-    async (birthData) => {
+    async (birthData, newServiceId = null) => {
       setIsBooting(true);
       setError(null);
       setPurchaseRequired(null);
+      setServiceId(newServiceId);
       try {
         const chart = await api.createChart(birthData);
         chartIdRef.current = chart.id;
@@ -176,5 +178,5 @@ export function useChatController() {
   const retryLast = useCallback(() => setError(null), []);
   const dismissPurchaseRequired = useCallback(() => setPurchaseRequired(null), []);
 
-  return { messages, character, choices, isTyping, isBooting, error, purchaseRequired, start, resumeConversation, pickChoice, sendFreeText, retryLast, dismissPurchaseRequired };
+  return { messages, character, choices, isTyping, isBooting, error, purchaseRequired, serviceId, start, resumeConversation, pickChoice, sendFreeText, retryLast, dismissPurchaseRequired };
 }

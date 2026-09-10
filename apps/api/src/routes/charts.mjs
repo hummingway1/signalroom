@@ -10,12 +10,15 @@ export function chartsRouter({ aiProviderFactory, model, basicAiProviderFactory 
 
   // POST /api/charts — 생년월일시 입력 → 계산 → Canonical Chart 생성
   router.post('/', async (req, res) => {
-    const { birthDate, birthTime, gender, city, timezone, userId } = req.body ?? {};
+    const { birthDate, birthTime, timeKnown, gender, city, timezone, userId } = req.body ?? {};
     if (!birthDate || !birthTime || !gender || !city) {
       return res.status(400).json({ error: { code: 'INVALID_INPUT', message: 'birthDate, birthTime, gender, city는 필수입니다.' } });
     }
     try {
-      const chart = await createChart({ birthDate, birthTime, gender, city, timezone }, userId ?? null);
+      // §timeKnown 보존 원칙 — 명시적으로 false가 온 경우만 "모름"으로 취급, 그 외(생략/true)는
+      // 기존 클라이언트와의 하위호환을 위해 true로 취급(기존 동작 무변경).
+      const resolvedTimeKnown = timeKnown === false ? false : true;
+      const chart = await createChart({ birthDate, birthTime, timeKnown: resolvedTimeKnown, gender, city, timezone }, userId ?? null);
       return res.status(201).json({ id: chart.id, canonical: chart.canonical, created_at: chart.created_at });
     } catch (err) {
       if (err instanceof ChartEngineError) {

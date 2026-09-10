@@ -2,6 +2,84 @@
 
 프로젝트 지시사항에 따라, 기존 구조/파일과 충돌하거나 임의 판단이 필요했던 지점을 여기에 기록한다.
 
+## [Unreleased] — SIGNAL ROOM 서비스 identity 재정렬(SERVICE_CATALOG + ANALYSIS_ROUTER)
+
+### 배경
+승인된 설계(SERVICE_CATALOG로 UI/identity 통합, ANALYSIS_ROUTER로 출생시간 기반 분석엔진
+추천을 분리)를 구현. Phase 1(SERVICE_CATALOG)~3(추천 선택 UI)까지 진행하고 전체 시나리오를
+실제 브라우저로 검증.
+
+### Phase 1 — SERVICE_CATALOG(단일 소스)
+- `apps/web/src/serviceCatalog.js`(신규) — 7개 서비스(saju/jami/yearlyFortune/gunghap/
+  isignal/taegil/naming) identity 통합 정의.
+- `SignalRoomHome.jsx` — 별 목록에서 멤버십 제거, 신년운세 추가(마이페이지를 통한 멤버십
+  접근은 그대로 유지, 최소 데이터 변경만 — 새 시각 디자인/애니메이션 추가 없음).
+- `App.jsx`의 `onService` 콜백 — 기존에 `jami→saju`, `gunghap→relationship`으로 identity를
+  뭉개던 매핑 제거. 각 서비스가 자기 자신의 serviceId를 그대로 유지.
+- `ServiceIntroScreen.jsx` — 분산되어 있던 SERVICE_INTRO 객체를 제거하고 SERVICE_CATALOG로
+  통합. 가격은 여전히 `GET /api/products`에서 조회(하드코딩 없음, 기존 원칙 유지).
+- `WelcomeScreen.jsx` — **실제로 추가 발견한 버그**: "아이시그널" 타이틀 하드코딩뿐 아니라
+  "사주 보러 왔구나...", "내 사주 이야기 시작하기" 같은 **채팅 인사말 문구 전체가 어떤
+  서비스를 선택했는지와 무관하게 항상 고정 표시**되고 있었다. `serviceId` prop을 받아
+  catalog의 title/greeting/description/quickReply를 그대로 사용하도록 재작성.
+- `ChatHeader.jsx`/`ChatScreen.jsx` — 서비스명을 메인으로, 캐릭터명(대구 등)을 보조 정보로
+  표시. `useChatController.js`에 `serviceId` state 추가(이전엔 이 값 자체가 존재하지 않아
+  전달할 방법이 없었음).
+
+### Phase 2 — timeKnown 데이터 보존
+**실제로 발견한 버그**: `BirthDataForm`에 "모르겠어" 옵션이 이미 있었지만, 백엔드로는 항상
+정오(12:00)라는 시각값으로만 전송되어 "모른다는 사실" 자체가 API 호출 시점에 완전히
+소실되고 있었다. 게다가 `canonical.subject.time_known`은 실제 입력과 무관하게 **항상
+`true`로 하드코딩**되어 있었다.
+- `BirthDataForm.jsx` — `timeKnown` boolean을 별도 필드로 명확히 전송.
+- `apps/api/src/routes/charts.mjs` → `packages/chart-engine/compute.mjs` → 
+  `packages/canonical/transform.mjs` 전체 배관 연결, `time_known` 하드코딩 제거.
+- 실행 테스트로 true/false/미전달(하위호환) 3가지 케이스 전부 정확히 동작 확인.
+
+### Phase 3 — 분석 방식 추천(자동전환 아님, 사용자 선택 확정)
+- `apps/web/src/analysisRecommendation.js`(신규) — `getAnalysisRecommendation()` 순수
+  함수. SERVICE_CATALOG와 완전히 분리(서로 import 없음). saju+timeKnown=true일 때만
+  `requiresUserChoice: true` 반환, 나머지 모든 조합은 추천 없이 그대로 진행.
+- `AnalysisChoiceScreen.jsx`(신규) — "자미두수로 분석하기"/"사주로 분석하기" 두 버튼을
+  명확히 제시, 사용자가 직접 눌러야 최종 서비스가 결정됨(자동 전환 없음).
+- 표현 원칙 준수: "자미두수가 더 정확하다"는 주장 없이 "출생시간을 알고 있으니 시간 정보를
+  활용하는 분석도 가능하다"는 사실만 안내.
+
+### 실제 브라우저로 전체 시나리오 검증 (Playwright)
+1. 사주 클릭 → intro/welcome에 정확히 "사주" 표시(catalog 기반, 하드코딩 없음)
+2. 자미두수 클릭 → 정확히 "자미두수"로 독립 표시(사주와 다른 greeting)
+3. **핵심 시나리오**: 사주 진입 → 출생시간 명확히 입력 → 추천 화면 정확히 등장
+   ("출생시간을 정확히 알고 있어요. 시간 정보를 활용하는 자미두수 분석도 진행할 수
+   있어요." + 두 버튼) → "자미두수로 분석하기" 클릭 → **최종 채팅 헤더에 정확히
+   "자미두수" 표시**(캐릭터명 "대구"는 보조 정보로만)
+4. 같은 상황에서 "사주로 분석하기" 선택 → 최종 헤더 "사주" 유지 확인
+5. 사주 진입 + 시간 모름 → 추천 화면 없이 즉시 사주로 진행 확인
+6. 자미두수 직접 선택 + 시간 명확히 입력 → 추천 화면 없이 즉시 자미두수로 진행 확인
+   (직접 선택은 항상 존중)
+7. 궁합/아이시그널/출생일택일 → 각각 정확한 서비스명으로 catalog 기반 표시 확인
+8. 신년운세 → 비로그인 상태에서 로그인 화면으로 정상 유도(§11 로그인 시점 원칙과 일치)
+9. 작명 → "COMING SOON · 추후 서비스 예정" 정확히 표시, 결제/분석 화면 진입 없음 확인
+
+### 신규 파일
+`serviceCatalog.js`, `analysisRecommendation.js`, `AnalysisChoiceScreen.jsx`,
+`tests/65-analysis-recommendation-and-time-known.test.mjs`(9개).
+
+### 테스트 결과
+신규 9/9 통과. **전체 backend 719/719 통과**. 프론트 빌드 성공(78 모듈).
+
+### 절대 하지 않은 것 확인
+새 결제/entitlement 시스템 없음, `QUESTION_CATALOG`의 실제 질문 데이터 삭제 없음(그대로
+보존, 분석 후 질문 역할로 유지), 홈 화면 시각 디자인 전면 개편 없음(별 목록 데이터만 최소
+교체), Toss 연동 무변경.
+
+### 남은 작업 (Phase 4~5, 다음 라운드)
+- Phase 4: 오프닝 자유 텍스트 quickReply를 서비스별로 완전히 분리(현재는 catalog의
+  quickReplies가 WelcomeScreen 진입 버튼으로만 쓰이고, 채팅 중 오프닝 선택지는 여전히
+  기존 통합 QUESTION_CATALOG 사용 — "어? 내가 그래?" 등)
+- Phase 5: YearlyFortuneScreen/BirthSelectionScreen/NamingScreen을 SERVICE_CATALOG와
+  완전히 통일(현재는 이 3개 화면이 각자 독립적으로 유지됨, 결제 흐름이 이미 검증되어
+  있어 리스크 관리 차원에서 이번 라운드에 포함하지 않음)
+
 ## [Unreleased] — 실제로 발견한 심각한 버그: 지금까지 어떤 상품도 결제가 될 수 없었음
 
 ### 배경

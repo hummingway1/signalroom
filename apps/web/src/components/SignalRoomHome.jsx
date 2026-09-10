@@ -14,11 +14,11 @@ const SR_CY = 900;
 const SR_SERVICES = [
   { id: "saju",     kr: "사주",        hanja: "四柱", color: "#E84040", r: 800, order: 6, x: 250, y: 140, bodyType: "star" },
   { id: "jami",     kr: "자미두수",    hanja: "紫微", color: "#F08828", r: 733, order: 5, x: 140, y: 205, bodyType: "planet" },
-  { id: "gunghap",  kr: "궁합",        hanja: "宮合", color: "#DDB820", r: 666, order: 4, x: 290, y: 270, bodyType: "moon" },
-  { id: "isignal",  kr: "아이시그널",  hanja: "兒",   color: "#3ABE80", r: 599, order: 3, x: 100, y: 335, bodyType: "constellation" },
-  { id: "taegil",   kr: "출생일 택일", hanja: "擇日", color: "#4090E8", r: 532, order: 2, x: 305, y: 405, bodyType: "comet" },
-  { id: "jakmeong", kr: "작명소",      hanja: "作名", color: "#5B55CC", r: 465, order: 1, x: 85,  y: 465, bodyType: "nebula" },
-  { id: "member",   kr: "운명의 열쇠", hanja: "命",   color: "#9B48CC", r: 398, order: 0, x: 195, y: 535, bodyType: "portal" },
+  { id: "yearlyFortune", kr: "신년운세", hanja: "年運", color: "#DDB820", r: 666, order: 4, x: 290, y: 270, bodyType: "moon" },
+  { id: "gunghap",  kr: "궁합",        hanja: "宮合", color: "#3ABE80", r: 599, order: 3, x: 100, y: 335, bodyType: "constellation" },
+  { id: "isignal",  kr: "아이시그널",  hanja: "兒",   color: "#4090E8", r: 532, order: 2, x: 305, y: 405, bodyType: "comet" },
+  { id: "taegil",   kr: "출생일 택일", hanja: "擇日", color: "#5B55CC", r: 465, order: 1, x: 85,  y: 465, bodyType: "nebula" },
+  { id: "jakmeong", kr: "작명소",      hanja: "作名", color: "#9B48CC", r: 398, order: 0, x: 195, y: 535, bodyType: "portal" },
 ];
 
 // ── Celestial bodies (replaces the old rainbow-arc visual) ─────────────────

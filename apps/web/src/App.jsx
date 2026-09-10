@@ -11,6 +11,8 @@ import { useChatController } from './hooks/useChatController.js';
 import { HomeScreen } from './components/HomeScreen.jsx';
 import { SignalRoomHome } from './components/SignalRoomHome.jsx';
 import { ServiceIntroScreen } from './components/ServiceIntroScreen.jsx';
+import { AnalysisChoiceScreen } from './components/AnalysisChoiceScreen.jsx';
+import { getAnalysisRecommendation } from './analysisRecommendation.js';
 import { WelcomeScreen } from './components/WelcomeScreen.jsx';
 import { BirthDataForm } from './components/BirthDataForm.jsx';
 import { ChatScreen } from './components/ChatScreen.jsx';
@@ -47,6 +49,8 @@ export default function App() {
   // 패턴에 필드 하나 추가).
   const [homeOrigin, setHomeOrigin] = useState('signalRoom');
   const [pendingService, setPendingService] = useState(null); // intro 화면에서 고른 서비스
+  const [pendingBirthData, setPendingBirthData] = useState(null); // §ANALYSIS_ROUTER — 추천 선택 화면에서 최종 확정 전까지 보관
+  const [pendingRecommendation, setPendingRecommendation] = useState(null);
   const [revealDest, setRevealDest] = useState(null); // null | 'fun' | 'battle'
   const [showMenu, setShowMenu] = useState(false);
   const [chartId, setChartId] = useState(null);
@@ -121,6 +125,20 @@ export default function App() {
     }
   }
 
+  async function proceedToChat(birthData, finalServiceId) {
+    await chat.start(birthData, finalServiceId);
+    // 리더보드/궁합/사주대결 기능에 쓸 chartId를 별도로 확보 — chat.start 내부에서 생성된 chart를
+    // 재사용하기 위해 여기서 한 번 더 생성하지 않고, useChatController가 chartIdRef로 갖고 있는
+    // 값을 못 꺼내오는 구조라 편의상 이 화면에서 한 번 더 생성한다(계산 비용만 있고 AI 호출은 없음).
+    try {
+      const chart = await api.createChart(birthData);
+      setChartId(chart.id);
+    } catch {
+      // 채팅 자체는 이미 시작됐으니 실패해도 채팅 진행에는 지장 없음 — 랭킹/궁합만 못 씀
+    }
+    setScreen('chat');
+  }
+
   async function handleBirthSubmit(birthData) {
     if (pendingService === 'yearlyFortuneAfterBirth') {
       // 신년운세 진입은 일반 사주 채팅이 필요 없다 — chart만 만들고 원래 화면으로 돌아간다.
@@ -133,17 +151,28 @@ export default function App() {
       setScreen('yearlyFortune');
       return;
     }
-    await chat.start(birthData);
-    // 리더보드/궁합/사주대결 기능에 쓸 chartId를 별도로 확보 — chat.start 내부에서 생성된 chart를
-    // 재사용하기 위해 여기서 한 번 더 생성하지 않고, useChatController가 chartIdRef로 갖고 있는
-    // 값을 못 꺼내오는 구조라 편의상 이 화면에서 한 번 더 생성한다(계산 비용만 있고 AI 호출은 없음).
-    try {
-      const chart = await api.createChart(birthData);
-      setChartId(chart.id);
-    } catch {
-      // 채팅 자체는 이미 시작됐으니 실패해도 채팅 진행에는 지장 없음 — 랭킹/궁합만 못 씀
+
+    // §ANALYSIS_ROUTER — saju/jami 진입에서만 추천 판단(다른 서비스는 이 판단과 무관).
+    // "추천 후 사용자 선택" 확정 UX — 여기서 절대 자동으로 서비스를 바꾸지 않는다.
+    if (pendingService === 'saju' || pendingService === 'jami') {
+      const recommendation = getAnalysisRecommendation({ requestedServiceId: pendingService, timeKnown: birthData.timeKnown });
+      if (recommendation.requiresUserChoice) {
+        setPendingBirthData(birthData);
+        setPendingRecommendation(recommendation);
+        setScreen('analysisChoice');
+        return;
+      }
     }
-    setScreen('chat');
+
+    await proceedToChat(birthData, pendingService);
+  }
+
+  async function handleAnalysisChoice(finalServiceId) {
+    setPendingService(finalServiceId);
+    const birthData = pendingBirthData;
+    setPendingBirthData(null);
+    setPendingRecommendation(null);
+    await proceedToChat(birthData, finalServiceId);
   }
 
   function handleOpenDetail(message) {
@@ -178,11 +207,11 @@ export default function App() {
   }
 
   function handleIntroNext(destOverride) {
-    if (pendingService === 'saju' || pendingService === 'ziwei') {
+    if (pendingService === 'saju' || pendingService === 'jami') {
       setScreen('welcome');
-    } else if (pendingService === 'child') {
+    } else if (pendingService === 'isignal') {
       setScreen('child');
-    } else if (pendingService === 'relationship') {
+    } else if (pendingService === 'gunghap') {
       // §13 — 궁합/사주대결 둘 다 "내 정보 확인 또는 입력"이 먼저다. chartId가 아직 없으면 내 정보부터.
       setPendingService(destOverride); // birth 화면에서 목적지 판단에 쓰임(battle/compatibility)
       setScreen(chartId ? destOverride : 'birth');
@@ -301,25 +330,28 @@ export default function App() {
           <SignalRoomHome
             onOpenMyPage={() => { setHomeOrigin('signalRoom'); setScreen('mypage'); }}
             onService={(id) => {
-              // §2단계 — 자미두수/궁합/아이시그널도 기존 handleHomeSelect를 그대로 재사용한다
-              // (새 로직 0개). 실제 서비스 키 매핑: gunghap→relationship, isignal→child.
-              // handleIntroNext가 이 pendingService 값을 보고 기존 분기(welcome/child/
-              // birth+compatibility)로 정확히 이어간다 — 이 파일 §13 로직 그대로.
-              const SR_ID_TO_SERVICE_KEY = { saju: 'saju', jami: 'saju', gunghap: 'relationship', isignal: 'child' };
-              const serviceKey = SR_ID_TO_SERVICE_KEY[id];
-              if (serviceKey) {
-                handleHomeSelect(serviceKey);
-              } else if (id === 'member') {
-                setHomeOrigin('signalRoom');
-                setScreen('membership');
-              } else if (id === 'taegil') {
+              // §SERVICE_CATALOG 도입 — 더 이상 jami를 saju로, gunghap을 relationship으로
+              // 뭉개는 매핑을 하지 않는다. serviceId(catalog id) 그대로 pendingService에
+              // 저장해서 이후 전체 화면 체인(intro/welcome/chat)에서 유지되게 한다.
+              if (id === 'taegil') {
                 setHomeOrigin('signalRoom');
                 setPendingService('taegil');
                 setScreen('birthSelection');
-              } else {
-                // jakmeong(작명소) — 아직 화면 자체가 없음(2차 조사 결과).
+              } else if (id === 'jakmeong') {
+                // 작명(naming) — SERVICE_CATALOG.status='comingSoon', 아직 실제 서비스 없음.
                 setPendingService(id);
                 setScreen('comingSoon');
+              } else if (id === 'yearlyFortune') {
+                setHomeOrigin('signalRoom');
+                if (!userId) {
+                  setPendingAfterSignup('yearlyFortune');
+                  setScreen('signup');
+                } else {
+                  setScreen('yearlyFortune');
+                }
+              } else {
+                // saju / jami / gunghap / isignal — 각자의 identity를 그대로 유지.
+                handleHomeSelect(id);
               }
             }}
           />
@@ -366,7 +398,14 @@ export default function App() {
         {screen === 'legal' && <LegalScreen docType={legalDocType} onBack={() => setScreen('mypage')} onHome={() => setScreen(homeOrigin)} />}
         {screen === 'products' && <ProductsScreen onBack={() => setScreen('mypage')} onHome={() => setScreen(homeOrigin)} />}
         {screen === 'intro' && <ServiceIntroScreen serviceKey={pendingService} onNext={handleIntroNext} onBack={() => setScreen(homeOrigin)} />}
-        {screen === 'welcome' && <WelcomeScreen onStart={() => setScreen('birth')} onBack={() => setScreen('intro')} onHome={() => setScreen(homeOrigin)} />}
+        {screen === 'analysisChoice' && pendingRecommendation && (
+          <AnalysisChoiceScreen
+            recommendation={pendingRecommendation}
+            onChoose={handleAnalysisChoice}
+            onBack={() => setScreen('birth')}
+          />
+        )}
+        {screen === 'welcome' && <WelcomeScreen serviceId={pendingService} onStart={() => setScreen('birth')} onBack={() => setScreen('intro')} onHome={() => setScreen(homeOrigin)} />}
         {screen === 'birth' && (
           <BirthDataForm
             onSubmit={async (birthData) => {
@@ -408,7 +447,14 @@ export default function App() {
         {screen === 'child' && <ChildSajuScreen onBack={() => setScreen(homeOrigin)} onHome={() => setScreen(homeOrigin)} />}
 
         {screen === 'chat' && (
-          <ChatScreen chat={chat} onOpenDetail={handleOpenDetail} onOpenMenu={() => setShowMenu(true)} onHome={() => setScreen('home')} />
+          <ChatScreen
+            chat={chat}
+            onOpenDetail={handleOpenDetail}
+            onOpenMenu={() => setShowMenu(true)}
+            onHome={() => setScreen('home')}
+            onNeedLogin={() => { setPendingAfterSignup('chat'); setScreen('signup'); }}
+            onNeedPurchase={() => setScreen('products')}
+          />
         )}
 
         {showMenu && <MoreMenu onSelect={handleMenuSelect} onClose={() => setShowMenu(false)} />}

@@ -25,7 +25,10 @@ export function BirthDataForm({ onSubmit, isSubmitting, error, onBack, onHome })
   function handleSubmit() {
     const selectedHour = HOUR_OPTIONS.find((h) => h.label === hourLabel) ?? HOUR_OPTIONS[0];
     const birthDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    onSubmit({ birthDate, birthTime: selectedHour.time, gender, city: city.trim() || 'Seoul' });
+    // §timeKnown 데이터 보존 — "모르겠어"를 선택했다는 사실 자체를 별도 필드로 넘긴다.
+    // birthTime(12:00)은 계산을 위한 placeholder일 뿐 실제 출생시간으로 간주하지 않는다.
+    const timeKnown = hourLabel !== '모르겠어';
+    onSubmit({ birthDate, birthTime: selectedHour.time, timeKnown, gender, city: city.trim() || 'Seoul' });
   }
 
   const canSubmit = city.trim().length > 0;

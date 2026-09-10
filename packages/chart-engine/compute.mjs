@@ -35,7 +35,7 @@ function resolveCity(cityQuery) {
  * @param {string} input.city
  * @param {string} [input.timezone] - only "Asia/Seoul" is currently handled correctly (see note below)
  */
-export function computeChart({ birthDate, birthTime, gender, city, timezone = 'Asia/Seoul' }) {
+export function computeChart({ birthDate, birthTime, timeKnown = true, gender, city, timezone = 'Asia/Seoul' }) {
   if (timezone !== 'Asia/Seoul') {
     // @orrery/core has no timezone parameter — it assumes KST wall-clock
     // time (see the earlier project's README for the full explanation).
@@ -72,7 +72,7 @@ export function computeChart({ birthDate, birthTime, gender, city, timezone = 'A
     meta: {
       engine: '@orrery/core',
       input: {
-        birthDate, birthTime, gender, city, timezone,
+        birthDate, birthTime, timeKnown, gender, city, timezone,
         resolvedCity: { query: city, matched, name: resolvedCity.name ?? displayName, lat: resolvedCity.lat, lon: resolvedCity.lon },
         birthInputUsed: birthInput,
       },

@@ -3,9 +3,11 @@ import { MessageList } from './MessageList.jsx';
 import { QuickReplyChips } from './QuickReplyChips.jsx';
 import { ChatInput } from './ChatInput.jsx';
 import { ChatHeader } from './ChatHeader.jsx';
+import { getServiceCatalogEntry } from '../serviceCatalog.js';
 
 export function ChatScreen({ chat, onOpenDetail, onOpenMenu, onHome, onNeedLogin, onNeedPurchase }) {
-  const { messages, character, choices, isTyping, error, purchaseRequired, pickChoice, sendFreeText, retryLast, dismissPurchaseRequired } = chat;
+  const { messages, character, choices, isTyping, error, purchaseRequired, serviceId, pickChoice, sendFreeText, retryLast, dismissPurchaseRequired } = chat;
+  const serviceTitle = getServiceCatalogEntry(serviceId)?.title ?? null;
 
   function handlePurchaseCtaClick() {
     dismissPurchaseRequired();
@@ -18,7 +20,7 @@ export function ChatScreen({ chat, onOpenDetail, onOpenMenu, onHome, onNeedLogin
 
   return (
     <div className="chat-screen">
-      <ChatHeader character={character} onOpenMenu={onOpenMenu} onHome={onHome} />
+      <ChatHeader character={character} serviceTitle={serviceTitle} onOpenMenu={onOpenMenu} onHome={onHome} />
       <MessageList messages={messages} isTyping={isTyping} currentCharacterId={character?.id} onOpenDetail={onOpenDetail} />
       {error && (
         <div className="error-banner">
