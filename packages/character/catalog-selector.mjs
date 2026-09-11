@@ -40,6 +40,40 @@ export function selectFallbackTopicSwitch({ catalog, excludeContext, seenIds = [
  * 초기 진입점 — 아직 어떤 context에도 있지 않을 때(예: 차트 생성 직후) 보여줄 첫 선택지 세트.
  * prev_context가 빈 배열인 항목들(=아무 데서나 시작 가능) 중 우선순위 높은 순, context당 1개.
  */
+/** §Priority3 Hybrid 아키텍처 — 사용자 발화를 4가지 "결정적 처리" 버킷 중 하나로 분류하거나,
+ * 어느 것에도 안 걸리면 null(= 기존 casual/saju_question 경로로 그대로 진행, 특히 진짜
+ * 열린 대화는 Casual API가 처리하도록 남겨둔다). 문구를 하나하나 나열하는 대신 의미 단위
+ * 키워드 버킷으로 판정해서 "사주 보려고"/"사주 좀 봐줘"/"사주 한번 보고싶어" 같은 무한한
+ * 자연어 변형에 일반적으로 대응한다 — 특정 문장을 if문으로 추가하는 방식이 아님. */
+const PAYMENT_KEYWORDS = ['결제', '카드', '페이', '계좌'];
+const PRICE_KEYWORDS = ['가격', '얼마', '요금', '비용'];
+const SIGNUP_KEYWORDS = ['회원가입', '가입'];
+const HOW_KEYWORDS = ['어디', '어떻게', '언제', '방법'];
+const START_KEYWORDS = ['보려고', '보고싶', '보고 싶', '봐줘', '보고파', '볼래', '봐줄래', '한번 볼까', '한 번 볼까', '보고싶어', '시작할래', '해줘'];
+const SERVICE_NAME_KEYWORDS = ['사주', '자미두수', '궁합', '아이시그널', '택일', '작명', '신년운세', '운세'];
+
+export function classifyServiceIntent(text) {
+  const t = (text ?? '').trim();
+  if (!t) return null;
+
+  const hasPayment = PAYMENT_KEYWORDS.some((k) => t.includes(k));
+  const hasPrice = PRICE_KEYWORDS.some((k) => t.includes(k));
+  const hasSignup = SIGNUP_KEYWORDS.some((k) => t.includes(k));
+  const hasHow = HOW_KEYWORDS.some((k) => t.includes(k));
+  const hasStart = START_KEYWORDS.some((k) => t.includes(k));
+  const hasServiceName = SERVICE_NAME_KEYWORDS.some((k) => t.includes(k));
+
+  if (hasPayment && hasHow) return 'payment_question';
+  if (hasPrice) return 'product_question';
+  if (hasSignup && (hasHow || t.length < 15)) return 'signup_question';
+  // "사주 보려고"처럼 서비스명 언급 없이도(이미 그 방에 있으므로) 시작 의도만으로 충분히 판단
+  // 가능해야 한다 — SERVICE_NAME_KEYWORDS는 있으면 신뢰도를 더 높이는 보조 신호일 뿐, 필수는
+  // 아니다("봐줘"만으로도 시작 의도로 본다. 다만 너무 짧은 잡담 방지를 위해 최소 길이 체크).
+  if (hasStart && t.length <= 20) return 'service_start';
+
+  return null;
+}
+
 export function selectOpeningChoices({ catalog, limit = DEFAULT_LIMIT }) {
   const pool = catalog ?? [];
   const openers = pool.filter((c) => c.prev_context.length === 0);

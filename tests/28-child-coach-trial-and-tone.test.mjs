@@ -258,7 +258,7 @@ test('18. child context 없는 기존 대화는 완전히 호환된다(문자열
   const conversation = await createConversation({ chartId: chart.id });
   const provider = new RecordingMockAIProvider();
   const result = await handleFreeTextMessage({ conversationId: conversation.id, text: '안녕', aiProvider: provider, casualAiProvider: provider });
-  const directPrompt = buildCasualSystemPrompt(result.character.id);
+  const directPrompt = buildCasualSystemPrompt(result.character.id, null, '', false, '', { userLoggedIn: false, birthDataExists: true });
   assert.equal(provider.last.system, directPrompt);
 });
 

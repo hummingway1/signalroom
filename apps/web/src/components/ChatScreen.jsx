@@ -9,6 +9,15 @@ export function ChatScreen({ chat, onOpenDetail, onOpenMenu, onHome, onNeedLogin
   const { messages, character, choices, isTyping, error, purchaseRequired, serviceId, pickChoice, sendFreeText, retryLast, dismissPurchaseRequired } = chat;
   const serviceTitle = getServiceCatalogEntry(serviceId)?.title ?? null;
 
+  // §중복 CTA 제거(실측 버그 수정) — 마지막 메시지에 이미 구조화된 카드(product_selection/
+  // signup_cta)가 붙어있으면, 그 카드 자체가 실제 액션 버튼을 갖고 있으므로 fallback
+  // 배너("로그인하기"/"상세분석 보러가기")는 숨긴다. 카드가 없는 경우(예: authorization
+  // 거부로 productCode만 오고 카드는 안 만들어진 기존 경로)에는 배너가 정상 작동해야
+  // 하므로, 카드 유무로만 판단하고 배너 자체를 없애지는 않는다.
+  const lastMessage = messages[messages.length - 1];
+  const lastMessageHasCard = lastMessage?.card?.type === 'product_selection' || lastMessage?.card?.type === 'signup_cta';
+  const showPurchaseBanner = purchaseRequired && (purchaseRequired.loginRequired || purchaseRequired.productCode) && !lastMessageHasCard;
+
   function handlePurchaseCtaClick() {
     dismissPurchaseRequired();
     if (purchaseRequired.loginRequired) {
@@ -21,17 +30,21 @@ export function ChatScreen({ chat, onOpenDetail, onOpenMenu, onHome, onNeedLogin
   return (
     <div className="chat-screen">
       <ChatHeader character={character} serviceTitle={serviceTitle} onOpenMenu={onOpenMenu} onHome={onHome} />
-      <MessageList messages={messages} isTyping={isTyping} currentCharacterId={character?.id} onOpenDetail={onOpenDetail} />
+      <MessageList
+        messages={messages}
+        isTyping={isTyping}
+        currentCharacterId={character?.id}
+        onOpenDetail={onOpenDetail}
+        onSelectProduct={(code) => onNeedPurchase?.(code)}
+        onSignup={() => onNeedLogin?.()}
+      />
       {error && (
         <div className="error-banner">
           <span>{error}</span>
           <button onClick={retryLast}>닫기</button>
         </div>
       )}
-      {/* §실제 상품 플로우 연결 — 이전엔 authorization이 거부돼도 안내 문구만 뜨고 사용자가 결제
-          화면으로 갈 방법이 전혀 없었다(실제 브라우저 테스트로 발견된 핵심 문제). 이제 서버가
-          내려준 구조화된 신호(purchaseRequired)로 실제 CTA 버튼을 보여준다. */}
-      {purchaseRequired && (purchaseRequired.loginRequired || purchaseRequired.productCode) && (
+      {showPurchaseBanner && (
         <div className="purchase-cta-banner">
           <button onClick={handlePurchaseCtaClick}>
             {purchaseRequired.loginRequired ? '로그인하기' : '상세분석 보러가기'}

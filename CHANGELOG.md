@@ -2,6 +2,241 @@
 
 프로젝트 지시사항에 따라, 기존 구조/파일과 충돌하거나 임의 판단이 필요했던 지점을 여기에 기록한다.
 
+## [Unreleased] — 중복 CTA 정리 + 전체 사용자 플로우 실제 브라우저 재검증
+
+### 1. 중복 CTA 수정
+`ChatScreen.jsx` — 마지막 메시지에 이미 구조화된 카드(`product_selection`/`signup_cta`)가
+있으면 fallback 배너("로그인하기"/"상세분석 보러가기")를 숨긴다. 카드가 없는 기존 경로
+(예: authorization 거부로 productCode만 오고 카드는 안 만들어지는 케이스)에는 배너가
+그대로 정상 작동 — 완전히 제거한 게 아니라 조건부로 정리.
+
+### 2~7. 실제 브라우저로 전체 플로우 재검증 (결과)
+- **중복 CTA**: "가격 얼마야?" 재시도 → 카드 버튼 1개만 표시(스크린샷 확인).
+- **자연어 시나리오**: "사주 한번 봐줘"(B), "가입해야 돼?"(E) 추가 검증 — 둘 다 시스템
+  문구 없이 대구 말투로 정확히 응답, "가입해야 돼?"는 signup_question으로 정확히
+  분류되어 회원가입 카드 표시.
+- **Home navigation**: 사주 ChatScreen/자미두수 WelcomeScreen/궁합 ServiceIntroScreen/
+  신년운세→로그인화면→뒤로가기, 총 4개 경로 모두 정확히 SIGNAL ROOM으로 복귀 확인.
+  `ServiceIntroScreen`엔 별도 Home 버튼이 없지만, `onBack`이 이미 `homeOrigin`으로
+  연결되어 있어 "서비스 진입 직후 Back=Home" 원칙과 정확히 일치함을 확인(결함 아님).
+- **Header 고정**: 메시지 등장 전/후/상품카드 등장 후 3개 시점 모두 `.chat-header`의
+  bounding box `y` 좌표가 완전히 동일(0으로 고정)함을 실측.
+- **자미두수 추천**: 출생시간 명확히 입력 → "출생시간을 정확히 알고 있어요..." 정확한
+  톤 확인(우열 비교 표현 없음) → "자미두수로 분석하기" 선택 → 최종 ChatHeader 타이틀이
+  정확히 "자미두수"로 전환됨을 확인.
+
+### 신규 테스트
+`tests/68-duplicate-cta-fix.test.mjs`(2개).
+
+### 테스트 결과
+신규 2/2 통과. 전체 backend **737/737 통과**. 프론트 빌드 성공(79 모듈).
+
+### 변경 파일
+- `apps/web/src/components/ChatScreen.jsx`(중복 CTA 조건 추가)
+
+### 남은 문제
+- 로그인 상태에서 실제 990/4900원 카드가 정확히 표시되는지는 이 환경엔 실제 DB가 없어
+  브라우저로 직접 확인하지 못함 — 코드 경로 자체는 이전 라운드 실행 테스트로 DB 조회
+  시점까지 정확히 도달함을 확인했음. 사장님 실제 배포 환경에서 로그인 후 재확인 필요.
+- 결제 화면(Toss) 진입 자체는 이전 라운드에 이미 실결제 테스트까지 완료된 영역이라
+  이번 라운드에서 재검증하지 않음(회귀 테스트로만 확인).
+
+**Priority 7/8 등 새 기능은 사장님 승인 전까지 시작하지 않음.**
+
+## [Unreleased] — Priority 5/6: 실제 상품 카드 연결 + 고양이 이미지/첫 메시지 개선
+
+### 조사 결과 — 놀랍게도 백엔드/카드 컴포넌트는 이미 대부분 완성되어 있었음
+`handleServiceIntentMessage`가 이미 `highlightCard`(`product_selection`/`signup_cta`)를
+정확히 반환하고 있었고, `ProductSelectionCard.jsx`/`SignupCtaCard`(실제 가격/설명/버튼
+포함)도 이미 존재했으며, `MessageBubbles.jsx`/`MessageList.jsx`도 이 카드를 렌더링하는
+로직을 이미 갖추고 있었다(아마 이전 세션에서 시작됐다가 중간에 끊긴 작업으로 추정).
+
+### 실제로 빠져있던 연결고리 (이번에 발견하고 수정)
+1. **`ChatScreen.jsx`가 `onSelectProduct`/`onSignup`을 `MessageList`에 전혀 전달하지
+   않고 있었다** — 카드는 화면에 보이지만 버튼을 눌러도 아무 동작이 없었을 것.
+2. **상품 카드 CSS가 전혀 없었다** — 컴포넌트는 완성됐지만 스타일 클래스
+   (`.product-selection-card__*`)가 `app.css` 어디에도 정의되어 있지 않아, 실제로는
+   카드가 아니라 세로로 나열된 못생긴 텍스트+버튼으로 보였을 것.
+3. **로그인 후 "어떤 상품을 사려던 참이었는지" 보존 메커니즘 자체가 없었다** —
+   `ProductsScreen`은 `autoBuyCode` prop을 받을 준비가 되어 있었지만, `App.jsx`
+   어디에도 이 prop을 채워서 넘기는 코드가 없었다.
+
+### 수정
+- `ChatScreen.jsx` — `onSelectProduct={(code) => onNeedPurchase?.(code)}`,
+  `onSignup={() => onNeedLogin?.()}`로 기존 콜백 재사용(새 배관 최소화).
+- `App.jsx` — `pendingProductCode` state 신규 추가. 상품 카드 클릭 시 비로그인이면
+  `pendingAfterSignup='products'`로 로그인 화면행, 로그인 상태면 바로 상품 화면행.
+  로그인 성공 후 기존 `pendingAfterSignup` 복귀 메커니즘이 `'products'`로 자연스럽게
+  이어지면서, `ProductsScreen`의 기존 `autoBuyCode` 자동결제 로직이 그대로 작동한다
+  (새 결제 로직 없음, 기존 것을 연결만 함).
+- `app.css` — 상품 카드 CSS 신규 작성(글래스카드 스타일, SIGNAL ROOM 톤에 맞춘 subtle
+  shadow/radius).
+
+### Priority 6 — 고양이 이미지 + 첫 메시지
+- 지난 라운드에 준비해둔 `daegu-magnifier.png`를 `WelcomeScreen`의 첫 등장 순간에
+  연결. 채팅 중 작은 아바타(32px)는 저해상도 사진이 오히려 품질 저하로 보일 수 있어
+  기존 SVG를 그대로 유지 — 이 "첫 등장" 큰 화면에만 사진을 사용.
+  `onError`로 이미지 로드 실패 시 안전하게 기존 SVG 아바타로 폴백(경로 하드코딩 대신
+  `DAEGU_INTRO_IMAGE` 상수로 분리, 나중에 고해상도 이미지 교체 시 한 줄만 변경).
+- 첫 메시지를 "너의 운명의 소리를 한번 들어볼까?"로 교체(브랜드 톤), 그 다음에
+  catalog.greeting("어서 와, 이 방에서는...")이 이어짐.
+
+### 실제 브라우저로 검증
+- WelcomeScreen에서 실제 고양이 사진이 정확히 렌더링되고, 새 첫 메시지 확인(스크린샷).
+- "사주 보려고" 입력 → 대구 말투 안내 + **"회원가입하고 시작하기" 카드 버튼**이 실제로
+  스타일 적용된 카드 형태로 렌더링됨을 확인(스크린샷).
+
+### 테스트 결과
+신규 7/7 통과. 전체 backend **735/735 통과**. 프론트 빌드 성공(79 모듈).
+
+### 남은 문제 (정직하게 보고)
+- **UI 중복**: "사주 보려고" 같은 발화에 카드 버튼("회원가입하고 시작하기")과 기존
+  `purchaseRequired` 배너 버튼("로그인하기")이 **동시에** 나타난다 — 둘 다 기능은
+  정상이지만 시각적으로 중복된 CTA 2개가 보이는 건 다음에 정리가 필요.
+- 로그인 상태에서 실제 990/4900원 상품 카드가 정확히 뜨는지는 이 환경엔 실제 DB가 없어
+  브라우저로 직접 확인하지 못했다 — 코드 경로가 정확히 DB 조회 시점까지 도달하는 것만
+  실행 테스트로 확인(Test 5, 지난 라운드). 사장님 실제 배포 환경에서 로그인 후 재확인
+  필요.
+- Header 고정(Scenario 8)/신년운세 Back(Scenario 7)/자미두수 추천(Scenario 9)은 지난
+  두 라운드에서 이미 검증 완료된 것을 재사용 — 이번 라운드에서 새로 깨진 곳이 있는지
+  회귀 테스트(735/735)로만 확인했고 별도 재스크린샷은 안 찍음.
+
+## [Unreleased] — Priority 3: Hybrid Intent Routing 아키텍처 구현
+
+### 핵심 아키텍처
+Router의 역할을 "답변 생성"에서 "어떤 처리기로 보낼지 결정하는 것"으로 재정의. 사용자
+입력 → `classifyServiceIntent()`(신규, 넓은 키워드 버킷 분류) → 4가지 결정적 버킷
+(service_start/product_question/payment_question/signup_question)이면 NPC 말투+실제
+상품데이터로 결정적 처리(AI 호출 없음), 아니면(진짜 열린 대화) 기존 Casual API 경로를
+그대로 사용하되 이번에 실제 로그인/생년월일 상태를 프롬프트에 주입.
+
+### 신규 분류기 — `classifyServiceIntent()`
+문구를 하나하나 나열하는 방식(if문 남발) 대신, 의미 단위 키워드 버킷(결제/가격/회원가입/
+시작 의도 키워드 조합)으로 판정 — "사주 보려고"/"사주 좀 봐줘"/"나 사주 보고 싶어" 같은
+무한한 자연어 변형에 일반적으로 대응. 실제 실행 검증: 지시서의 결제/가격/시작 예시 문구
+전부 정확히 분류되고, "안녕"/"그냥 궁금해서"/"사주 처음 봐"/"뭘 알 수 있는데?" 등 진짜
+열린 대화는 전부 null(casual 유지)로 정확히 분류됨을 확인.
+
+### 결정적 처리 핸들러 — `handleServiceIntentMessage()`
+- 비로그인: "우선 네 생년월일이 있어야 제대로 들여다볼 수 있어..." 등 대구 말투로 회원가입
+  필요성 설명(시스템 안내문 완전히 제거) + 기존 `purchaseRequired.loginRequired` 신호
+  재사용(새 UI 배관 불필요, 이미 있는 로그인 CTA 버튼이 그대로 작동).
+- 로그인 상태: 실제 `listActiveProducts()`(DB)에서 SAJU_BASIC/DETAIL(또는 child_profile_id
+  가 있으면 CHILD_BASIC/DETAIL) 가격을 조회해서 안내(하드코딩 없음, DB 조회 실패 시
+  안전한 fallback 문구).
+- 자녀 프로필 대화(`child_profile_id` 있음)는 이 hybrid 라우팅을 건너뛰고 기존
+  child-coach 전용 흐름을 그대로 존중(회귀 없음).
+
+### 실제로 발견하고 고친 버그 — purchaseRequired 덮어쓰기
+`routes/conversations.mjs`의 두 라우트(`catalog-choice`/`messages`)가 `purchaseRequired`
+를 오직 `result.authorization`으로만 재구성하고 있어서, 새 핸들러가 `result.purchaseRequired`
+를 직접 설정해도 **무조건 `null`로 덮어써지고 있었다.** `result.authorization`이 없을 때
+`result.purchaseRequired`로 폴백하도록 두 곳 모두 수정 — 실제 실행 테스트로 이 버그를
+먼저 재현한 뒤 고쳤다.
+
+### Casual 프롬프트 컨텍스트 주입
+`buildCasualSystemPrompt()`에 `serviceContext`(userLoggedIn/birthDataExists) 파라미터
+추가 — 백엔드가 실제로 아는 값(요청의 `userId` 존재 여부, `conversation.chart_id` 존재
+여부)만 정직하게 주입, 지어낸 정보 없음. 모델에게 "궁금증을 보이면 자연스럽게 이어가도
+된다"는 지침만 추가하고, 사주 판단 금지 등 기존 안전 규칙은 전부 그대로 유지.
+
+### 기존 계약 변경 반영(정직한 테스트 업데이트)
+`buildCasualSystemPrompt`가 이제 항상 `serviceContext`를 받으므로, "기존 프롬프트와
+완전히 동일한 문자열"을 직접 비교하던 기존 테스트 3개(`26`/`27`/`28`번 파일)가 실패 —
+이건 실제로 프롬프트 내용이 개선되어 달라진 것이 맞으므로, 테스트가 `directPrompt` 생성
+시 동일한 `serviceContext`를 넘기도록 업데이트(검증 약화 아님, 새 계약을 정확히 반영).
+
+### 실제 브라우저로 자연어 시나리오 전체 검증
+"안녕" → "왔어?"(자연스러운 casual) → "사주 보려고"/"어디서 결제해?"/"가격 얼마야?"
+**셋 다** 대구 말투로 동일하게 자연스러운 회원가입 안내(시스템 문구 완전히 사라짐) →
+화면 하단에 **"로그인하기" 버튼이 실제로 렌더링**됨을 스크린샷으로 확인.
+
+### 신규/변경 파일
+- `packages/character/catalog-selector.mjs` — `classifyServiceIntent()` 추가.
+- `apps/api/src/services/conversation-service.mjs` — `handleServiceIntentMessage()`
+  추가, hybrid 라우팅 삽입, casual 컨텍스트 주입.
+- `apps/api/src/routes/conversations.mjs` — purchaseRequired 폴백 버그 수정(2곳).
+- `packages/character/casual-chat-prompt.mjs` — `serviceContext` 파라미터 추가.
+- `tests/66-hybrid-intent-routing.test.mjs`(신규, 9개).
+- 기존 테스트 3개 업데이트(계약 변경 정직 반영).
+
+### 테스트 결과
+신규 9/9 통과. 전체 backend **728/728 통과**. 프론트 빌드 성공(78 모듈, 이번 라운드는
+백엔드 전용이라 프론트 코드 무변경).
+
+### 절대 하지 않은 것 확인
+Casual API 제거 없음, 문구 if문 개별 추가 없음(키워드 버킷 방식), 실제 사주 데이터를
+casual이 지어내는 로직 없음, Analysis Chat(결제 후 실제 분석) 경로 무변경.
+
+### 남은 것 (다음 라운드)
+- Priority 5: 대화 중 실제 클릭 가능한 상품 카드(현재는 텍스트 가격 안내까지만)
+- Priority 6: 신뢰 메시지("30년 경력..." 등 실제 근거 확인 필요) + 고양이 이미지 연출
+- 로그인 후 "원래 선택했던 상품 context 유지"는 기존 `pendingAfterSignup`(화면 복귀)까지만
+  검증됨 — "어떤 상품을 보려고 했는지"까지 보존하는 것은 미구현.
+
+## [Unreleased] — Priority 1/2/4 구현: Navigation 확정 수정, ChatHeader 중앙정렬, 서비스별 quickReply
+
+### [ROOT CAUSE — Priority 1] 신년운세→뒤로가기→아이시그널
+실제 브라우저로 정확히 재현: 비로그인 상태에서 SIGNAL ROOM → 신년운세 클릭 → 로그인 화면
+(`NicknameSignup`)으로 이동(§11 원칙상 정상) → 이 화면의 "‹ 뒤로" 버튼이
+`onBack={() => setScreen('home')}`으로 **하드코딩**되어 있어서, 다른 정상 화면들과 달리
+`homeOrigin`을 무시하고 예전 teal 아이시그널 홈으로 이동하고 있었다. 실제 재현+수정 확인.
+
+### [Priority 2] ChatHeader 중앙정렬
+좌/중/우 3분할 구조로 재작성 — 서비스명 18px/굵게/중앙, 캐릭터명은 그 아래 11px 보조
+텍스트로 분리. Back/Home은 기존과 동일한 좌우 위치 유지. 아바타는 헤더에서 제거(이미
+메시지 리스트에 표시되고 있어 중복이었고, 중앙정렬을 방해하는 요소였음).
+
+### [Priority 4] 서비스별 quickReply 분리 — 추가로 발견한 버그
+채팅 화면 진입 시 오프닝 선택지("어? 내가 그래?" 등)뿐 아니라 **첫 메시지 자체도
+`getTimeBasedGreeting`(시간대 기반 인사, 서비스와 완전히 무관)로 별도 하드코딩**되어
+있었다 — WelcomeScreen이 이미 서비스를 정확히 소개했는데, 채팅으로 넘어가면 서비스와
+무관한 "아침부터 왔네..." 같은 인사가 한 번 더 나오고 있었음.
+- `useChatController.js`의 `start()` — SERVICE_CATALOG에 정의된 서비스면 그 서비스의
+  quickReplies 3개만 사용하고, 짧은 연결 문구("좋아, 그럼 뭐부터 볼까?")로 자연스럽게
+  이어감(catalog에 없는 서비스는 기존 동작 100% 유지, 회귀 없음).
+- `pickChoice()` — 이 새 quickReply들은 `action` 필드를 가지므로, 기존 백엔드
+  카탈로그 API(`pickCatalogChoice`)를 호출하지 않고 **AI/서버 호출 없이 결정적으로
+  처리**(§6 원칙 그대로): `describe`는 catalog.description을 그대로, `start`/`products`
+  는 실제 `GET /api/products`에서 가격을 조회해서 텍스트로 안내(하드코딩 없음).
+- **범위 밖으로 명시**: 실제 클릭 가능한 상품 카드+구매 버튼(대화 중 바로 결제 진입)은
+  Priority 5 — 이번엔 텍스트 안내까지만.
+
+### 고양이 이미지 asset
+사장님이 첨부하신 참고 이미지(12패널 목업)의 5번 패널에서 실제 고양이 사진(돋보기 든 컷)을
+추출해서 `apps/web/public/characters/daegu-magnifier.png`로 저장(145×115px). **원본 참고
+이미지 자체가 저해상도 소스(1254×1254를 12분할)라 추출된 이미지도 저해상도** — 실제
+화면에서 크게 쓰면 흐릿할 수 있음. 이번 라운드에서는 asset 파일만 준비했고, 실제 컴포넌트
+연결(§9 "너의 운명의 소리를 들어볼까?" 연출)은 Priority 6로 다음 라운드에 진행.
+
+### 조사만 하고 아직 구현 안 한 것(순서상 다음 라운드)
+- Priority 3: NPC 자연어 처리(casual prompt에 serviceId/product context 주입,
+  "어디서 결제해?" 등의 payment intent 처리) — 조사 결과, `classifyMessage`가 결제
+  질문을 `casual`로 분류하고 `buildCasualSystemPrompt`가 `serviceId`를 전혀 모르는
+  구조적 문제를 확인. 가장 리스크가 큰 작업이라 이번 라운드에 포함하지 않음.
+- Priority 5: 대화 중 실제 클릭 가능한 상품 카드+결제 진입.
+- Priority 6: 신뢰 메시지("30년 경력 우물할매" 등, 실제 근거 확인 필요) + 고양이 이미지
+  실제 연출.
+
+### 테스트 결과
+전체 backend 719/719 통과(무변경). 프론트 빌드 성공(78 모듈).
+
+### 실제 브라우저로 검증
+- 신년운세→로그인화면→뒤로가기 → **정확히 SIGNAL ROOM 복귀**(수정 전/후 비교 확인).
+- 채팅 화면 헤더 — "사주"가 크고 중앙에, "대구"가 작은 보조텍스트로 표시.
+- 서비스 전용 quickReply 3개만 표시(기존 "어? 내가 그래?" 등 완전히 제거됨).
+- "가격과 분석 내용 보기" 클릭 → DB 없는 이 환경에서도 안전하게 fallback 문구, 서버
+  크래시 없음(`/health` 정상 확인).
+- "사주로 무엇을 볼 수 있어?" 클릭 → catalog.description 정확히 표시.
+
+### 변경 파일
+- `apps/web/src/App.jsx` — NicknameSignup의 onBack 수정.
+- `apps/web/src/components/ChatHeader.jsx` — 3분할 중앙정렬 구조.
+- `apps/web/src/styles/app.css` — 헤더 CSS 추가.
+- `apps/web/src/hooks/useChatController.js` — 서비스별 quickReply/greeting, pickChoice
+  결정적 처리.
+- `apps/web/public/characters/daegu-magnifier.png`(신규 asset, 아직 미연결).
+
 ## [Unreleased] — Home navigation 버그 + WelcomeScreen 헤더 레이아웃 구조적 수정
 
 ### [1. Home route의 기존 문제 원인]

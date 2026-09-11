@@ -63,7 +63,7 @@ test('2. child context 없는 conversation → 기존 prompt와 완전히 동일
   const conversation = await createConversation({ chartId: chart.id });
   const provider = new RecordingMockAIProvider();
   const result = await handleFreeTextMessage({ conversationId: conversation.id, text: '안녕', aiProvider: provider, casualAiProvider: provider });
-  const directPrompt = buildCasualSystemPrompt(result.character.id);
+  const directPrompt = buildCasualSystemPrompt(result.character.id, null, '', false, '', { userLoggedIn: false, birthDataExists: true });
   assert.equal(provider.last.system, directPrompt);
 });
 

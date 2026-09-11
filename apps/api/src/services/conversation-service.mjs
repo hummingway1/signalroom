@@ -13,7 +13,8 @@ import { addMessage, listMessages } from '../repositories/message-repository.mjs
 import { recordAnalysis } from '../repositories/analysis-repository.mjs';
 import { getCharacter } from '../../../../packages/character/characters.mjs';
 import { getCatalogEntry, QUESTION_CATALOG, CHILD_QUESTION_CATALOG, getChildCatalogEntry } from '../../../../packages/character/question-catalog.mjs';
-import { selectNextChoices, selectFallbackTopicSwitch, selectOpeningChoices, isServiceEntryIntent } from '../../../../packages/character/catalog-selector.mjs';
+import { selectNextChoices, selectFallbackTopicSwitch, selectOpeningChoices, isServiceEntryIntent, classifyServiceIntent } from '../../../../packages/character/catalog-selector.mjs';
+import { listActiveProducts } from '../repositories/product-repository.mjs';
 import { classifyMessage } from '../../../../packages/character/casual-chat-classifier.mjs';
 import { authorizeAnalysisQuestion } from './entitlement-authorization-service.mjs';
 import { consumeQuestionEntitlement } from '../repositories/payment-repository.mjs';
@@ -196,7 +197,7 @@ export async function pickCatalogChoice({ conversationId, catalogId, aiProvider,
   // 기존과 동일하게 그대로 authorization을 거친다.
   const authorizeBeforeAnalysis = entry.free ? null : async (routerResult) => {
     if (!userId) {
-      return { authorized: false, message: '로그인 후 상세분석을 구매하시면 이 내용에 대해 채팅으로 질문할 수 있어요.' };
+      return { authorized: false, loginRequired: true, message: '로그인 후 상세분석을 구매하시면 이 내용에 대해 채팅으로 질문할 수 있어요.' };
     }
     return authorizeAnalysisQuestion({
       userId,
@@ -248,6 +249,7 @@ export async function pickCatalogChoice({ conversationId, catalogId, aiProvider,
     usage: pipelineResult.usage,
     sources: pipelineResult.analysis?.sources ?? null,
     highlightCard: pipelineResult.analysis?.highlight_card ?? null,
+    authorization: pipelineResult.authorization, // §실제 상품 플로우 연결 버그 수정 — 라우트가 구매 CTA를 만들 수 있도록 노출
   };
 }
 
@@ -420,6 +422,35 @@ async function handleNamingChatMessage({ conversationId, conversation, text, aiP
   return { intent: 'saju_question', response, character, usage: aiResult.usage ?? null, sources: scope.result_data, cross_analysis: null, highlightCard: null };
 }
 
+/** §Priority3 Hybrid 아키텍처 — service_start/product_question/payment_question/
+ * signup_question을 대구의 말투로 처리한다. 실제 사주 데이터를 지어내지 않고(§3 원칙),
+ * 오직 "회원가입/상품 안내"라는 서비스 진입 정보만 다룬다 — 실제 분석은 여전히 결제 후
+ * 별도 Analysis Chat(authorizeAnalysisQuestion 경로)에서만 이루어진다(무변경). */
+async function handleServiceIntentMessage({ conversationId, conversation, text, serviceIntent, userId }) {
+  const character = getCharacter(conversation?.character_id);
+  await addMessage({ conversationId, role: 'user', content: text });
+
+  if (!userId) {
+    const response = serviceIntent === 'signup_question'
+      ? '이름이나 닉네임, 생년월일, 태어난 시간만 간단히 입력하면 회원가입할 수 있어. 귀찮은 거 없이 바로 시작할 수 있어.\n\n회원가입하고 결제하면, 본 사주는 나중에 다시 찾아볼 수 있어.'
+      : '우선 네 생년월일이 있어야 제대로 들여다볼 수 있어. 이름이나 닉네임, 생년월일, 태어난 시간만 간단히 입력하면 돼. 귀찮은 거 없이 바로 시작할 수 있어.\n\n회원가입하고 나면 바로 이어서 볼 수 있어. 어때, 한번 봐줄까?';
+    await addMessage({ conversationId, role: 'assistant', content: response });
+    return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: null, purchaseRequired: { productCode: null, loginRequired: true } };
+  }
+
+  // §로그인 상태 — 실제 상품 정보를 DB에서 조회해서 대구 말투로 안내(가격 하드코딩 없음).
+  const products = await listActiveProducts();
+  const codes = conversation?.child_profile_id ? ['CHILD_BASIC', 'CHILD_DETAIL'] : ['SAJU_BASIC', 'SAJU_DETAIL'];
+  const matched = codes.map((code) => products.find((p) => p.code === code)).filter(Boolean);
+  const priceLines = matched.map((p) => `${p.name} ${p.price.toLocaleString()}원`).join(' / ');
+  const response = priceLines
+    ? `좋아, 어떻게 봐줄까?\n${priceLines}\n\n☰ 메뉴의 "서비스 보기"에서 바로 시작할 수 있어.`
+    : '지금은 상품 정보를 불러오지 못했어. 잠시 후 다시 물어봐줄래?';
+
+  await addMessage({ conversationId, role: 'assistant', content: response });
+  return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: null, purchaseRequired: priceLines ? { productCode: codes[1], loginRequired: false } : null };
+}
+
 export async function handleFreeTextMessage({ conversationId, text, aiProvider, model = 'unknown', casualAiProvider = null, casualModel = 'unknown', childCoachAiProvider = null, userId = null }) {
   // §출생일 택일 채팅 — 이 conversation이 DATE_SELECTION analysis_scope에 태깅되어 있으면,
   // classifyMessage(casual/saju_question 분류) 결과와 무관하게 항상 이 전용 경로를 탄다.
@@ -436,6 +467,18 @@ export async function handleFreeTextMessage({ conversationId, text, aiProvider, 
   }
 
   const intent = classifyMessage(text);
+
+  // §Priority3 Hybrid 아키텍처 — deterministic 처리(service_start/product_question/
+  // payment_question/signup_question)를 casual/saju_question 분류보다 먼저 확인한다.
+  // Router의 역할은 "답변 생성"이 아니라 "어떤 처리기로 보낼지 결정하는 것"이어야 한다는
+  // 원칙에 따라, 이 4가지는 시스템 안내문이 아니라 대구의 말투로 응답하고 실제 상품 데이터를
+  // 함께 준다. 여기 안 걸리면(진짜 열린 대화) 기존 casual/saju_question 경로를 그대로 탄다.
+  const serviceIntent = classifyServiceIntent(text);
+  if (serviceIntent && !earlyConversation?.child_profile_id) {
+    // §자녀 프로필 대화는 기존 child-coach 흐름을 그대로 존중 — 이 hybrid 라우팅은 사주/
+    // 자미두수/궁합 등 일반 성인 대화 conversation에만 적용(회귀 방지).
+    return handleServiceIntentMessage({ conversationId, conversation: earlyConversation, text, serviceIntent, userId });
+  }
 
   if (intent === 'casual') {
     await addMessage({ conversationId, role: 'user', content: text });
@@ -479,7 +522,7 @@ export async function handleFreeTextMessage({ conversationId, text, aiProvider, 
             const priorMessages = recentMessages.slice(0, -1);
             const lastUserMessage = [...priorMessages].reverse().find((m) => m.role === 'user');
             const result = await effectiveProvider.complete({
-              system: buildCasualSystemPrompt(character.id, childContext, text, priorMessages.length > 0, lastUserMessage?.content ?? ''), // history 유무 + 직전 사용자 발화(DEEP 반복맥락 판정용)
+              system: buildCasualSystemPrompt(character.id, childContext, text, priorMessages.length > 0, lastUserMessage?.content ?? '', { userLoggedIn: !!userId, birthDataExists: !!conversation?.chart_id }), // §Priority3 — 로그인/생년월일 존재 여부를 실제 backend가 아는 값으로 정확히 주입
               user: userMessage,
               jsonSchema: CASUAL_RESPONSE_SCHEMA,
               schemaName: 'casual_reaction',
@@ -553,7 +596,7 @@ export async function handleFreeTextMessage({ conversationId, text, aiProvider, 
   // userId가 없으면(비로그인) 개인 분석 권한을 가질 수 없으므로 Router 결과와 무관하게 즉시 거부한다.
   const authorizeBeforeAnalysis = async (routerResult) => {
     if (!userId) {
-      return { authorized: false, message: '로그인 후 상세분석을 구매하시면 이 내용에 대해 채팅으로 질문할 수 있어요.' };
+      return { authorized: false, loginRequired: true, message: '로그인 후 상세분석을 구매하시면 이 내용에 대해 채팅으로 질문할 수 있어요.' };
     }
     return authorizeAnalysisQuestion({
       userId,
@@ -581,6 +624,7 @@ export async function handleFreeTextMessage({ conversationId, text, aiProvider, 
       sources: null,
       cross_analysis: null,
       highlightCard: null,
+      authorization: pipelineResult.authorization, // §실제 상품 플로우 연결 버그 수정 — 라우트가 purchaseRequired를 만들도록 노출
     };
   }
 

@@ -396,11 +396,17 @@ export function getPersonalizationDepth(childContext, text, hasHistory = false, 
   return resolveDepthAndMaterial(childContext, text, target, intent, hasHistory, recentText).depth;
 }
 
-export function buildCasualSystemPrompt(characterId, childContext = null, userText = '', hasHistory = false, recentText = '') {
+export function buildCasualSystemPrompt(characterId, childContext = null, userText = '', hasHistory = false, recentText = '', serviceContext = null) {
   const character = getCharacter(characterId);
+  const contextLines = serviceContext
+    ? `\n현재 상황: ${serviceContext.userLoggedIn ? '로그인한 사용자' : '아직 로그인하지 않은 사용자'}, ${serviceContext.birthDataExists ? '이미 생년월일 정보를 입력한 상태' : '아직 생년월일 정보 없음'}.
+사용자가 "사주 처음 봐", "너는 어떻게 보는 거야?" 같은 궁금증이나 애매한 관심을 보이면, 짧게
+답한 뒤 자연스럽게 "궁금하면 한번 봐줄까?" 정도로 이어가도 된다 — 억지로 매번 권유할
+필요는 없다.\n`
+    : '';
   const base = `너는 '${character.displayName}'라는 반말 쓰는 고양이 캐릭터야. 사용자가 사주와 무관한 일상적인
 말을 걸었을 때 짧고 친근하게 반응해.
-
+${contextLines}
 규칙:
 - 1~2문장, 짧고 자연스럽게. 실제 메신저 대화처럼.
 - 사주/운세/명리학적 판단을 절대 하지 않는다 — 이건 사주 분석 기능이 아니라 순수 잡담 반응이다.

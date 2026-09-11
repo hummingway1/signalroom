@@ -51,7 +51,7 @@ export function conversationsRouter({ aiProviderFactory, model, casualAiProvider
         // 새 백엔드 로직이 아니라 이미 있던 authorization 판정 결과를 그대로 드러내는 것뿐이다.
         purchaseRequired: (result.authorization && !result.authorization.authorized)
           ? { productCode: result.authorization.missingAnalysisType ?? null, loginRequired: result.authorization.loginRequired === true }
-          : null,
+          : (result.purchaseRequired ?? null),
       });
     } catch (err) {
       return handlePipelineError(res, err);
@@ -92,7 +92,7 @@ export function conversationsRouter({ aiProviderFactory, model, casualAiProvider
         usage: result.usage,
         purchaseRequired: (result.authorization && !result.authorization.authorized)
           ? { productCode: result.authorization.missingAnalysisType ?? null, loginRequired: result.authorization.loginRequired === true }
-          : null,
+          : (result.purchaseRequired ?? null),
       });
     } catch (err) {
       if (err.code === 'CATALOG_ENTRY_NOT_FOUND') {

@@ -429,7 +429,7 @@ export default function App() {
             onHome={() => setScreen(homeOrigin)}
           />
         )}
-        {screen === 'signup' && <NicknameSignup onSubmit={handleNicknameSubmit} isSubmitting={isSigningUp} error={nicknameError} onBack={() => setScreen('home')} onEmailAuthSuccess={handleEmailAuthSuccess} />}
+        {screen === 'signup' && <NicknameSignup onSubmit={handleNicknameSubmit} isSubmitting={isSigningUp} error={nicknameError} onBack={() => setScreen(homeOrigin)} onEmailAuthSuccess={handleEmailAuthSuccess} />}
         {screen === 'fun' && <FunContentScreen onBack={() => setScreen('chat')} onHome={() => setScreen('home')} />}
         {screen === 'battle' && <SajuBattleScreen myChartId={chartId} onBack={() => setScreen(pendingService === 'battle' ? homeOrigin : 'chat')} onHome={() => setScreen(homeOrigin)} />}
         {screen === 'ranking' && <LeaderboardScreen chartId={chartId} userId={userId} onBack={() => setScreen('chat')} onHome={() => setScreen('home')} />}

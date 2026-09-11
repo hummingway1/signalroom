@@ -196,7 +196,7 @@ test('13. child_profile_id 없는 기존 conversation은 기존 동작 100% 그�
   assert.equal(result.intent, 'casual');
   assert.ok(!provider.lastSystemPrompt.includes('자녀에 대해 이야기'));
   // 기존 buildCasualSystemPrompt(characterId)와 동일한 결과인지 직접 대조
-  const directPrompt = buildCasualSystemPrompt(result.character.id);
+  const directPrompt = buildCasualSystemPrompt(result.character.id, null, '', false, '', { userLoggedIn: false, birthDataExists: true }); // §Priority3 — 실제 호출부와 동일한 serviceContext(로그인false/생년월일있음)를 넘겨야 문자열이 일치함
   assert.equal(provider.lastSystemPrompt, directPrompt);
 });
 

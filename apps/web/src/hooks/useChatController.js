@@ -3,6 +3,7 @@ import { useCallback, useRef, useState } from 'react';
 import * as api from '../api/client.js';
 import { computeTypingDelay, wait } from './useTypingDelay.js';
 import { getTimeBasedGreeting } from '../characterAssets.js';
+import { getServiceCatalogEntry } from '../serviceCatalog.js';
 import { MAX_QUICK_REPLIES } from '../config.js';
 import { splitIntoBubbles } from '../utils/splitIntoBubbles.js';
 
@@ -108,9 +109,20 @@ export function useChatController() {
         const opening = await api.getOpeningChoices(first.conversationId);
         setCharacter(opening.character);
         lastCharacterIdRef.current = opening.character?.id ?? null;
-        setChoices(opening.choices.slice(0, MAX_QUICK_REPLIES));
 
-        pushMessage({ role: 'character', character: opening.character, text: getTimeBasedGreeting(opening.character.id), card: null });
+        // §서비스별 quickReply 분리(실측 버그 수정) — 이전엔 어떤 서비스로 들어와도 항상
+        // 성인 통합 QUESTION_CATALOG의 오프닝 선택지("어? 내가 그래?" 등)가 그대로
+        // 나왔고, 채팅 첫 메시지도 서비스와 무관한 시간대 인사말(getTimeBasedGreeting)
+        // 이었다. WelcomeScreen이 이미 서비스를 정확히 소개했으므로, 여기서는 그
+        // 흐름을 자연스럽게 이어받는 짧은 연결 문구 + 서비스 전용 quickReply만 쓴다.
+        const catalogEntry = getServiceCatalogEntry(newServiceId);
+        if (catalogEntry && catalogEntry.quickReplies.length > 0) {
+          setChoices(catalogEntry.quickReplies.map((qr, i) => ({ id: `catalog-${newServiceId}-${i}`, displayText: qr.label, free: true, action: qr.action })));
+          pushMessage({ role: 'character', character: opening.character, text: '좋아, 그럼 뭐부터 볼까?', card: null });
+        } else {
+          setChoices(opening.choices.slice(0, MAX_QUICK_REPLIES));
+          pushMessage({ role: 'character', character: opening.character, text: getTimeBasedGreeting(opening.character.id), card: null });
+        }
       } catch (err) {
         setError(toFriendlyErrorMessage(err));
       } finally {
@@ -148,6 +160,26 @@ export function useChatController() {
     async (choice) => {
       pushMessage({ role: 'user', text: choice.displayText });
       setChoices([]);
+      // §서비스 진입 단계 quickReply(action 있음) — AI/백엔드 호출 없이 결정적으로 처리
+      // (§6 원칙: 상품 탐색 단계는 가능한 AI 호출 없음). 실제 클릭 가능한 상품 카드+구매
+      // 버튼은 아직 없음(Priority 5에서 추가 예정) — 지금은 가격 텍스트만 안내.
+      if (choice.action) {
+        const catalogEntry = getServiceCatalogEntry(serviceId);
+        if (choice.action === 'describe') {
+          pushMessage({ role: 'character', character, text: catalogEntry.description, card: null });
+        } else {
+          // 'start' / 'products' — 실제 상품 가격을 API로 조회해서 텍스트로 안내.
+          try {
+            const { products } = await api.listProducts();
+            const matched = catalogEntry.productCodes.map((code) => products?.find((p) => p.code === code)).filter(Boolean);
+            const priceLines = matched.map((p) => `${p.name} ${p.price.toLocaleString()}원`).join(' / ');
+            pushMessage({ role: 'character', character, text: priceLines ? `좋아, 어떻게 봐줄까?\n${priceLines}\n\n☰ 메뉴의 "서비스 보기"에서 바로 시작할 수 있어.` : '가격 정보를 불러오지 못했어.', card: null });
+          } catch {
+            pushMessage({ role: 'character', character, text: '가격 정보를 불러오지 못했어.', card: null });
+          }
+        }
+        return;
+      }
       try {
         const result = await runWithTyping(() => api.pickCatalogChoice(conversationIdRef.current, choice.id));
         applyCharacterTurn(result);
@@ -155,7 +187,7 @@ export function useChatController() {
         // 에러는 이미 상태에 반영됨
       }
     },
-    [pushMessage, runWithTyping, applyCharacterTurn]
+    [pushMessage, runWithTyping, applyCharacterTurn, character, serviceId]
   );
 
   /** 사용자가 직접 텍스트를 입력했을 때 (§13: 선택형과 동일한 스트림). */
