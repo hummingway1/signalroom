@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import * as api from '../api/client.js';
 import { TOSS_CLIENT_KEY } from '../config.js';
 
-export function ProductsScreen({ onBack, onHome }) {
+export function ProductsScreen({ onBack, onHome, autoBuyCode }) {
   const [products, setProducts] = useState(null);
   const [error, setError] = useState(null);
   const [payingCode, setPayingCode] = useState(null);
@@ -14,6 +14,16 @@ export function ProductsScreen({ onBack, onHome }) {
   useEffect(() => {
     api.listProducts().then((r) => setProducts(r.products)).catch((err) => setError(err.message));
   }, []);
+
+  // §Priority5 — 로그인/회원가입 전에 채팅에서 이미 선택한 상품이 있으면(pendingProductCode),
+  // 상품 목록이 로드되자마자 자동으로 그 상품의 결제를 시작한다. 사용자가 "사주"/"가격"을
+  // 다시 입력할 필요 없이 원래 하려던 결제로 바로 이어진다.
+  useEffect(() => {
+    if (!autoBuyCode || !products) return;
+    const target = products.find((p) => p.code === autoBuyCode);
+    if (target) handleBuy(target);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoBuyCode, products]);
 
   async function handleBuy(product) {
     if (!TOSS_CLIENT_KEY) {
@@ -53,23 +63,32 @@ export function ProductsScreen({ onBack, onHome }) {
       </div>
       <div className="subscreen__body">
         {error && <div className="intake-error">{error}</div>}
-        {!products && !error && <p className="products-screen__loading">불러오는 중...</p>}
-        <div className="products-screen__list">
-          {products?.map((p) => (
-            <div key={p.code} className="products-screen__card">
-              <div className="products-screen__card-info">
-                <p className="products-screen__card-name">{p.name}</p>
-                <p className="products-screen__card-desc">{p.description}</p>
-              </div>
-              <div className="products-screen__card-buy">
-                <p className="products-screen__card-price">{p.price.toLocaleString()}원</p>
-                <button className="products-screen__buy-btn" onClick={() => handleBuy(p)} disabled={payingCode === p.code}>
-                  {payingCode === p.code ? '이동 중...' : '구매하기'}
-                </button>
-              </div>
+        {autoBuyCode ? (
+          // §바로 결제하기 흐름(실측 UX 개선) — 채팅에서 특정 상품을 이미 골랐을 때는 전체
+          // 상품 목록을 보여주지 않고, 결제창으로 넘어가는 중이라는 것만 보여준다. 목록이
+          // 잠깐이라도 보이면 "상품안내로 갔다"고 느껴지므로, 이 케이스는 목록 자체를 렌더링하지 않음.
+          !error && <p className="products-screen__loading">결제 화면으로 이동하고 있어요...</p>
+        ) : (
+          <>
+            {!products && !error && <p className="products-screen__loading">불러오는 중...</p>}
+            <div className="products-screen__list">
+              {products?.map((p) => (
+                <div key={p.code} className="products-screen__card">
+                  <div className="products-screen__card-info">
+                    <p className="products-screen__card-name">{p.name}</p>
+                    <p className="products-screen__card-desc">{p.description}</p>
+                  </div>
+                  <div className="products-screen__card-buy">
+                    <p className="products-screen__card-price">{p.price.toLocaleString()}원</p>
+                    <button className="products-screen__buy-btn" onClick={() => handleBuy(p)} disabled={payingCode === p.code}>
+                      {payingCode === p.code ? '이동 중...' : '구매하기'}
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
