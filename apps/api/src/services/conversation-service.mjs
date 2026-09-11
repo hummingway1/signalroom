@@ -17,7 +17,10 @@ import { selectNextChoices, selectFallbackTopicSwitch, selectOpeningChoices, isS
 import { listActiveProducts } from '../repositories/product-repository.mjs';
 import { classifyMessage } from '../../../../packages/character/casual-chat-classifier.mjs';
 import { authorizeAnalysisQuestion } from './entitlement-authorization-service.mjs';
-import { consumeQuestionEntitlement } from '../repositories/payment-repository.mjs';
+import { consumeQuestionEntitlement, findActiveEntitlementByAnalysisType } from '../repositories/payment-repository.mjs';
+import { listChartsForUser } from '../repositories/chart-repository.mjs';
+import { getProductByCode } from '../repositories/product-repository.mjs';
+import { getActiveCampaign, claimFreeCampaignSlot } from '../repositories/campaign-repository.mjs';
 import { generateCasualResponse } from '../../../../packages/character/casual-response-engine.mjs';
 import { sanitizeUserFacingText } from '../../../../packages/shared/sanitize-output.mjs';
 import { buildCasualSystemPrompt, CASUAL_RESPONSE_SCHEMA, truncateForCasual, isMedicalOrSafetyTopic, buildCasualUserMessage, getPersonalizationDepth } from '../../../../packages/character/casual-chat-prompt.mjs';
@@ -473,6 +476,102 @@ async function handleServiceIntentMessage({ conversationId, conversation, text, 
   const card = { type: 'product_selection', products: matched.map((p) => ({ code: p.code, name: p.name, price: p.price, description: p.description })) };
   return respond(intro, card, null);
 }
+
+/** §Critical Flow — 로그인/회원가입 성공 직후 자동으로 호출된다(프론트가 setScreen만 하고
+ * 끝내던 문제의 수정). 서버 state(chart 존재 여부)를 기준으로 대구의 다음 메시지를
+ * 결정적으로 만든다 — AI에게 "생년월일이 있는지" 추측하게 하지 않는다. */
+export async function resumeAfterAuth({ conversationId, userId }) {
+  const conversation = await getConversation(conversationId);
+  const character = getCharacter(conversation?.character_id);
+  const charts = await listChartsForUser(userId);
+  const latestChart = charts.length > 0 ? charts.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0] : null;
+
+  if (!latestChart) {
+    const response = '좋아, 이제 제대로 봐줄게.\n생년월일이랑 태어난 시간을 알려줘.';
+    await addMessage({ conversationId, role: 'assistant', content: response, metadata: { card: { type: 'birth_form_needed' } } });
+    return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: { type: 'birth_form_needed' }, purchaseRequired: null };
+  }
+
+  const subject = latestChart.canonical?.subject;
+  const dateStr = subject?.birth_date ?? '알 수 없음';
+  const timeStr = subject?.time_known === false ? '모름' : (subject?.birth_time ?? '알 수 없음');
+  const response = `왔네. 이제 진짜 한번 볼까?\n네 생년월일은 ${dateStr}, 태어난 시간은 ${timeStr}로 되어 있어.\n이 정보가 맞아?`;
+  const card = { type: 'birth_confirm', chartId: latestChart.id, birthDate: dateStr, birthTime: timeStr };
+  await addMessage({ conversationId, role: 'assistant', content: response, metadata: { card } });
+  return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: card, purchaseRequired: null };
+}
+
+/** §Critical Flow — [응,맞아]/[아니,수정할게] 처리. confirmed=false는 프론트가 BirthDataForm
+ * 화면으로 보내면 되므로 여기선 안내 문구만. confirmed=true는 실제 entitlement/campaign
+ * 상태를 서버가 조회해서(AI 추측 금지) 다음 단계를 결정적으로 만든다. */
+export async function confirmBirthData({ conversationId, userId, chartId, confirmed }) {
+  const conversation = await getConversation(conversationId);
+  const character = getCharacter(conversation?.character_id);
+
+  if (!confirmed) {
+    const response = '좋아, 다시 입력해줘.';
+    await addMessage({ conversationId, role: 'assistant', content: response, metadata: { card: { type: 'birth_form_needed', chartId } } });
+    return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: { type: 'birth_form_needed', chartId }, purchaseRequired: null };
+  }
+
+  const detailEntitlement = await findActiveEntitlementByAnalysisType(userId, 'SAJU_DETAIL');
+  if (detailEntitlement) {
+    const response = '좋아. 이미 산 상세분석이 있으니 바로 이어서 볼 수 있어.\n뭐가 궁금해?';
+    await addMessage({ conversationId, role: 'assistant', content: response, metadata: { card: null } });
+    return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: null, purchaseRequired: null };
+  }
+
+  const basicEntitlement = await findActiveEntitlementByAnalysisType(userId, 'SAJU_BASIC');
+  if (basicEntitlement) {
+    const detailProduct = await getProductByCode('SAJU_DETAIL');
+    const card = { type: 'product_selection', products: detailProduct ? [{ code: detailProduct.code, name: detailProduct.name, price: detailProduct.price, description: detailProduct.description }] : [] };
+    const response = '기본 분석은 이미 봤어.\n더 자세히 들여다보고 싶으면 상세분석으로 이어갈 수 있어.';
+    await addMessage({ conversationId, role: 'assistant', content: response, metadata: { card } });
+    return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: card, purchaseRequired: null };
+  }
+
+  const basicProduct = await getProductByCode('SAJU_BASIC');
+  const detailProduct = await getProductByCode('SAJU_DETAIL');
+  const campaign = basicProduct ? await getActiveCampaign('SAJU_BASIC') : null;
+  const products = [];
+  if (basicProduct) products.push({ code: basicProduct.code, name: basicProduct.name, price: basicProduct.price, description: basicProduct.description, campaignActive: !!campaign });
+  if (detailProduct) products.push({ code: detailProduct.code, name: detailProduct.name, price: detailProduct.price, description: detailProduct.description });
+  const response = campaign
+    ? '좋아. 이 정보로 볼게.\n지금은 기본 사주 분석을 무료로 체험할 수 있어(첫 10,000명 한정).'
+    : '좋아. 이 정보로 볼게.\n어떻게 봐줄까?';
+  const card = { type: 'product_selection', products, chartId };
+  await addMessage({ conversationId, role: 'assistant', content: response, metadata: { card } });
+  return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: card, purchaseRequired: null };
+}
+
+/** §10,000명 무료 캠페인 claim — 원자적 처리는 campaign-repository.mjs가 담당(이 함수는
+ * 그 결과를 대구의 말투로 옮기기만 한다). 무료로 받은 entitlement도 기존 결제 entitlement와
+ * 완전히 동일한 구조라, 이후 quota 소비/authorization 로직은 전혀 새로 만들 필요가 없다. */
+export async function claimFreeTrial({ conversationId, userId }) {
+  const conversation = await getConversation(conversationId);
+  const character = getCharacter(conversation?.character_id);
+  const product = await getProductByCode('SAJU_BASIC');
+  if (!product) {
+    const response = '지금은 상품 정보를 불러오지 못했어.\n잠시 후 다시 시도해줄래?';
+    await addMessage({ conversationId, role: 'assistant', content: response, metadata: { card: null } });
+    return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: null, purchaseRequired: null };
+  }
+
+  const result = await claimFreeCampaignSlot({ userId, campaignCode: 'SAJU_BASIC_FREE_10K', product });
+  if (!result.claimed && result.reason === 'CAMPAIGN_FULL') {
+    const card = { type: 'product_selection', products: [{ code: product.code, name: product.name, price: product.price, description: product.description }] };
+    const response = '아쉽게도 무료 체험 인원이 다 찼어.\n정가로 바로 시작할 수 있어.';
+    await addMessage({ conversationId, role: 'assistant', content: response, metadata: { card } });
+    return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: card, purchaseRequired: null };
+  }
+
+  const response = result.claimed
+    ? '좋아, 무료로 받았어!\n이제 궁금한 거 편하게 물어봐.'
+    : '이미 기본 분석을 받았네.\n바로 이어서 물어봐.';
+  await addMessage({ conversationId, role: 'assistant', content: response, metadata: { card: null } });
+  return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: null, purchaseRequired: null };
+}
+
 
 export async function handleFreeTextMessage({ conversationId, text, aiProvider, model = 'unknown', casualAiProvider = null, casualModel = 'unknown', childCoachAiProvider = null, userId = null }) {
   // §출생일 택일 채팅 — 이 conversation이 DATE_SELECTION analysis_scope에 태깅되어 있으면,

@@ -2,6 +2,89 @@
 
 프로젝트 지시사항에 따라, 기존 구조/파일과 충돌하거나 임의 판단이 필요했던 지점을 여기에 기록한다.
 
+## [Unreleased] — Critical Flow: 로그인 후 무반응 + 생년월일 확인 + 10,000명 무료 캠페인
+
+### ROOT CAUSE
+`handleNicknameSubmit`/`handleEmailAuthSuccess`가 로그인 성공 시 `setScreen(pendingAfterSignup)`
+만 실행하고 끝나서, 채팅화면으로 돌아가도 **대구가 먼저 말을 거는 트리거 자체가 없었다.**
+conversationId/serviceId 자체는 이미 정상적으로 유지되고 있었음(useChatController의 ref/state가
+그대로 살아있음) — 문제는 오직 "로그인 후 무엇을 자동으로 할지"가 빠져있던 것.
+
+### POST-AUTH FLOW (신규 구현)
+1. 로그인 성공 → `chat.resumeAfterAuth(userId)` 자동 호출(신규)
+2. 백엔드 `resumeAfterAuth`가 `listChartsForUser(userId)`(기존 파일 기반 chart 저장소, 신규
+   API 불필요)로 최근 chart 조회
+3. chart 없음 → "생년월일이랑 태어난 시간을 알려줘" + `birth_form_needed` 카드
+4. chart 있음 → **저장된 실제 생년월일/시간을 정확히 인용**("네 생년월일은 1990-05-15,
+   태어난 시간은 14:30로 되어 있어") + `birth_confirm` 카드 — 실행 테스트로 "절대 다시
+   묻지 않음"을 확인.
+
+### BIRTH DATA
+canonical.subject(`birth_date`/`birth_time`/`time_known`)를 그대로 인용 — AI가 추측하지
+않고 서버 state를 그대로 문자열로 삽입. [응,맞아] → `confirmBirthData(confirmed=true)` →
+entitlement 상태를 서버가 조회해서 다음 단계 결정. [아니,수정할게] → 기존 `BirthDataForm`
+화면을 재사용(신규 UI 없음) → 제출 시 새 chart 생성 → **다시 확인 질문 없이** 곧바로
+`confirmBirth(chartId, true)` 자동 호출(무한루프 방지, "수정 후 즉시 다음 단계" 원칙 준수).
+
+### FREE 10K — DB 설계
+`migrations/015_free_campaign.sql` — `campaigns` 테이블 1개만 신설. **`products.price`는
+전혀 건드리지 않음**(990원 그대로, 영구 무료 아님). 동시성 보장은
+`UPDATE campaigns SET used_count=used_count+1 WHERE used_count<limit_count RETURNING`
+(Postgres 행 잠금 기반 원자적 연산) 하나로 처리 — 별도 락 테이블/애플리케이션 레벨 세마포어
+불필요. 이중 claim 방지는 별도 claims 테이블 없이, "이미 entitlement가 있으면 다시 안 준다"
+는 트랜잭션 내 체크로 충분(entitlement 자체가 claim 증거).
+
+### PRODUCT — 캠페인과 entitlement 관계
+무료 캠페인 claim 성공 시, 기존 `orders`(amount=0, status='PAID')→`entitlements` 파이프라인을
+**그대로 재사용**(새 발급 경로 없음) — `entitlements.order_id`가 not null unique라서 이 제약을
+깨지 않기 위한 선택. 무료로 받은 entitlement도 결제로 받은 것과 완전히 동일한 구조라, 이후
+quota 소비/재조회 로직을 전혀 새로 만들지 않음.
+
+### CONVERSATION CONTEXT
+회원가입 전 conversation을 그대로 재사용(conversationIdRef가 useChatController 안에 계속
+살아있음, 새 conversation 생성 없음) — 이건 기존 구조가 이미 보장하고 있었음(추가 확인만).
+
+### INTENT
+이번 3개 신규 엔드포인트(`resume-after-auth`/`confirm-birth`/`claim-free-trial`)는 전부
+**AI 호출 없는 순수 deterministic 처리** — Casual API/기존 hybrid intent routing(Priority3)
+과 완전히 분리되어 있어 서로 간섭하지 않음.
+
+### 실제 실행으로 검증 (이 환경엔 실 DB가 없어 브라우저 전체 시나리오 대신 코드 레벨 실행 검증)
+- `resumeAfterAuth`(chart 없음) → 정확히 생년월일 요청
+- `resumeAfterAuth`(chart 있음) → **저장된 실제 값(1990-05-15/14:30)을 정확히 인용**, 재질문 없음
+- `confirmBirthData(confirmed=false)` → DB 없이도 안전하게 재입력 카드 반환
+- `confirmBirthData(confirmed=true)` / `claimFreeTrial` → 실제 DB(entitlement/campaign)
+  조회를 시도, 이 환경엔 DB 없어 명확한 에러로 정상 차단(가짜 응답 없음)
+
+### 신규 파일
+- `migrations/015_free_campaign.sql`
+- `apps/api/src/repositories/campaign-repository.mjs`
+- `tests/69-critical-flow-post-auth.test.mjs`(9개)
+
+### 변경 파일
+- `apps/api/src/services/conversation-service.mjs`(`resumeAfterAuth`/`confirmBirthData`/`claimFreeTrial` 추가)
+- `apps/api/src/routes/conversations.mjs`(라우트 3개 추가)
+- `apps/web/src/api/client.js`, `apps/web/src/hooks/useChatController.js`
+- `apps/web/src/App.jsx`(로그인 콜백 2곳 + birthEditFromChat 분기)
+- `apps/web/src/components/ProductSelectionCard.jsx`(캠페인 표시 + 신규 카드 2종)
+- `apps/web/src/components/MessageBubbles.jsx`, `MessageList.jsx`, `ChatScreen.jsx`
+- `apps/web/src/styles/app.css`
+
+### 테스트 결과
+신규 9/9 통과. 전체 backend **746/746 통과**. 프론트 빌드 성공(79 모듈).
+
+### 남은 것 — 실제 배포 환경에서 반드시 확인 필요
+1. **`migrations/015_free_campaign.sql`을 Supabase에 직접 실행**해야 캠페인 기능이
+   작동합니다(이 환경엔 실제 DB가 없어 마이그레이션 자체는 적용 못 함).
+2. 이 환경엔 실 DB/로그인이 없어 **Scenario A~E 전체를 브라우저로 끝까지 검증하지
+   못했습니다** — 사장님 실제 배포 환경에서 반드시 재확인 필요:
+   - 신규 가입 → chart 없음 → 생년월일 입력 → 확인 → 무료체험 카드 → claim → 실제 무료 이용
+   - 기존 chart 있는 사용자 → 재질문 없이 확인만
+   - 무료 10,000명 소진 후 990원 정상 판매로 전환
+3. 무료 캠페인 claim 후 "실제 분석 결과 생성"까지는 이번 라운드에서 결과 화면 자체를
+   새로 만들지 않고, "이제 편하게 물어봐"로 채팅 진입만 안내함 — 완전한 결과 화면 연결은
+   다음 라운드 후보.
+
 ## [Unreleased] — 상품 목록 화면 노출 없이 바로 결제로 이동 + Casual 대화 원인 확정
 
 ### 1. "상품 버튼 클릭 시 상품안내로 넘어가는 것처럼 보임" — 조사 결과

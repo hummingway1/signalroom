@@ -1,6 +1,6 @@
 // apps/api/src/routes/conversations.mjs
 import { Router } from 'express';
-import { askQuestion, getConversationHistory, getOpeningChoices, pickCatalogChoice, handleFreeTextMessage, getChildOpeningChoices, pickChildCatalogChoice } from '../services/conversation-service.mjs';
+import { askQuestion, getConversationHistory, getOpeningChoices, pickCatalogChoice, handleFreeTextMessage, getChildOpeningChoices, pickChildCatalogChoice, resumeAfterAuth, confirmBirthData, claimFreeTrial } from '../services/conversation-service.mjs';
 import { handlePipelineError } from './charts.mjs';
 
 export function conversationsRouter({ aiProviderFactory, model, casualAiProviderFactory = () => null, casualModel = 'unknown', childCoachAiProviderFactory = () => null, childCoachModel = 'unknown' }) {
@@ -11,6 +11,55 @@ export function conversationsRouter({ aiProviderFactory, model, casualAiProvider
     try {
       const messages = await getConversationHistory(req.params.id);
       return res.json({ conversationId: req.params.id, messages });
+    } catch (err) {
+      return res.status(500).json({ error: { code: 'INTERNAL_ERROR', message: err.message } });
+    }
+  });
+
+  // POST /api/conversations/:id/resume-after-auth — §Critical Flow: 로그인/회원가입 성공
+  // 직후 프론트가 반드시 호출한다. 서버가 chart 존재 여부를 판정해서 대구가 먼저 말을 걸게 한다.
+  router.post('/:id/resume-after-auth', async (req, res) => {
+    try {
+      const { userId } = req.body ?? {};
+      if (!userId) return res.status(400).json({ error: { code: 'INVALID_INPUT', message: 'userId는 필수입니다.' } });
+      const result = await resumeAfterAuth({ conversationId: req.params.id, userId });
+      return res.json({
+        conversationId: req.params.id, intent: result.intent, response: result.response,
+        character: result.character, sources: result.sources, cross_analysis: result.cross_analysis,
+        highlight_card: result.highlightCard ?? null, usage: result.usage, purchaseRequired: result.purchaseRequired ?? null,
+      });
+    } catch (err) {
+      return res.status(500).json({ error: { code: 'INTERNAL_ERROR', message: err.message } });
+    }
+  });
+
+  // POST /api/conversations/:id/confirm-birth — [응,맞아]/[아니,수정할게] 처리
+  router.post('/:id/confirm-birth', async (req, res) => {
+    try {
+      const { userId, chartId, confirmed } = req.body ?? {};
+      if (!userId) return res.status(400).json({ error: { code: 'INVALID_INPUT', message: 'userId는 필수입니다.' } });
+      const result = await confirmBirthData({ conversationId: req.params.id, userId, chartId, confirmed: confirmed === true });
+      return res.json({
+        conversationId: req.params.id, intent: result.intent, response: result.response,
+        character: result.character, sources: result.sources, cross_analysis: result.cross_analysis,
+        highlight_card: result.highlightCard ?? null, usage: result.usage, purchaseRequired: result.purchaseRequired ?? null,
+      });
+    } catch (err) {
+      return res.status(500).json({ error: { code: 'INTERNAL_ERROR', message: err.message } });
+    }
+  });
+
+  // POST /api/conversations/:id/claim-free-trial — §10,000명 무료 캠페인 claim
+  router.post('/:id/claim-free-trial', async (req, res) => {
+    try {
+      const { userId } = req.body ?? {};
+      if (!userId) return res.status(400).json({ error: { code: 'INVALID_INPUT', message: 'userId는 필수입니다.' } });
+      const result = await claimFreeTrial({ conversationId: req.params.id, userId });
+      return res.json({
+        conversationId: req.params.id, intent: result.intent, response: result.response,
+        character: result.character, sources: result.sources, cross_analysis: result.cross_analysis,
+        highlight_card: result.highlightCard ?? null, usage: result.usage, purchaseRequired: result.purchaseRequired ?? null,
+      });
     } catch (err) {
       return res.status(500).json({ error: { code: 'INTERNAL_ERROR', message: err.message } });
     }
