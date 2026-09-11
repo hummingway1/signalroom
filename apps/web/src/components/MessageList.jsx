@@ -6,7 +6,7 @@ import { ChatBackground } from './ChatBackground.jsx';
 
 const NEAR_BOTTOM_THRESHOLD_PX = 120;
 
-export function MessageList({ messages, isTyping, currentCharacterId, onOpenDetail, onSelectProduct, onSignup }) {
+export function MessageList({ messages, isTyping, currentCharacterId, onOpenDetail, onSelectProduct, onSignup, onConfirmBirth, onOpenBirthForm, onClaimFreeTrial }) {
   const scrollRef = useRef(null);
   const [showJumpToLatest, setShowJumpToLatest] = useState(false);
   const wasNearBottomRef = useRef(true);
@@ -47,7 +47,7 @@ export function MessageList({ messages, isTyping, currentCharacterId, onOpenDeta
           if (message.role === 'user') return <UserMessageBubble key={message.id} message={message} />;
           const prev = messages[i - 1];
           const showAvatar = !prev || prev.role !== 'character' || prev.character?.id !== message.character?.id;
-          return <CharacterMessageBubble key={message.id} message={message} showAvatar={showAvatar} onOpenDetail={onOpenDetail} onSelectProduct={onSelectProduct} onSignup={onSignup} />;
+          return <CharacterMessageBubble key={message.id} message={message} showAvatar={showAvatar} onOpenDetail={onOpenDetail} onSelectProduct={onSelectProduct} onSignup={onSignup} onConfirmBirth={onConfirmBirth} onOpenBirthForm={onOpenBirthForm} onClaimFreeTrial={onClaimFreeTrial} />;
         })}
         {isTyping && <TypingIndicator characterId={currentCharacterId} />}
       </div>

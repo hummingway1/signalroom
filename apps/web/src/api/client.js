@@ -68,6 +68,19 @@ export function sendMessage(conversationId, question) {
   return request(`/api/conversations/${conversationId}/messages`, { method: 'POST', body: JSON.stringify({ question }) });
 }
 
+// §Critical Flow — 로그인/회원가입 성공 직후, birth 확인, 무료 캠페인 claim.
+export function resumeAfterAuth(conversationId, userId) {
+  return request(`/api/conversations/${conversationId}/resume-after-auth`, { method: 'POST', body: JSON.stringify({ userId }) });
+}
+
+export function confirmBirth(conversationId, userId, chartId, confirmed) {
+  return request(`/api/conversations/${conversationId}/confirm-birth`, { method: 'POST', body: JSON.stringify({ userId, chartId, confirmed }) });
+}
+
+export function claimFreeTrial(conversationId, userId) {
+  return request(`/api/conversations/${conversationId}/claim-free-trial`, { method: 'POST', body: JSON.stringify({ userId }) });
+}
+
 export function getConversationHistory(conversationId) {
   return request(`/api/conversations/${conversationId}`);
 }

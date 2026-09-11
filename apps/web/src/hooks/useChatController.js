@@ -210,5 +210,44 @@ export function useChatController() {
   const retryLast = useCallback(() => setError(null), []);
   const dismissPurchaseRequired = useCallback(() => setPurchaseRequired(null), []);
 
-  return { messages, character, choices, isTyping, isBooting, error, purchaseRequired, serviceId, start, resumeConversation, pickChoice, sendFreeText, retryLast, dismissPurchaseRequired };
+  // §Critical Flow — 로그인/회원가입 성공 직후 App.jsx가 호출한다. conversation은 그대로
+  // 유지(새로 만들지 않음), 대구가 서버 state(chart 존재 여부)를 기준으로 먼저 말을 건다.
+  const resumeAfterAuth = useCallback(
+    async (userId) => {
+      if (!conversationIdRef.current) return;
+      try {
+        const result = await runWithTyping(() => api.resumeAfterAuth(conversationIdRef.current, userId));
+        applyCharacterTurn(result);
+      } catch {
+        // no-op — 최소한 화면은 그대로 유지되고, 사용자가 다시 시도할 수 있음
+      }
+    },
+    [runWithTyping, applyCharacterTurn]
+  );
+
+  const confirmBirth = useCallback(
+    async (userId, chartId, confirmed) => {
+      try {
+        const result = await runWithTyping(() => api.confirmBirth(conversationIdRef.current, userId, chartId, confirmed));
+        applyCharacterTurn(result);
+      } catch {
+        // no-op
+      }
+    },
+    [runWithTyping, applyCharacterTurn]
+  );
+
+  const claimFreeTrialAction = useCallback(
+    async (userId) => {
+      try {
+        const result = await runWithTyping(() => api.claimFreeTrial(conversationIdRef.current, userId));
+        applyCharacterTurn(result);
+      } catch {
+        // no-op
+      }
+    },
+    [runWithTyping, applyCharacterTurn]
+  );
+
+  return { messages, character, choices, isTyping, isBooting, error, purchaseRequired, serviceId, start, resumeConversation, pickChoice, sendFreeText, retryLast, dismissPurchaseRequired, resumeAfterAuth, confirmBirth, claimFreeTrialAction };
 }

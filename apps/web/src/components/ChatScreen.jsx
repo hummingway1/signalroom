@@ -5,8 +5,8 @@ import { ChatInput } from './ChatInput.jsx';
 import { ChatHeader } from './ChatHeader.jsx';
 import { getServiceCatalogEntry } from '../serviceCatalog.js';
 
-export function ChatScreen({ chat, onOpenDetail, onOpenMenu, onHome, onNeedLogin, onNeedPurchase }) {
-  const { messages, character, choices, isTyping, error, purchaseRequired, serviceId, pickChoice, sendFreeText, retryLast, dismissPurchaseRequired } = chat;
+export function ChatScreen({ chat, userId, onOpenDetail, onOpenMenu, onHome, onNeedLogin, onNeedPurchase, onOpenBirthForm }) {
+  const { messages, character, choices, isTyping, error, purchaseRequired, serviceId, pickChoice, sendFreeText, retryLast, dismissPurchaseRequired, confirmBirth, claimFreeTrialAction } = chat;
   const serviceTitle = getServiceCatalogEntry(serviceId)?.title ?? null;
 
   // §중복 CTA 제거(실측 버그 수정) — 마지막 메시지에 이미 구조화된 카드(product_selection/
@@ -37,6 +37,9 @@ export function ChatScreen({ chat, onOpenDetail, onOpenMenu, onHome, onNeedLogin
         onOpenDetail={onOpenDetail}
         onSelectProduct={(code) => onNeedPurchase?.(code)}
         onSignup={() => onNeedLogin?.()}
+        onConfirmBirth={(chartId, confirmed) => confirmBirth(userId, chartId, confirmed)}
+        onOpenBirthForm={() => onOpenBirthForm?.()}
+        onClaimFreeTrial={() => claimFreeTrialAction(userId)}
       />
       {error && (
         <div className="error-banner">

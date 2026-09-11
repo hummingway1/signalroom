@@ -1,17 +1,19 @@
 // apps/web/src/components/MessageBubbles.jsx
 import { CharacterAvatar } from './CharacterAvatar.jsx';
 import { AnalysisCard } from './AnalysisCard.jsx';
-import { ProductSelectionCard, SignupCtaCard } from './ProductSelectionCard.jsx';
+import { ProductSelectionCard, SignupCtaCard, BirthConfirmCard, BirthFormNeededCard } from './ProductSelectionCard.jsx';
 
-export function CharacterMessageBubble({ message, showAvatar, onOpenDetail, onSelectProduct, onSignup }) {
+export function CharacterMessageBubble({ message, showAvatar, onOpenDetail, onSelectProduct, onSignup, onConfirmBirth, onOpenBirthForm, onClaimFreeTrial }) {
   return (
     <div className="message-row message-row--character msg-in">
       <div className="message-row__avatar-slot">{showAvatar && <CharacterAvatar characterId={message.character?.id} size={32} />}</div>
       <div className="message-row__content">
         {message.sectionTitle && <p className="message-row__section-title">{message.sectionTitle}</p>}
         {message.text && <div className="bubble bubble--character">{message.text}</div>}
-        {message.card?.type === 'product_selection' && <ProductSelectionCard card={message.card} onSelectProduct={onSelectProduct} />}
+        {message.card?.type === 'product_selection' && <ProductSelectionCard card={message.card} onSelectProduct={onSelectProduct} onClaimFreeTrial={onClaimFreeTrial} />}
         {message.card?.type === 'signup_cta' && <SignupCtaCard onSignup={onSignup} />}
+        {message.card?.type === 'birth_confirm' && <BirthConfirmCard card={message.card} onConfirm={onConfirmBirth} />}
+        {message.card?.type === 'birth_form_needed' && <BirthFormNeededCard onOpenBirthForm={onOpenBirthForm} />}
         {message.card && !message.card.type && <AnalysisCard card={message.card} onOpenDetail={() => onOpenDetail?.(message)} />}
       </div>
     </div>

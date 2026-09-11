@@ -59,6 +59,7 @@ export default function App() {
   const [nicknameError, setNicknameError] = useState(null);
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [pendingAfterSignup, setPendingAfterSignup] = useState(null); // 가입 완료 후 이동할 화면
+  const [pendingProductCode, setPendingProductCode] = useState(null); // §Priority5 — 로그인/가입 전에 채팅에서 고른 상품을 보존
   const [showNicknameChooser, setShowNicknameChooser] = useState(false); // 신규 OAuth 가입 직후에만 true
   const [nicknameChooserError, setNicknameChooserError] = useState(null);
   const [isSavingNickname, setIsSavingNickname] = useState(false);
@@ -149,6 +150,20 @@ export default function App() {
         console.error('[yearly-fortune birth] chart 생성 실패', err.message);
       }
       setScreen('yearlyFortune');
+      return;
+    }
+
+    if (pendingService === 'birthEditFromChat') {
+      // §Critical Flow §6 — [아니, 수정할게] → 폼 수정 완료. 다시 확인 질문을 던지지 않고
+      // 새 chart로 곧바로 다음 단계(entitlement/campaign 판정)로 이어간다.
+      setScreen('chat');
+      try {
+        const chart = await api.createChart(birthData);
+        setChartId(chart.id);
+        await chat.confirmBirth(userId, chart.id, true);
+      } catch (err) {
+        console.error('[birth-edit] chart 생성 실패', err.message);
+      }
       return;
     }
 
@@ -252,8 +267,10 @@ export default function App() {
       localStorage.setItem(NICKNAME_STORAGE_KEY, user.nickname);
       setUserId(user.id);
       setNickname(user.nickname);
-      setScreen(pendingAfterSignup ?? 'home');
+      const dest = pendingAfterSignup ?? 'home';
+      setScreen(dest);
       setPendingAfterSignup(null);
+      if (dest === 'chat') await chat.resumeAfterAuth(user.id);
     } catch (err) {
       setNicknameError(err.message ?? '가입에 실패했어요.');
     } finally {
@@ -267,8 +284,10 @@ export default function App() {
     localStorage.setItem(NICKNAME_STORAGE_KEY, user.nickname);
     setUserId(user.id);
     setNickname(user.nickname);
-    setScreen(pendingAfterSignup ?? 'home');
+    const dest = pendingAfterSignup ?? 'home';
+    setScreen(dest);
     setPendingAfterSignup(null);
+    if (dest === 'chat') await chat.resumeAfterAuth(user.id);
   }
 
   async function handleLogout() {
@@ -396,7 +415,7 @@ export default function App() {
         {screen === 'home' && <HomeScreen onSelect={(key) => handleHomeSelect(key, 'home')} onLogin={() => { setPendingAfterSignup('home'); setScreen('signup'); }} onOpenMyPage={() => setScreen('mypage')} nickname={nickname} />}
         {screen === 'mypage' && <MyPage nickname={nickname} onBack={() => setScreen(homeOrigin)} onHome={() => setScreen(homeOrigin)} onOpenProducts={() => setScreen('products')} onLogout={handleLogout} onOpenLegal={(docType) => { setLegalDocType(docType); setScreen('legal'); }} onLogin={() => { setPendingAfterSignup(homeOrigin); setScreen('signup'); }} />}
         {screen === 'legal' && <LegalScreen docType={legalDocType} onBack={() => setScreen('mypage')} onHome={() => setScreen(homeOrigin)} />}
-        {screen === 'products' && <ProductsScreen onBack={() => setScreen('mypage')} onHome={() => setScreen(homeOrigin)} />}
+        {screen === 'products' && <ProductsScreen onBack={() => setScreen('mypage')} onHome={() => setScreen(homeOrigin)} autoBuyCode={pendingProductCode} />}
         {screen === 'intro' && <ServiceIntroScreen serviceKey={pendingService} onNext={handleIntroNext} onBack={() => setScreen(homeOrigin)} />}
         {screen === 'analysisChoice' && pendingRecommendation && (
           <AnalysisChoiceScreen
@@ -449,11 +468,13 @@ export default function App() {
         {screen === 'chat' && (
           <ChatScreen
             chat={chat}
+            userId={userId}
             onOpenDetail={handleOpenDetail}
             onOpenMenu={() => setShowMenu(true)}
             onHome={() => setScreen(homeOrigin)}
             onNeedLogin={() => { setPendingAfterSignup('chat'); setScreen('signup'); }}
-            onNeedPurchase={() => setScreen('products')}
+            onNeedPurchase={(code) => { setPendingProductCode(code); if (!userId) { setPendingAfterSignup('products'); setScreen('signup'); } else { setScreen('products'); } }}
+            onOpenBirthForm={() => { setPendingService('birthEditFromChat'); setScreen('birth'); }}
           />
         )}
 

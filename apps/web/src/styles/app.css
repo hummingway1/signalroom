@@ -356,6 +356,43 @@ body {
   opacity: 0.85;
 }
 
+.product-selection-card__price--strike {
+  text-decoration: line-through;
+  color: var(--muted-foreground);
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.product-selection-card__free-badge {
+  font-weight: 800;
+  font-size: 17px;
+  color: #C9971E;
+  margin-top: 2px;
+  animation: free-badge-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes free-badge-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.75; }
+}
+
+.product-selection-card__campaign-note {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  margin-top: 2px;
+}
+
+.product-selection-card__btn--free {
+  background: linear-gradient(135deg, #D9A93B, #C9971E);
+  color: #fff;
+}
+
+.product-selection-card__btn--secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
 .bubble--user {
   background: var(--primary);
   color: var(--primary-foreground);
