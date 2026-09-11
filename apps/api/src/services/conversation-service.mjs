@@ -430,25 +430,48 @@ async function handleServiceIntentMessage({ conversationId, conversation, text, 
   const character = getCharacter(conversation?.character_id);
   await addMessage({ conversationId, role: 'user', content: text });
 
-  if (!userId) {
-    const response = serviceIntent === 'signup_question'
-      ? '이름이나 닉네임, 생년월일, 태어난 시간만 간단히 입력하면 회원가입할 수 있어. 귀찮은 거 없이 바로 시작할 수 있어.\n\n회원가입하고 결제하면, 본 사주는 나중에 다시 찾아볼 수 있어.'
-      : '우선 네 생년월일이 있어야 제대로 들여다볼 수 있어. 이름이나 닉네임, 생년월일, 태어난 시간만 간단히 입력하면 돼. 귀찮은 거 없이 바로 시작할 수 있어.\n\n회원가입하고 나면 바로 이어서 볼 수 있어. 어때, 한번 봐줄까?';
-    await addMessage({ conversationId, role: 'assistant', content: response });
-    return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: null, purchaseRequired: { productCode: null, loginRequired: true } };
+  async function respond(response, card, purchaseRequired) {
+    await addMessage({ conversationId, role: 'assistant', content: response, metadata: { card } });
+    return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: card, purchaseRequired };
   }
 
-  // §로그인 상태 — 실제 상품 정보를 DB에서 조회해서 대구 말투로 안내(가격 하드코딩 없음).
+  // §실제 발견한 버그 수정 — 가격/결제 문의는 로그인 여부와 무관하게 항상 실제 상품 카드를
+  // 보여준다(가격은 공개 정보 — 로그인 게이트는 "카드 버튼을 눌러 구매를 시작할 때"만
+  // 필요하고, 이미 프론트 App.jsx의 onNeedPurchase가 그 시점에 로그인 여부를 정확히
+  // 체크한다). 이전엔 비로그인이면 무조건 "생년월일이 있어야 한다"는 사실과 다른 안내로
+  // 막아서, "사주 한번 봐줘"와 "가격 얼마야?"가 완전히 동일한 문구로 응답하고 있었다.
+  if (serviceIntent === 'product_question' || serviceIntent === 'payment_question') {
+    const products = await listActiveProducts();
+    const codes = conversation?.child_profile_id ? ['CHILD_BASIC', 'CHILD_DETAIL'] : ['SAJU_BASIC', 'SAJU_DETAIL'];
+    const matched = codes.map((code) => products.find((p) => p.code === code)).filter(Boolean);
+    if (matched.length === 0) {
+      return respond('지금은 상품 정보를 불러오지 못했어.\n잠시 후 다시 물어봐줄래?', null, null);
+    }
+    const intro = serviceIntent === 'payment_question' ? '여기서 바로 고르면 돼.' : '가격은 두 가지가 있어.';
+    const card = { type: 'product_selection', products: matched.map((p) => ({ code: p.code, name: p.name, price: p.price, description: p.description })) };
+    return respond(intro, card, null);
+  }
+
+  if (!userId) {
+    // §service_start / signup_question(비로그인) — 이 시점엔 이미 생년월일(chart)이 있으므로
+    // "생년월일이 필요하다"는 안내는 사실과 다르다. 실제로 필요한 건 로그인/회원가입뿐이다.
+    const response = serviceIntent === 'signup_question'
+      ? '응, 네 정보를 저장해두려면 간단한 가입이 필요해.\n가입해두면 네가 본 사주를 나중에 다시 찾아볼 수 있어.'
+      : '좋아. 제대로 한번 들여다보자.\n간단하게 가입만 하면 바로 시작할 수 있어.';
+    return respond(response, { type: 'signup_cta' }, { productCode: null, loginRequired: true });
+  }
+
+  // §로그인 상태에서 service_start/signup_question — 이미 가입돼 있으므로 곧바로 상품
+  // 선택으로 이어간다(로그인 상태에서 "가입해야 돼?"를 물어도 다시 가입을 요구하지 않음).
   const products = await listActiveProducts();
   const codes = conversation?.child_profile_id ? ['CHILD_BASIC', 'CHILD_DETAIL'] : ['SAJU_BASIC', 'SAJU_DETAIL'];
   const matched = codes.map((code) => products.find((p) => p.code === code)).filter(Boolean);
-  const priceLines = matched.map((p) => `${p.name} ${p.price.toLocaleString()}원`).join(' / ');
-  const response = priceLines
-    ? `좋아, 어떻게 봐줄까?\n${priceLines}\n\n☰ 메뉴의 "서비스 보기"에서 바로 시작할 수 있어.`
-    : '지금은 상품 정보를 불러오지 못했어. 잠시 후 다시 물어봐줄래?';
-
-  await addMessage({ conversationId, role: 'assistant', content: response });
-  return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: null, purchaseRequired: priceLines ? { productCode: codes[1], loginRequired: false } : null };
+  if (matched.length === 0) {
+    return respond('지금은 상품 정보를 불러오지 못했어.\n잠시 후 다시 물어봐줄래?', null, null);
+  }
+  const intro = serviceIntent === 'signup_question' ? '이미 가입돼 있으니 바로 시작할 수 있어.' : '좋아, 어떻게 봐줄까?';
+  const card = { type: 'product_selection', products: matched.map((p) => ({ code: p.code, name: p.name, price: p.price, description: p.description })) };
+  return respond(intro, card, null);
 }
 
 export async function handleFreeTextMessage({ conversationId, text, aiProvider, model = 'unknown', casualAiProvider = null, casualModel = 'unknown', childCoachAiProvider = null, userId = null }) {

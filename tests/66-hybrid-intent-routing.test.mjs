@@ -42,11 +42,12 @@ test('3. 비로그인 "사주 보려고" → 시스템 안내문이 아니라 �
   assert.deepEqual(result.purchaseRequired, { productCode: null, loginRequired: true });
 });
 
-test('4. 비로그인 "어디서 결제해?" → 동일하게 대구 말투로 회원가입 안내', async () => {
+test('4. 비로그인 "어디서 결제해?" → 실제 상품 카드를 조회한다(로그인 여부와 무관 — 가격은 공개 정보). 이 환경엔 DB가 없어 정상 차단된다(가짜 카드 생성 안 함)', async () => {
   const conv = await makeConversation();
-  const result = await handleFreeTextMessage({ conversationId: conv.id, text: '어디서 결제해?', aiProvider: new MockAIProvider(), model: 'mock' });
-  assert.ok(!result.response.includes('음, 그런가'));
-  assert.equal(result.purchaseRequired.loginRequired, true);
+  await assert.rejects(
+    () => handleFreeTextMessage({ conversationId: conv.id, text: '어디서 결제해?', aiProvider: new MockAIProvider(), model: 'mock' }),
+    /DATABASE_URL/
+  );
 });
 
 test('5. 로그인 상태에서 "가격 얼마야?" → 실제 product DB 조회를 시도한다', async () => {
