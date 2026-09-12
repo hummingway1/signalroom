@@ -415,7 +415,7 @@ export default function App() {
         {screen === 'home' && <HomeScreen onSelect={(key) => handleHomeSelect(key, 'home')} onLogin={() => { setPendingAfterSignup('home'); setScreen('signup'); }} onOpenMyPage={() => setScreen('mypage')} nickname={nickname} />}
         {screen === 'mypage' && <MyPage nickname={nickname} onBack={() => setScreen(homeOrigin)} onHome={() => setScreen(homeOrigin)} onOpenProducts={() => setScreen('products')} onLogout={handleLogout} onOpenLegal={(docType) => { setLegalDocType(docType); setScreen('legal'); }} onLogin={() => { setPendingAfterSignup(homeOrigin); setScreen('signup'); }} />}
         {screen === 'legal' && <LegalScreen docType={legalDocType} onBack={() => setScreen('mypage')} onHome={() => setScreen(homeOrigin)} />}
-        {screen === 'products' && <ProductsScreen onBack={() => setScreen('mypage')} onHome={() => setScreen(homeOrigin)} autoBuyCode={pendingProductCode} />}
+        {screen === 'products' && <ProductsScreen onBack={() => { setPendingProductCode(null); setScreen('mypage'); }} onHome={() => { setPendingProductCode(null); setScreen(homeOrigin); }} autoBuyCode={pendingProductCode} />}
         {screen === 'intro' && <ServiceIntroScreen serviceKey={pendingService} onNext={handleIntroNext} onBack={() => setScreen(homeOrigin)} />}
         {screen === 'analysisChoice' && pendingRecommendation && (
           <AnalysisChoiceScreen
