@@ -65,7 +65,7 @@ test('A2: 존재하지 않는 entitlementId를 사주 질문과 함께 보내도
   assert.equal(res.status, 200, '레거시였다면 ENTITLEMENT_NOT_FOUND로 404가 났을 상황');
   assert.equal(res.body.intent, 'saju_question');
   assert.equal(res.body.sources, null);
-  assert.ok(res.body.response.includes('로그인'));
+  assert.equal(res.body.purchaseRequired?.loginRequired, true);
 });
 
 test('B1: 소스 레벨 — conversations.mjs에는 client entitlementId를 추출하거나 직접 소비하는 코드가 전혀 없다', async () => {

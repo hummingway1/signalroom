@@ -33,7 +33,7 @@ const SUBSCRIPTION_GROUP_FOR_ANALYSIS_TYPE = {
 
 function buildDenialMessage(missingAnalysisType) {
   const name = FRIENDLY_NAME_BY_ANALYSIS_TYPE[missingAnalysisType] ?? missingAnalysisType;
-  return `이 질문은 ${name}에 포함된 내용이에요. ${name}을 이용하면 이 내용에 대해 채팅으로 질문할 수 있어요.`;
+  return `그건 ${name}으로 제대로 들여다봐야 알 수 있어.\n한번 볼래?`;
 }
 
 /**
@@ -60,7 +60,7 @@ async function findAccessEntitlement(userId, analysisType, { chartId, childProfi
  * 요구하면 SAJU_DETAIL도 함께 필요하다고 판단한다(새 LLM 호출 없이 기존 Router 출력만 사용).
  *
  * §Phase6 §7~9 구독 — access(위에서 확인)가 전부 있어도, 그 entitlement 자체의 잔여 수량이
- * 0이면 같은 도메인 그�1룹의 구독 quota로 대체 가능한지 확인한다. 구독은 access를 만들지
+ * 0이면 같은 도메인 그 1룹의 구독 quota로 대체 가능한지 확인한다. 구독은 access를 만들지
  * 않고 오직 quota만 보충한다 — 그래서 access 확인이 실패하면(entitlement 자체가 아예 없음)
  * 구독이 있어도 즉시 거부한다.
  *

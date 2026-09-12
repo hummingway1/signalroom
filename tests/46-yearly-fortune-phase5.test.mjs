@@ -141,6 +141,6 @@ test('E2: fortune_year 태그가 없는 일반 사주 대화는 기존과 동일
   });
 
   assert.equal(result.intent, 'saju_question');
-  assert.ok(result.response.includes('로그인'), '기존과 동일하게 로그인 안내를 받아야 함(신년운세 안내 아님)');
+  assert.equal(result.purchaseRequired?.loginRequired, true, '기존과 동일하게 로그인 필요 신호를 받아야 함(신년운세 안내 아님)');
   assert.equal(getCallCount(), 1);
 });

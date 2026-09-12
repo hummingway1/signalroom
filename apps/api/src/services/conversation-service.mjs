@@ -429,6 +429,48 @@ async function handleNamingChatMessage({ conversationId, conversation, text, aiP
  * signup_question을 대구의 말투로 처리한다. 실제 사주 데이터를 지어내지 않고(§3 원칙),
  * 오직 "회원가입/상품 안내"라는 서비스 진입 정보만 다룬다 — 실제 분석은 여전히 결제 후
  * 별도 Analysis Chat(authorizeAnalysisQuestion 경로)에서만 이루어진다(무변경). */
+/** 상품 코드 배열을 실제 DB 가격과 함께, 캠페인 상태까지 포함해서 카드 데이터로 만든다.
+ * §실측 버그 수정 — 이전엔 이 로직이 여러 곳에 흩어져 있었고 그 중 상당수가 캠페인 체크
+ * 자체를 빠뜨리고 있었다(confirmBirthData만 캠페인을 체크했고, product_question/
+ * payment_question/로그인 상태 service_start는 전혀 체크하지 않아 "무료체험 배지가
+ * 사라진 것처럼" 보이는 버그의 정확한 원인이었다). 이제 상품 카드를 만드는 지점은
+ * 전부 이 함수 하나만 거친다. */
+async function buildProductCardData(codes) {
+  const products = await listActiveProducts();
+  const matched = codes.map((code) => products.find((p) => p.code === code)).filter(Boolean);
+  const withCampaign = await Promise.all(
+    matched.map(async (p) => {
+      const campaign = p.code === 'SAJU_BASIC' ? await getActiveCampaign('SAJU_BASIC') : null;
+      return { code: p.code, name: p.name, price: p.price, description: p.description, campaignActive: !!campaign };
+    })
+  );
+  return withCampaign;
+}
+
+/** §구조적 수정 — classifyServiceIntent의 좁은 키워드 버킷에 안 걸리는 자연어 변형("사주
+ * 봐달라고" 등)이 일반 saju_question(Router→분석) 경로로 흘러가서 authorization에 거부되면,
+ * 예전의 기계적 시스템 문구(buildDenialMessage: "이 질문은 ...상세분석에 포함된 내용이에요")
+ * 가 그대로 노출되고 있었다. 특정 문구를 계속 추가하는 대신, "authorization이 거부된 모든
+ * 경우"를 이 하나의 안전한 fallback으로 통합한다 — handleServiceIntentMessage와 동일한
+ * 대구 말투+실제 상품 카드를 생성하되, user 메시지 저장은 호출부가 이미 했으므로 여기선
+ * assistant 메시지만 저장한다. */
+export async function generateServiceGuidanceResponse({ conversationId, conversation, userId }) {
+  const character = getCharacter(conversation?.character_id);
+  async function respond(response, card, purchaseRequired) {
+    await addMessage({ conversationId, role: 'assistant', content: response, metadata: { card } });
+    return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: card, purchaseRequired };
+  }
+  if (!userId) {
+    return respond('좋아. 제대로 한번 들여다보자.\n간단하게 가입만 하면 바로 시작할 수 있어.', { type: 'signup_cta' }, { productCode: null, loginRequired: true });
+  }
+  const codes = conversation?.child_profile_id ? ['CHILD_BASIC', 'CHILD_DETAIL'] : ['SAJU_BASIC', 'SAJU_DETAIL'];
+  const products = await buildProductCardData(codes);
+  if (products.length === 0) {
+    return respond('지금은 상품 정보를 불러오지 못했어.\n잠시 후 다시 물어봐줄래?', null, null);
+  }
+  return respond('좋아, 어떻게 봐줄까?', { type: 'product_selection', products }, null);
+}
+
 async function handleServiceIntentMessage({ conversationId, conversation, text, serviceIntent, userId }) {
   const character = getCharacter(conversation?.character_id);
   await addMessage({ conversationId, role: 'user', content: text });
@@ -438,21 +480,20 @@ async function handleServiceIntentMessage({ conversationId, conversation, text, 
     return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: card, purchaseRequired };
   }
 
+  const codes = conversation?.child_profile_id ? ['CHILD_BASIC', 'CHILD_DETAIL'] : ['SAJU_BASIC', 'SAJU_DETAIL'];
+
   // §실제 발견한 버그 수정 — 가격/결제 문의는 로그인 여부와 무관하게 항상 실제 상품 카드를
   // 보여준다(가격은 공개 정보 — 로그인 게이트는 "카드 버튼을 눌러 구매를 시작할 때"만
   // 필요하고, 이미 프론트 App.jsx의 onNeedPurchase가 그 시점에 로그인 여부를 정확히
   // 체크한다). 이전엔 비로그인이면 무조건 "생년월일이 있어야 한다"는 사실과 다른 안내로
   // 막아서, "사주 한번 봐줘"와 "가격 얼마야?"가 완전히 동일한 문구로 응답하고 있었다.
   if (serviceIntent === 'product_question' || serviceIntent === 'payment_question') {
-    const products = await listActiveProducts();
-    const codes = conversation?.child_profile_id ? ['CHILD_BASIC', 'CHILD_DETAIL'] : ['SAJU_BASIC', 'SAJU_DETAIL'];
-    const matched = codes.map((code) => products.find((p) => p.code === code)).filter(Boolean);
-    if (matched.length === 0) {
+    const products = await buildProductCardData(codes);
+    if (products.length === 0) {
       return respond('지금은 상품 정보를 불러오지 못했어.\n잠시 후 다시 물어봐줄래?', null, null);
     }
     const intro = serviceIntent === 'payment_question' ? '여기서 바로 고르면 돼.' : '가격은 두 가지가 있어.';
-    const card = { type: 'product_selection', products: matched.map((p) => ({ code: p.code, name: p.name, price: p.price, description: p.description })) };
-    return respond(intro, card, null);
+    return respond(intro, { type: 'product_selection', products }, null);
   }
 
   if (!userId) {
@@ -466,15 +507,12 @@ async function handleServiceIntentMessage({ conversationId, conversation, text, 
 
   // §로그인 상태에서 service_start/signup_question — 이미 가입돼 있으므로 곧바로 상품
   // 선택으로 이어간다(로그인 상태에서 "가입해야 돼?"를 물어도 다시 가입을 요구하지 않음).
-  const products = await listActiveProducts();
-  const codes = conversation?.child_profile_id ? ['CHILD_BASIC', 'CHILD_DETAIL'] : ['SAJU_BASIC', 'SAJU_DETAIL'];
-  const matched = codes.map((code) => products.find((p) => p.code === code)).filter(Boolean);
-  if (matched.length === 0) {
+  const products = await buildProductCardData(codes);
+  if (products.length === 0) {
     return respond('지금은 상품 정보를 불러오지 못했어.\n잠시 후 다시 물어봐줄래?', null, null);
   }
   const intro = serviceIntent === 'signup_question' ? '이미 가입돼 있으니 바로 시작할 수 있어.' : '좋아, 어떻게 봐줄까?';
-  const card = { type: 'product_selection', products: matched.map((p) => ({ code: p.code, name: p.name, price: p.price, description: p.description })) };
-  return respond(intro, card, null);
+  return respond(intro, { type: 'product_selection', products }, null);
 }
 
 /** §Critical Flow — 로그인/회원가입 성공 직후 자동으로 호출된다(프론트가 setScreen만 하고
@@ -547,7 +585,7 @@ export async function confirmBirthData({ conversationId, userId, chartId, confir
 /** §10,000명 무료 캠페인 claim — 원자적 처리는 campaign-repository.mjs가 담당(이 함수는
  * 그 결과를 대구의 말투로 옮기기만 한다). 무료로 받은 entitlement도 기존 결제 entitlement와
  * 완전히 동일한 구조라, 이후 quota 소비/authorization 로직은 전혀 새로 만들 필요가 없다. */
-export async function claimFreeTrial({ conversationId, userId }) {
+export async function claimFreeTrial({ conversationId, userId, aiProvider, model = 'unknown' }) {
   const conversation = await getConversation(conversationId);
   const character = getCharacter(conversation?.character_id);
   const product = await getProductByCode('SAJU_BASIC');
@@ -565,11 +603,38 @@ export async function claimFreeTrial({ conversationId, userId }) {
     return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: card, purchaseRequired: null };
   }
 
-  const response = result.claimed
-    ? '좋아, 무료로 받았어!\n이제 궁금한 거 편하게 물어봐.'
-    : '이미 기본 분석을 받았네.\n바로 이어서 물어봐.';
+  // §실측 버그 수정 — 이전엔 entitlement만 만들고 "궁금한 거 편하게 물어봐"로 끝나서
+  // 사용자가 실제로 받은 게 없었다. SAJU_BASIC은 analysis_scope를 안 만드는 상품이라(기존
+  // 설계 확인), "기본 분석 결과"의 실체는 free:true 카탈로그 질문과 동일한 실제 chart 기반
+  // AI 분석 응답이다 — 새 분석 파이프라인을 만들지 않고, free 카탈로그 항목이 이미 쓰는
+  // authorizeBeforeAnalysis=null + predefinedRouting 패턴을 그대로 재사용한다.
+  const overviewEntry = QUESTION_CATALOG.find((e) => e.id === 'major_period_meaning');
+  const predefinedRouting = {
+    saju_fields: overviewEntry.required_data.saju_fields ?? [],
+    ziwei_fields: overviewEntry.required_data.ziwei_fields ?? [],
+    ziwei_palace_focus: overviewEntry.required_data.ziwei_palace_focus ?? [],
+    reasoning: 'campaign:free-trial-basic-overview',
+  };
+  const pipelineResult = await askQuestion({
+    conversationId,
+    question: overviewEntry.question_text,
+    aiProvider,
+    model,
+    extraSystemInstruction: character.toneInstruction,
+    predefinedRouting,
+    catalogKind: overviewEntry.kind,
+    authorizeBeforeAnalysis: null,
+  });
+
+  const intro = result.claimed ? '좋아, 무료로 받았어! 바로 한번 들여다볼게.' : '이미 기본 분석을 받았었지. 다시 한번 보여줄게.';
+  const outro = '\n\n일단 기본 분석은 여기까지 봤어.\n더 궁금한 게 있으면 편하게 물어봐.';
+  const response = `${intro}\n\n${pipelineResult.response}${outro}`;
   await addMessage({ conversationId, role: 'assistant', content: response, metadata: { card: null } });
-  return { intent: 'saju_question', response, character, usage: null, sources: null, cross_analysis: null, highlightCard: null, purchaseRequired: null };
+  return {
+    intent: 'saju_question', response, character,
+    usage: pipelineResult.usage, sources: pipelineResult.analysis?.sources ?? null, cross_analysis: null,
+    highlightCard: null, purchaseRequired: null,
+  };
 }
 
 
@@ -738,15 +803,21 @@ export async function handleFreeTextMessage({ conversationId, text, aiProvider, 
 
   if (pipelineResult.authorization && !pipelineResult.authorization.authorized) {
     // §14/§20 — 권한 없음 = 분석 호출 자체가 없었다는 뜻이므로 당연히 차감도 하지 않는다.
+    // §실측 버그 수정 — classifyServiceIntent의 키워드 버킷에 안 걸리는 자연어 발화("사주
+    // 봐달라고" 등)가 여기까지 흘러오면, pipelineResult.response(기계적 시스템 문구)를
+    // 그대로 노출하는 대신 항상 generateServiceGuidanceResponse(대구 말투 + 실제 카드)로
+    // 대체한다 — 특정 문구를 계속 추가하는 대신, "거부되는 모든 경우"를 구조적으로 안전한
+    // fallback 하나로 흡수한다.
+    const guidance = await generateServiceGuidanceResponse({ conversationId, conversation, userId });
     return {
       intent,
-      response: pipelineResult.response,
+      response: guidance.response,
       character,
       usage: pipelineResult.usage,
       sources: null,
       cross_analysis: null,
-      highlightCard: null,
-      authorization: pipelineResult.authorization, // §실제 상품 플로우 연결 버그 수정 — 라우트가 purchaseRequired를 만들도록 노출
+      highlightCard: guidance.highlightCard,
+      purchaseRequired: guidance.purchaseRequired,
     };
   }
 

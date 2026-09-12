@@ -160,23 +160,23 @@ export function useChatController() {
     async (choice) => {
       pushMessage({ role: 'user', text: choice.displayText });
       setChoices([]);
-      // §서비스 진입 단계 quickReply(action 있음) — AI/백엔드 호출 없이 결정적으로 처리
-      // (§6 원칙: 상품 탐색 단계는 가능한 AI 호출 없음). 실제 클릭 가능한 상품 카드+구매
-      // 버튼은 아직 없음(Priority 5에서 추가 예정) — 지금은 가격 텍스트만 안내.
+      // §서비스 진입 단계 quickReply(action 있음) — 'describe'는 catalog 설명을 그대로
+      // 보여주면 되므로 결정적으로 처리. 'start'/'products'는 §실측 버그 수정 — 이전엔
+      // 프론트에서 직접 가격을 조회해서 캠페인 체크 없이 텍스트로만 보여주고 있었다
+      // (존재하지 않는 "서비스 보기" 메뉴까지 잘못 언급). 이제 백엔드의
+      // handleServiceIntentMessage(캠페인 체크 포함, 실제 카드 렌더링)로 그대로 위임한다.
       if (choice.action) {
         const catalogEntry = getServiceCatalogEntry(serviceId);
         if (choice.action === 'describe') {
           pushMessage({ role: 'character', character, text: catalogEntry.description, card: null });
-        } else {
-          // 'start' / 'products' — 실제 상품 가격을 API로 조회해서 텍스트로 안내.
-          try {
-            const { products } = await api.listProducts();
-            const matched = catalogEntry.productCodes.map((code) => products?.find((p) => p.code === code)).filter(Boolean);
-            const priceLines = matched.map((p) => `${p.name} ${p.price.toLocaleString()}원`).join(' / ');
-            pushMessage({ role: 'character', character, text: priceLines ? `좋아, 어떻게 봐줄까?\n${priceLines}\n\n☰ 메뉴의 "서비스 보기"에서 바로 시작할 수 있어.` : '가격 정보를 불러오지 못했어.', card: null });
-          } catch {
-            pushMessage({ role: 'character', character, text: '가격 정보를 불러오지 못했어.', card: null });
-          }
+          return;
+        }
+        const delegateText = choice.action === 'products' ? '가격 얼마야?' : `${catalogEntry.title} 한번 봐줘`;
+        try {
+          const result = await runWithTyping(() => api.sendMessage(conversationIdRef.current, delegateText));
+          applyCharacterTurn(result);
+        } catch {
+          // no-op
         }
         return;
       }

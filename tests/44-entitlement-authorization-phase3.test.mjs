@@ -70,7 +70,7 @@ test('B1: 비로그인 사용자의 사주 질문 → 분석 LLM 호출은 0회�
 
   assert.equal(result.intent, 'saju_question');
   assert.equal(result.sources, null, '분석이 실행 안 됐으므로 sources 없음');
-  assert.ok(result.response.includes('로그인'), '로그인 안내가 포함되어야 함');
+    assert.equal(result.purchaseRequired?.loginRequired, true, '로그인 필요 신호가 구조화된 필드로 와야 함(§실측 개선 — 시스템 문구 대신 대구 말투+구조화 신호)');
   // Router 1회는 호출되지만(기존 비용, §2 "새 LLM 호출 추가 안 함" — 기존에 항상 있던 호출),
   // 더 비싼 분석 호출은 정확히 0회여야 한다. Mock provider가 Router/분석 구분 없이 매 .complete()
   // 호출마다 카운트되므로, "Router만 1회, 분석 0회"는 총 호출 수가 1이어야 함을 뜻한다.

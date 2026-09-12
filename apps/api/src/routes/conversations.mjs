@@ -54,7 +54,8 @@ export function conversationsRouter({ aiProviderFactory, model, casualAiProvider
     try {
       const { userId } = req.body ?? {};
       if (!userId) return res.status(400).json({ error: { code: 'INVALID_INPUT', message: 'userId는 필수입니다.' } });
-      const result = await claimFreeTrial({ conversationId: req.params.id, userId });
+      const aiProvider = aiProviderFactory();
+      const result = await claimFreeTrial({ conversationId: req.params.id, userId, aiProvider, model });
       return res.json({
         conversationId: req.params.id, intent: result.intent, response: result.response,
         character: result.character, sources: result.sources, cross_analysis: result.cross_analysis,

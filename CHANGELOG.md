@@ -2,6 +2,76 @@
 
 프로젝트 지시사항에 따라, 기존 구조/파일과 충돌하거나 임의 판단이 필요했던 지점을 여기에 기록한다.
 
+## [Unreleased] — 무료체험 클릭 시 실제 사주 분석 결과 즉시 표시 + 상품명 통일
+
+### 조사 결과
+1. `SAJU_DETAIL`만 `analysis_scope`를 생성하고(기존 payment-repository.mjs 확인), **`SAJU_BASIC`
+   은 analysis_scope 자체를 만들지 않는 상품**이었다 — 즉 "미리 생성된 정적 결과"라는 개념이
+   SAJU_BASIC엔 원래 없다.
+2. 이 프로젝트의 실제 "사주 분석"은 정적 리포트가 아니라 **AI 채팅 응답**(`askQuestion`
+   → `runQuestionPipeline`, Router+extract+분석)이다. `pickCatalogChoice`가 `free:true`
+   카탈로그 항목에 대해 이미 이 정확한 패턴(predefinedRouting으로 Router 생략,
+   authorizeBeforeAnalysis=null로 authorization 스킵)을 쓰고 있었다.
+3. **`claimFreeTrial`은 캠페인 claim(entitlement 발급)만 하고, 이 분석 파이프라인을 전혀
+   호출하지 않아서** "좋아, 무료로 받았어! 이제 궁금한 거 편하게 물어봐"로 끝나고 있었다
+   — 이게 신고된 버그의 정확한 원인.
+
+### 수정
+`claimFreeTrial`이 claim 성공(또는 이미 claim된 경우) 즉시, **기존 free 카탈로그 항목과
+완전히 동일한 방식**(`QUESTION_CATALOG`에서 대표 개괄 항목 `major_period_meaning` 선택 →
+`askQuestion` 직접 호출, `authorizeBeforeAnalysis: null`)으로 실제 chart 기반 분석을
+생성해서, 그 결과를 응답 텍스트에 포함시켜 즉시 보여준다. 새로운 분석 파이프라인을 전혀
+만들지 않고 기존 것을 그대로 재사용 — `askQuestion`이 이미 chart(파일 기반 저장소)의
+canonical 데이터를 그대로 쓰므로, AI가 생년월일을 추측하거나 재계산할 여지가 없다.
+
+응답 구조: `"좋아, 무료로 받았어! 바로 한번 들여다볼게.\n\n[실제 분석 결과]\n\n일단
+기본 분석은 여기까지 봤어. 더 궁금한 게 있으면 편하게 물어봐."` — 결과를 먼저 보여준
+"다음에만" 후속 안내 문구가 붙는다(§3 원칙 그대로).
+
+### 실제로 발견하고 고친 부수 버그
+`askQuestion`의 정상 반환값은 `pipelineResult` 전체(즉 `.analysis.sources` 등 포함)인데,
+제가 처음 작성한 코드는 존재하지 않는 최상위 `.sources`/`.cross_analysis` 필드를 참조하고
+있었다 — `pickCatalogChoice`의 실제 필드 접근 방식(`pipelineResult.analysis?.sources`)과
+대조해서 발견, 즉시 수정.
+
+### 상품명 통일
+`migrations/016_rename_saju_products.sql`(신규) — `SAJU_BASIC`의 실제 DB name이
+`'나의 시그널 (본인 사주 기본)'`, `SAJU_DETAIL`이 `'나의 시그널 상세 분석'`이었던 것을
+확인 → 각각 `'사주 기본 분석'`/`'사주 상세 분석'`으로 통일. **가격/quota/analysis_type은
+전혀 건드리지 않음**(name 컬럼만).
+
+### 생년월일 재입력 문제 (재확인)
+지난 라운드의 `resumeAfterAuth`/`confirmBirthData` 로직이 이미 이 문제를 해결한 상태 —
+이번 라운드에서 다시 소스 레벨로 재확인, 회귀 없음 확인.
+
+### 실제 실행으로 검증
+`claimFreeTrial`이 여전히 campaign claim(DB 필요)을 먼저 거치므로, 이 환경(DB 없음)에서는
+**가짜 분석 결과를 만들지 않고 명확한 에러로 정상 차단됨**을 실행 테스트로 확인(§8 원칙:
+Casual API/frontend가 무료체험 여부를 판단하지 않고, 서버 DB가 authoritative source).
+
+### 신규 파일
+- `migrations/016_rename_saju_products.sql`
+- `tests/70-free-trial-real-analysis.test.mjs`(6개)
+
+### 변경 파일
+- `apps/api/src/services/conversation-service.mjs`(`claimFreeTrial` 전면 재작성)
+- `apps/api/src/routes/conversations.mjs`(aiProvider 전달)
+
+### 테스트 결과
+신규 6/6 통과. 전체 backend **752/752 통과**. 프론트 빌드 성공(79 모듈, 이번 라운드는
+백엔드+마이그레이션 전용이라 프론트 코드 무변경).
+
+### 아직 브라우저에서 검증하지 못한 부분 (이 환경엔 실 DB가 없어 불가피)
+1. `migrations/016_rename_saju_products.sql`을 Supabase에 직접 실행해야 상품명이
+   실제로 바뀝니다.
+2. 무료체험 클릭 → 실제 분석 결과가 채팅에 표시되는 전체 흐름은 실제 배포 환경(DB
+   있음)에서 사장님이 직접 확인해주셔야 합니다 — 이 환경에서는 campaign claim 단계에서
+   DB 필요 에러로 막혀 그 이후(실제 분석 텍스트 생성)까지는 실행 확인을 못했습니다.
+3. `sources`(참고 데이터 카드)는 이번 라운드에서 화면에 별도 카드로 렌더링하지 않고
+   응답 텍스트 안에만 포함시켰습니다 — 필요하면 다음 라운드에서 카드로 분리 가능.
+4. Test E(캠페인 소진 후 990원 전환)/Test F(중복 방지)/Test G(SAJU_DETAIL 회귀)는
+   회귀 테스트(752/752)로만 확인, 실제 DB 기반 브라우저 검증은 못했습니다.
+
 ## [Unreleased] — Critical Flow: 로그인 후 무반응 + 생년월일 확인 + 10,000명 무료 캠페인
 
 ### ROOT CAUSE
