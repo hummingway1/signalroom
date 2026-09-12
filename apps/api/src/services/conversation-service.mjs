@@ -610,6 +610,7 @@ export async function claimFreeTrial({ conversationId, userId, aiProvider, model
   // authorizeBeforeAnalysis=null + predefinedRouting 패턴을 그대로 재사용한다.
   const overviewEntry = QUESTION_CATALOG.find((e) => e.id === 'major_period_meaning');
   const predefinedRouting = {
+    categories: [overviewEntry.category],
     saju_fields: overviewEntry.required_data.saju_fields ?? [],
     ziwei_fields: overviewEntry.required_data.ziwei_fields ?? [],
     ziwei_palace_focus: overviewEntry.required_data.ziwei_palace_focus ?? [],
